@@ -1,0 +1,21 @@
+#+TITLE: Dot
+#+AUTHOR: Mathieu Marques
+
+This repository contains a number of configuration I find myself copying over
+and over from one machine to another during installations.
+
+Eventually, this will be laid out in a way that allows symlinking to the files
+directly.
+
+* MacOS
+
+Increase the key repeat rate beyond the naive limit that is enforced by macOS.
+
+#+BEGIN_SRC sh
+defaults write -g KeyRepeat -int 1
+brew install coreutils most
+#+END_SRC
+
+* Windows
+
+Soon :tm:
