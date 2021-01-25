@@ -19,6 +19,7 @@ ln -fs ~/Workspace/dot/gitconfig ~/.gitconfig
 ln -fs ~/Workspace/dot/gitignore ~/.gitignore
 ln -fs ~/Workspace/dot/profile ~/.profile
 ln -fs ~/Workspace/dot/xinitrc ~/.xinitrc
+ln -fs ~/Workspace/dot/zshrc ~/.zshrc
 #+END_SRC
 
 * MacOS
