@@ -17,6 +17,7 @@ automatically.
 #+BEGIN_SRC shell
 ln -fs ~/Workspace/dot/gitconfig ~/.gitconfig
 ln -fs ~/Workspace/dot/gitignore ~/.gitignore
+ln -fs ~/Workspace/dot/profile ~/.profile
 #+END_SRC
 
 * MacOS
