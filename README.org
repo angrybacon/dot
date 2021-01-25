@@ -18,6 +18,7 @@ automatically.
 ln -fs ~/Workspace/dot/gitconfig ~/.gitconfig
 ln -fs ~/Workspace/dot/gitignore ~/.gitignore
 ln -fs ~/Workspace/dot/profile ~/.profile
+ln -fs ~/Workspace/dot/xinitrc ~/.xinitrc
 #+END_SRC
 
 * MacOS
