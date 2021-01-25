@@ -1,11 +1,23 @@
 #+TITLE: Dot
 #+AUTHOR: Mathieu Marques
+#+PROPERTY: header-args :results silent
 
 This repository contains a number of configuration I find myself copying over
 and over from one machine to another during installations.
 
-Eventually, this will be laid out in a way that allows symlinking to the files
-directly.
+Below are some OS-specific extra configurations.
+
+#+BEGIN_QUOTE
+Eventually, this will be laid out in a single Org file that tangles things
+automatically.
+#+END_QUOTE
+
+* Arch
+
+#+BEGIN_SRC shell
+ln -fs ~/Workspace/dot/gitconfig ~/.gitconfig
+ln -fs ~/Workspace/dot/gitignore ~/.gitignore
+#+END_SRC
 
 * MacOS
 
