@@ -183,7 +183,7 @@ Install my favorite fonts.
 
 #+BEGIN_SRC sh
 paru -S \
-    ttf-cascadia-code \
+    otf-code-new-roman \
     ttf-google-sans \
     ttf-roboto \
     ttf-roboto-slab
