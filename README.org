@@ -2,25 +2,12 @@
 #+AUTHOR: Mathieu Marques
 #+PROPERTY: header-args :results silent
 
-This repository contains a number of configuration I find myself copying over
+This repository contains a number of configurations I find myself copying over
 and over from one machine to another during installations.
-
-Below are some OS-specific extra configurations.
-
-#+BEGIN_QUOTE
-Eventually, this will be laid out in a single Org file that tangles things
-automatically.
-#+END_QUOTE
 
 * Arch
 
-#+BEGIN_SRC shell
-ln -fs ~/Workspace/dot/gitconfig ~/.gitconfig
-ln -fs ~/Workspace/dot/gitignore ~/.gitignore
-ln -fs ~/Workspace/dot/profile ~/.profile
-ln -fs ~/Workspace/dot/xinitrc ~/.xinitrc
-ln -fs ~/Workspace/dot/zshrc ~/.zshrc
-#+END_SRC
+See [[ARCH.org]].
 
 * MacOS
 
@@ -28,6 +15,11 @@ Increase the key repeat rate beyond the naive limit that is enforced by macOS.
 
 #+BEGIN_SRC sh
 defaults write -g KeyRepeat -int 1
+#+END_SRC
+
+Install core dependencies, somehow not present by default.
+
+#+BEGIN_SRC sh
 brew install coreutils most
 #+END_SRC
 

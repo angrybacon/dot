@@ -1,9 +1,0 @@
-[user]
-	email = mathieumarques78@gmail.com
-	name = Mathieu Marques
-[core]
-	excludesfile = ~/.gitignore
-[pull]
-	rebase = true
-[rebase]
-	autosquash = true
