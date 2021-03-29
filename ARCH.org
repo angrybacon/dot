@@ -166,6 +166,12 @@ gsettings set org.gnome.desktop.peripherals.keyboard delay 200
 gsettings set org.gnome.desktop.peripherals.keyboard repeat-interval 20
 #+END_SRC
 
+Disable the audible bell.
+
+#+BEGIN_SRC sh
+gsettings set org.gnome.desktop.wm.preferences audible-bell false
+#+END_SRC
+
 * Emacs
 
 Install the preferred =gccemacs=. Details at http://akrl.sdf.org/gccemacs.html.
