@@ -155,18 +155,23 @@ picom --experimental-backends &
 
 * Desktop
 
+** Gnome
+
 I typically use EXWM (https://github.com/ch11ng/exwm) as my window manager, but
 once in a while I'll log in something more stable -- read when I break my system
 -- like Gnome.
 
-Speed up the key-repeat rate.
+Below are a couple settings to make the temporary excursion less
+painful.
+
+*** Speed up the Key-Repeat Rate.
 
 #+BEGIN_SRC sh
 gsettings set org.gnome.desktop.peripherals.keyboard delay 200
 gsettings set org.gnome.desktop.peripherals.keyboard repeat-interval 20
 #+END_SRC
 
-Disable the audible bell.
+*** Disable the Audible Bell
 
 #+BEGIN_SRC sh
 gsettings set org.gnome.desktop.wm.preferences audible-bell false
