@@ -16,7 +16,13 @@ Arch.
 xset r rate 200 50
 #+END_SRC
 
-** Core Dependencies and Paru
+Optionally, create a =.zprofile= link to the profile file.
+
+#+BEGIN_SRC sh
+ln -s ~/.profile ~/.zprofile
+#+END_SRC
+
+** Core Dependencies and =paru=
 
 #+BEGIN_SRC sh
 pacman -S base-devel cmake git
@@ -109,26 +115,65 @@ sudo mhwd -a pci free 0300
 
 * Desktop
 
-** Gnome
+** Compositor
 
-I typically use EXWM (https://github.com/ch11ng/exwm) as my window manager, but
-once in a while I'll log in something more stable -- read when I break my system
--- like Gnome.
+Set a compositor to handle complex graphic interactions eg. dragging,
+transparency, shadows.
 
-Below are a couple settings to make the temporary excursion less
-painful.
-
-*** Speed up the Key-Repeat Rate.
+Identify the running compositor program.
 
 #+BEGIN_SRC sh
-gsettings set org.gnome.desktop.peripherals.keyboard delay 200
-gsettings set org.gnome.desktop.peripherals.keyboard repeat-interval 20
+inxi -Gxx | grep compositor
 #+END_SRC
 
-*** Disable the Audible Bell
+Install the preferred fork of =picom=.
+
+#+BEGIN_SRC emacs-lisp
+paru -S picom-ibhagwan-git
+#+END_SRC
+
+Start the compositor on login.
+
+=~/.xprofile=
+
+#+BEGIN_SRC sh :shebang #!/bin/sh
+picom --experimental-backends &
+#+END_SRC
+
+** Notifications
 
 #+BEGIN_SRC sh
-gsettings set org.gnome.desktop.wm.preferences audible-bell false
+paru -S dunst
+#+END_SRC
+
+Configure notification styles. Still experimenting with the options.
+
+=~/.config/dunst/dunstrc=
+
+#+BEGIN_SRC conf :tangle ~/.config/dunst/dunstrc
+[global]
+corner_radius = 4
+font = Google Sans 14
+geometry = "0x5-20+20"
+horizontal_padding = 16
+indicate_hidden = yes
+monitor = 0
+padding = 8
+transparency = 32
+#+END_SRC
+
+** Theme
+
+#+BEGIN_SRC sh
+paru -S materia-gtk-theme
+#+END_SRC
+
+Enable the theme in GTK settings files: =~/.config/gtk-3.0/settings.ini= and
+=~/.config/gtk-4.0/settings.ini=.
+
+#+BEGIN_SRC diff
++gtk-auto-mnemonics=0
++gtk-enable-mnemonics=0
 #+END_SRC
 
 * Emacs
@@ -144,6 +189,62 @@ See my Emacs configuration: [[https://github.com/angrybacon/dotemacs]].
 
 * Fonts
 
+** Aliasing and Hinting
+
+Enable aliasing and hinting presets.
+
+#+BEGIN_SRC sh
+rm -f /etc/fonts/conf.d/10-hinting-slight.conf
+ln -s /etc/fonts/conf.avail/10-hinting-full.conf /etc/fonts/conf.d
+ln -s /etc/fonts/conf.avail/10-sub-pixel-rgb.conf /etc/fonts/conf.d
+ln -s /etc/fonts/conf.avail/11-lcdfilter-default.conf /etc/fonts/conf.d
+ln -s /etc/fonts/conf.avail/70-no-bitmaps.conf /etc/fonts/conf.d
+#+END_SRC
+
+Uncomment FreeType hinting in =/etc/profile.d/freetype2.sh=.
+
+#+BEGIN_SRC diff
+-# export FREETYPE_PROPERTIES="truetype:interpreter-version=40"
++export FREETYPE_PROPERTIES="truetype:interpreter-version=40"
+#+END_SRC
+
+** Font Preferences
+
+Set default font for classes in =/etc/fonts/local.conf=.
+
+#+BEGIN_SRC xml :tangle /sudo:://etc/fonts/local.conf
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE fontconfig SYSTEM "urn:fontconfig:fonts.dtd">
+<fontconfig>
+  <match target="pattern">
+    <test qual="any" name="family">
+      <string>serif</string>
+    </test>
+    <edit name="family" mode="assign" binding="same">
+      <string>Roboto Slab</string>
+    </edit>
+  </match>
+  <match target="pattern">
+    <test qual="any" name="family">
+      <string>sans-serif</string>
+    </test>
+    <edit name="family" mode="assign" binding="same">
+      <string>Roboto</string>
+    </edit>
+  </match>
+  <match target="pattern">
+    <test qual="any" name="family">
+      <string>monospace</string>
+    </test>
+    <edit name="family" mode="assign" binding="same">
+      <string>Monaco</string>
+    </edit>
+  </match>
+</fontconfig>
+#+END_SRC
+
+** Font Dependencies
+
 Install my favorite fonts.
 
 #+BEGIN_SRC sh
@@ -151,6 +252,7 @@ paru -S \
     otf-code-new-roman \
     ttf-google-sans \
     ttf-material-design-icons-git \
+    ttf-monaco \
     ttf-roboto \
     ttf-roboto-slab
 #+END_SRC
