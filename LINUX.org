@@ -1,7 +1,7 @@
 # -*- after-save-hook: (org-babel-tangle t); -*-
-#+TITLE: Setting up Arch
+#+TITLE: Linux
 #+AUTHOR: Mathieu Marques
-#+PROPERTY: header-args :mkdirp yes :results silent
+#+PROPERTY: header-args :results silent
 
 This file documents the steps I've followed to install my daily machine running
 Arch.
@@ -52,7 +52,8 @@ paru -S npm yarn
 I like =zsh= with the =pure= prompt.
 
 #+BEGIN_SRC sh
-paru -S zsh-pure-prompt-git
+paru -S zsh zsh-pure-prompt-git
+chsh -s $(which zsh)
 #+END_SRC
 
 =~/.zshrc=
@@ -60,8 +61,10 @@ paru -S zsh-pure-prompt-git
 #+BEGIN_SRC sh :tangle ~/.zshrc
 # Aliases
 alias diff='diff --color'
+alias egrep='egrep --color'
+alias fgrep='fgrep --color'
 alias grep='grep --color --ignore-case'
-alias la='ll -a'
+alias la='ll -A'
 alias ll='ls -ghlo'
 alias ls='ls --color --group-directories-first'
 alias rsync='rsync --human-readable --info=progress2'
@@ -70,16 +73,6 @@ alias tree='tree -C'
 # Prompt
 autoload -U promptinit; promptinit
 prompt pure
-
-# Node version manager
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-
-# Source manjaro-zsh-configuration
-if [[ -e /usr/share/zsh/manjaro-zsh-config ]]; then
-  source /usr/share/zsh/manjaro-zsh-config
-fi
 #+END_SRC
 
 ** Enable Asterisks During Password Prompts
@@ -112,45 +105,6 @@ versions. For instance:
 
 #+BEGIN_SRC sh
 sudo mhwd -a pci free 0300
-#+END_SRC
-
-** X
-
-=~.xinitrc=
-
-#+BEGIN_SRC sh :shebang #!/bin/sh :tangle ~/.xinitrc
-# Merge in defaults and keymaps
-userresources=$HOME/.Xresources
-usermodmap=$HOME/.Xmodmap
-sysresources=/etc/X11/xinit/.Xresources
-sysmodmap=/etc/X11/xinit/.Xmodmap
-if [ -f $sysresources ]; then
-    xrdb -merge $sysresources
-fi
-if [ -f $sysmodmap ]; then
-    xmodmap $sysmodmap
-fi
-if [ -f "$userresources" ]; then
-    xrdb -merge "$userresources"
-fi
-if [ -f "$usermodmap" ]; then
-    xmodmap "$usermodmap"
-fi
-
-# Start xinit modules
-if [ -d /etc/X11/xinit/xinitrc.d ] ; then
-    for f in /etc/X11/xinit/xinitrc.d/?*.sh ; do
-        [ -x "$f" ] && . "$f"
-    done
-    unset f
-fi
-#+END_SRC
-
-=~/.xprofile=
-
-#+BEGIN_SRC sh :shebang #!/bin/sh :tangle ~/.xprofile
-# Start compositor
-picom --experimental-backends &
 #+END_SRC
 
 * Desktop
@@ -196,6 +150,7 @@ Install my favorite fonts.
 paru -S \
     otf-code-new-roman \
     ttf-google-sans \
+    ttf-material-design-icons-git \
     ttf-roboto \
     ttf-roboto-slab
 #+END_SRC
@@ -221,7 +176,6 @@ paru -S \
 #+BEGIN_SRC conf :tangle ~/.gitignore
 .dir-locals.el
 .projectile
-.log/
 #+END_SRC
 
 * Plex

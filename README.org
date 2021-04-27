@@ -5,9 +5,9 @@
 This repository contains a number of configurations I find myself copying over
 and over from one machine to another during installations.
 
-* Arch
+* Linux
 
-See [[ARCH.org]].
+See [[LINUX.org]].
 
 * MacOS
 
@@ -22,7 +22,3 @@ Install core dependencies, somehow not present by default.
 #+BEGIN_SRC sh
 brew install coreutils most
 #+END_SRC
-
-* Windows
-
-Soon :tm:
