@@ -195,6 +195,16 @@ paru -S kvantum-qt5 kvantum-theme-materia
 
 Then run =kvantummanager= to select your theme.
 
+** Window Manager
+
+*** Qtile
+
+See [[config/qtile.org]].
+
+*** XMonad
+
+See [[config/xmonad.org]].
+
 * Emacs
 
 Install the preferred =gccemacs=. Details at http://akrl.sdf.org/gccemacs.html.

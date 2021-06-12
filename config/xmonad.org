@@ -1,0 +1,15 @@
+# -*- after-save-hook: (org-babel-tangle t); -*-
+#+TITLE: XMonad
+#+AUTHOR: Mathieu Marques
+#+PROPERTY: header-args:haskell :tangle ~/.config/xmonad/xmonad2.hs
+
+* Installation
+
+#+BEGIN_SRC sh
+paru -S xmonad xmonad-contrib
+#+END_SRC
+
+* Configuration
+
+#+BEGIN_SRC haskell
+#+END_SRC
