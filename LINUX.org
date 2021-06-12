@@ -53,6 +53,10 @@ don't support NVM paths.
 paru -S npm yarn
 #+END_SRC
 
+** Terminal
+
+See [[config/alacritty.org]].
+
 ** Shell
 
 I like =zsh= with the =pure= prompt.
