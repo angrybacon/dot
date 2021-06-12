@@ -69,13 +69,18 @@ chsh -s $(which zsh)
 =~/.zshrc=
 
 #+BEGIN_SRC sh :tangle ~/.zshrc
+# Add user-local path
+export PATH=$PATH:~/.bin/
+
 # Aliases
+alias arecordvvv='arecord -vvv -f dat /dev/null'
 alias diff='diff --color'
 alias egrep='egrep --color'
 alias fgrep='fgrep --color'
 alias grep='grep --color --ignore-case'
 alias la='ll -A'
 alias ll='ls -ghlo'
+alias lll='ls -hl'
 alias ls='ls --color --group-directories-first'
 alias rsync='rsync --human-readable --info=progress2'
 alias tree='tree -C'
