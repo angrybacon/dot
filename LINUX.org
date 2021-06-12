@@ -173,6 +173,8 @@ transparency = 32
 
 ** Theme
 
+*** GTK
+
 #+BEGIN_SRC sh
 paru -S materia-gtk-theme
 #+END_SRC
@@ -184,6 +186,14 @@ Enable the theme in GTK settings files: =~/.config/gtk-3.0/settings.ini= and
 +gtk-auto-mnemonics=0
 +gtk-enable-mnemonics=0
 #+END_SRC
+
+*** Qt
+
+#+BEGIN_SRC sh
+paru -S kvantum-qt5 kvantum-theme-materia
+#+END_SRC
+
+Then run =kvantummanager= to select your theme.
 
 * Emacs
 
@@ -197,6 +207,20 @@ paru -S emacs-native-comp-git
 See my Emacs configuration: [[https://github.com/angrybacon/dotemacs]].
 
 * Fonts
+
+** Font Dependencies
+
+Install my favorite fonts.
+
+#+BEGIN_SRC sh
+paru -S \
+    otf-code-new-roman \
+    ttf-google-sans \
+    ttf-material-design-icons-git \
+    ttf-monaco \
+    ttf-roboto \
+    ttf-roboto-slab
+#+END_SRC
 
 ** Aliasing and Hinting
 
@@ -250,20 +274,6 @@ Set default font for classes in =/etc/fonts/local.conf=.
     </edit>
   </match>
 </fontconfig>
-#+END_SRC
-
-** Font Dependencies
-
-Install my favorite fonts.
-
-#+BEGIN_SRC sh
-paru -S \
-    otf-code-new-roman \
-    ttf-google-sans \
-    ttf-material-design-icons-git \
-    ttf-monaco \
-    ttf-roboto \
-    ttf-roboto-slab
 #+END_SRC
 
 * Git
@@ -363,7 +373,7 @@ ssh-keygen -t rsa -b 4096
 #+BEGIN_SRC sh
 paru -S \
     emoji-keyboard \
-    htop \
+    gtop htop \
     tree
 #+END_SRC
 
