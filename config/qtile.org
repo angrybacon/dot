@@ -193,7 +193,7 @@ def widget_list():
             background=colors['background'],
             fontsize=font_size,
             foreground=colors['foreground'],
-            format='%H:%M',
+            format='%d-%m %H:%M',
             padding=4,
         ),
         widget.Spacer(**spacer),
