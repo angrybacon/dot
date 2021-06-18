@@ -364,6 +364,24 @@ paru -S openssh
 ssh-keygen -t rsa -b 4096
 #+END_SRC
 
+* Steam
+
+Enable the =multilib= repositories in =/etc/pacman.conf=.
+
+#+BEGIN_SRC diff
+-#[multilib]
+-#Include = /etc/pacman.d/mirrorlist
++[multilib]
++Include = /etc/pacman.d/mirrorlist
+#+END_SRC
+
+Upgrade the system and install the =steam= package.
+
+#+BEGIN_SRC sh
+paru -Syu
+paru -S steam
+#+END_SRC
+
 * Other Applications
 
 #+BEGIN_SRC sh
