@@ -147,16 +147,11 @@ See [[config/picom.org]].
 *** GTK
 
 #+BEGIN_SRC sh
-paru -S materia-gtk-theme
+paru -S lxappearance materia-gtk-theme
 #+END_SRC
 
-Enable the theme in GTK settings files: =~/.config/gtk-3.0/settings.ini= and
-=~/.config/gtk-4.0/settings.ini=.
-
-#+BEGIN_SRC diff
-+gtk-auto-mnemonics=0
-+gtk-enable-mnemonics=0
-#+END_SRC
+Enable the theme in GTK settings through =lxappearance= and verify the
+configuration file =~/.config/gtk-3.0/settings.ini=.
 
 *** Qt
 
