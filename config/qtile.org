@@ -50,6 +50,7 @@ terminal = guess_terminal()
 keys = [
     # Meta
     Key([mod], 'Return', lazy.spawn(terminal)),
+    Key([mod], 'space', lazy.spawncmd()),
     Key([mod], 'q', lazy.window.kill()),
     Key([mod], 'r', lazy.restart()),
     # Layout
@@ -174,6 +175,8 @@ def widget_list():
             padding=4,
             this_current_screen_border=colors['accent'],
         ),
+        widget.Spacer(**spacer),
+        widget.Prompt(background=colors['background']),
         widget.Spacer(background=colors['background']),
         widget.Systray(
             background=colors['background'],
