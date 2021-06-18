@@ -44,6 +44,12 @@ makepkg -si
 
 Run =visudo= in order to customize sudoers settings.
 
+*** Change the Default Editor
+
+#+BEGIN_SRC diff
++Defaults editor=/usr/bin/vim
+#+END_SRC
+
 *** Enable Asterisks During Password Prompts
 
 #+BEGIN_SRC diff
