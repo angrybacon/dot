@@ -171,6 +171,26 @@ See [[config/qtile.org]].
 
 See [[config/xmonad.org]].
 
+** Sound
+
+#+BEGIN_SRC sh
+paru -S alsa-utils pavucontrol
+#+END_SRC
+
+Make sure that the devices are correctly selected in =pavucontrol= and that the
+=pulseaudio= server is running.
+
+#+BEGIN_SRC sh
+systemctl --user status pulseaudio.service
+systemctl --user status pulseaudio.socket
+#+END_SRC
+
+Use the following command to detect input sound.
+
+#+BEGIN_SRC sh
+arecord -vv -f dat /dev/null
+#+END_SRC
+
 * Emacs
 
 Install the preferred =gccemacs=. Details at http://akrl.sdf.org/gccemacs.html.
