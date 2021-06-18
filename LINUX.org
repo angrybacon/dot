@@ -115,29 +115,6 @@ See [[config/alacritty.org]].
 
 * Desktop
 
-** Graphics
-
-Identify the installed drivers with either =mhwd= or =inxi=.
-
-#+BEGIN_SRC sh
-mhwd -li -d --pci
-inxi -G
-#+END_SRC
-
-Identify the available drivers for the current configuration.
-
-#+BEGIN_SRC sh
-mhwd -l -d --pci
-#+END_SRC
-
-Install the recommended driver for the current configuration. If experiencing
-issues related to the drivers, try switching between the =free= and =nonfree=
-versions. For instance:
-
-#+BEGIN_SRC sh
-sudo mhwd -a pci free 0300
-#+END_SRC
-
 ** Compositor
 
 See [[config/picom.org]].
