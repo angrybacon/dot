@@ -210,6 +210,7 @@ Install my favorite fonts.
 
 #+BEGIN_SRC sh
 paru -S \
+    noto-fonts-emoji \
     ttf-google-sans \
     ttf-material-design-icons-git \
     ttf-monaco \
