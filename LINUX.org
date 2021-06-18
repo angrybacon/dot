@@ -174,7 +174,22 @@ Install the preferred =gccemacs=. Details at http://akrl.sdf.org/gccemacs.html.
 CMake is necessary in order to compile the dependencies to =vterm= at runtime.
 
 #+BEGIN_SRC sh
-paru -S emacs-native-comp-git
+paru -S cmake libgccjit
+paru -G emacs-git
+#+END_SRC
+
+Edit =emacs-git/PKGBUILD= and enable just-in-time compilation.
+
+#+BEGIN_SRC diff
+-JIT=              # Enable native just-in-time compilation. libgccjit is in AUR.
++JIT="YES"         # Enable native just-in-time compilation. libgccjit is in AUR.
+#+END_SRC
+
+Install =emacs= with the new flags.
+
+#+BEGIN_SRC sh
+cd emacs-git/
+makepkg -si
 #+END_SRC
 
 See my Emacs configuration: [[https://github.com/angrybacon/dotemacs]].
