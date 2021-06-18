@@ -1,0 +1,37 @@
+# -*- after-save-hook: (org-babel-tangle t); -*-
+#+TITLE: Picom
+#+AUTHOR: Mathieu Marques
+#+PROPERTY: header-args:conf :tangle ~/.config/picom/picom.conf
+
+Use a compositor to handle complex graphic interactions eg. dragging,
+transparency, shadows.
+
+* Installation
+
+Install the preferred fork or =picom= itself.
+
+#+BEGIN_SRC sh
+paru -S picom-ibhagwan-git
+#+END_SRC
+
+* Bootstrap
+
+To identify the compositor currently running, use =inxi=.
+
+#+BEGIN_SRC sh
+inxi -Gxx | grep compositor
+#+END_SRC
+
+Start the compositor on login.
+
+=~/.xinitrc=
+
+#+BEGIN_SRC diff
++picom --experimental-backends &
+#+END_SRC
+
+* Configuration
+
+#+BEGIN_QUOTE
+Work in progress
+#+END_QUOTE
