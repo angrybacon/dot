@@ -20,7 +20,10 @@ https://github.com/qtile/qtile/issues/2404.
 * Installation
 
 #+BEGIN_SRC sh
-paru -S qtile
+paru -S \
+    python-psutil \
+    qtile \
+    ttf-material-design-icons-git
 #+END_SRC
 
 * Configuration
@@ -30,126 +33,43 @@ paru -S qtile
 #+BEGIN_SRC python
 import os
 import subprocess
-from libqtile import bar, hook, layout, widget
+from libqtile import bar, layout, widget
 from libqtile.command import lazy
-from libqtile.config import Drag, Group, Key, Screen
+from libqtile.config import Drag, Group, Key, Match, Screen
+from libqtile.utils import guess_terminal
 
 
 mod = 'mod4'
-mod1 = 'alt'
-mod2 = 'control'
 home = os.path.expanduser('~')
-
-
-@lazy.function
-def window_to_prev_group(qtile):
-    if qtile.currentWindow is not None:
-        i = qtile.groups.index(qtile.currentGroup)
-        qtile.currentWindow.togroup(qtile.groups[i - 1].name)
-
-
-@lazy.function
-def window_to_next_group(qtile):
-    if qtile.currentWindow is not None:
-        i = qtile.groups.index(qtile.currentGroup)
-        qtile.currentWindow.togroup(qtile.groups[i + 1].name)
+terminal = guess_terminal()
 #+END_SRC
 
 ** Keys
 
-Most of our keybindings are in sxhkd file - except these
-
 #+BEGIN_SRC python
 keys = [
-
-    # SUPER + FUNCTION KEYS
-    Key([mod], 'Return', lazy.spawn('alacritty')),
-    Key([mod], 'f', lazy.window.toggle_fullscreen()),
+    # Meta
+    Key([mod], 'Return', lazy.spawn(terminal)),
     Key([mod], 'q', lazy.window.kill()),
     Key([mod], 'r', lazy.restart()),
-
-    # QTILE LAYOUT KEYS
+    # Layout
+    Key([mod], 'Tab', lazy.next_layout()),
+    Key([mod], 'f', lazy.window.toggle_fullscreen()),
     Key([mod], 'n', lazy.layout.normalize()),
-
-    # CHANGE FOCUS
+    Key([mod, 'control'], 'h', lazy.layout.shrink()),
+    Key([mod, 'control'], 'j', lazy.layout.grow_down()),
+    Key([mod, 'control'], 'k', lazy.layout.grow_up()),
+    Key([mod, 'control'], 'l', lazy.layout.grow()),
+    Key([mod, 'shift'], 'f', lazy.layout.flip()),
+    Key([mod, 'shift'], 'h', lazy.layout.shuffle_left()),
+    Key([mod, 'shift'], 'j', lazy.layout.shuffle_down()),
+    Key([mod, 'shift'], 'k', lazy.layout.shuffle_up()),
+    Key([mod, 'shift'], 'l', lazy.layout.shuffle_right()),
+    # Focus
     Key([mod], 'Up', lazy.layout.up()),
     Key([mod], 'Down', lazy.layout.down()),
     Key([mod], 'Left', lazy.layout.left()),
     Key([mod], 'Right', lazy.layout.right()),
-
-    # RESIZE UP, DOWN, LEFT, RIGHT
-    Key(
-        [mod, 'control'], 'l',
-        lazy.layout.grow_right(),
-        lazy.layout.grow(),
-        lazy.layout.increase_ratio(),
-        lazy.layout.delete(),
-    ),
-    Key(
-        [mod, 'control'], 'Right',
-        lazy.layout.grow_right(),
-        lazy.layout.grow(),
-        lazy.layout.increase_ratio(),
-        lazy.layout.delete(),
-    ),
-    Key(
-        [mod, 'control'], 'h',
-        lazy.layout.grow_left(),
-        lazy.layout.shrink(),
-        lazy.layout.decrease_ratio(),
-        lazy.layout.add(),
-    ),
-    Key(
-        [mod, 'control'], 'Left',
-        lazy.layout.grow_left(),
-        lazy.layout.shrink(),
-        lazy.layout.decrease_ratio(),
-        lazy.layout.add(),
-    ),
-    Key([mod, 'control'], 'k',
-        lazy.layout.grow_up(),
-        lazy.layout.grow(),
-        lazy.layout.decrease_nmaster(),
-        ),
-    Key(
-        [mod, 'control'], 'Up',
-        lazy.layout.grow_up(),
-        lazy.layout.grow(),
-        lazy.layout.decrease_nmaster(),
-    ),
-    Key(
-        [mod, 'control'], 'j',
-        lazy.layout.grow_down(),
-        lazy.layout.shrink(),
-        lazy.layout.increase_nmaster(),
-    ),
-    Key(
-        [mod, 'control'], 'Down',
-        lazy.layout.grow_down(),
-        lazy.layout.shrink(),
-        lazy.layout.increase_nmaster(),
-    ),
-
-    # FLIP LAYOUT FOR MONADTALL/MONADWIDE
-    Key([mod, 'shift'], 'f', lazy.layout.flip()),
-
-    # FLIP LAYOUT FOR BSP
-    Key([mod, 'mod1'], 'k', lazy.layout.flip_up()),
-    Key([mod, 'mod1'], 'j', lazy.layout.flip_down()),
-    Key([mod, 'mod1'], 'l', lazy.layout.flip_right()),
-    Key([mod, 'mod1'], 'h', lazy.layout.flip_left()),
-
-    # MOVE WINDOWS UP OR DOWN BSP LAYOUT
-    Key([mod, 'shift'], 'k', lazy.layout.shuffle_up()),
-    Key([mod, 'shift'], 'j', lazy.layout.shuffle_down()),
-    Key([mod, 'shift'], 'h', lazy.layout.shuffle_left()),
-    Key([mod, 'shift'], 'l', lazy.layout.shuffle_right()),
-
-    # MOVE WINDOWS UP OR DOWN MONADTALL/MONADWIDE LAYOUT
-    Key([mod, 'shift'], 'Up', lazy.layout.shuffle_up()),
-    Key([mod, 'shift'], 'Down', lazy.layout.shuffle_down()),
-    Key([mod, 'shift'], 'Left', lazy.layout.swap_left()),
-    Key([mod, 'shift'], 'Right', lazy.layout.swap_right()),
 ]
 #+END_SRC
 
@@ -179,8 +99,8 @@ for i in groups:
 
 #+BEGIN_SRC python
 theme = {
-    'border_focus': '#5e81ac',
-    'border_normal': '#4c566a',
+    'border_focus': '#5E81AC',
+    'border_normal': '#4C566A',
     'border_width': 2,
     'margin': 24,
 }
@@ -189,62 +109,25 @@ theme = {
 layouts = [
     layout.MonadTall(**theme, ratio=.6),
     layout.MonadWide(**theme, ratio=.75),
-    layout.Max(**theme),
 ]
 
 
-keys.extend([Key([mod], 'Tab', lazy.next_layout())])
+floating_layout = layout.Floating(
+    float_rules=[
+        *layout.Floating.default_float_rules,
+        # NOTE Run `xprop` to guess the appliation attributes
+        Match(title='branchdialog'),
+        Match(title='pinentry'),
+        Match(wm_class='confirmreset'),
+        Match(wm_class='makebranch'),
+        Match(wm_class='maketag'),
+        Match(wm_class='ssh-askpass'),
+    ],
+)
 
 
-@hook.subscribe.startup_once
-def start_once():
-    home = os.path.expanduser('~')
-    subprocess.call([home + '/.config/qtile/scripts/autostart.sh'])
-
-
-@hook.subscribe.startup
-def start_always():
-    # Set the cursor to something sane in X
-    subprocess.Popen(['xsetroot', '-cursor_name', 'left_ptr'])
-
-
-@hook.subscribe.client_new
-def set_floating(window):
-    if (window.window.get_wm_transient_for() or window.window.get_wm_type() in floating_types):
-        window.floating = True
-
-
-floating_types = ['notification', 'toolbar', 'splash', 'dialog']
-follow_mouse_focus = True
-bring_front_click = False
-cursor_warp = False
-floating_layout = layout.Floating(float_rules=[
-    {'wmclass': 'Arcolinux-welcome-app.py'},
-    {'wmclass': 'Arcolinux-tweak-tool.py'},
-    {'wmclass': 'Arcolinux-calamares-tool.py'},
-    {'wmclass': 'confirm'},
-    {'wmclass': 'dialog'},
-    {'wmclass': 'download'},
-    {'wmclass': 'error'},
-    {'wmclass': 'file_progress'},
-    {'wmclass': 'notification'},
-    {'wmclass': 'splash'},
-    {'wmclass': 'toolbar'},
-    {'wmclass': 'confirmreset'},
-    {'wmclass': 'makebranch'},
-    {'wmclass': 'maketag'},
-    {'wmclass': 'Arandr'},
-    {'wmclass': 'feh'},
-    {'wmclass': 'Galculator'},
-    {'wmclass': 'arcolinux-logout'},
-    {'wmclass': 'xfce4-terminal'},
-    {'wname': 'branchdialog'},
-    {'wname': 'Open File'},
-    {'wname': 'pinentry'},
-    {'wmclass': 'ssh-askpass'},
-],  fullscreen_border_width = 0, border_width = 0)
 auto_fullscreen = True
-focus_on_window_activation = 'focus' # or smart
+focus_on_window_activation = 'smart'
 wmname = 'LG3D'
 #+END_SRC
 
@@ -252,7 +135,6 @@ wmname = 'LG3D'
 
 #+BEGIN_SRC python
 def widget_list():
-
     colors = {
         'accent': '#00BFA5',
         'background': '#37474F',
@@ -277,7 +159,6 @@ def widget_list():
         'background': colors['background'],
         'length': 8,
     }
-
     return [
         widget.Spacer(**spacer),
         widget.GroupBox(
@@ -316,10 +197,7 @@ def widget_list():
     ]
 
 
-screens = [
-    Screen(top=bar.Bar(widgets=widget_list(), size=40)),
-    Screen(top=bar.Bar(widgets=widget_list(), size=40)),
-]
+screens = [Screen(top=bar.Bar(widgets=widget_list(), size=40))]
 #+END_SRC
 
 ** Mouse
@@ -342,7 +220,7 @@ mouse = [
 
 dgroups_key_binder = None
 dgroups_app_rules = []
-
-
-main = None
+follow_mouse_focus = True
+bring_front_click = False
+cursor_warp = False
 #+END_SRC

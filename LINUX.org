@@ -189,7 +189,6 @@ Install my favorite fonts.
 paru -S \
     noto-fonts-emoji \
     ttf-google-sans \
-    ttf-material-design-icons-git \
     ttf-monaco \
     ttf-roboto \
     ttf-roboto-slab
