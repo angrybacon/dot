@@ -91,7 +91,7 @@ And install additional utilities =npm= and =yarn= globally in case packages
 don't support NVM paths.
 
 #+BEGIN_SRC sh
-paru -S npm yarn
+paru -S npm nvm yarn
 #+END_SRC
 
 * Shell
@@ -127,6 +127,9 @@ alias tree='tree -C'
 # Prompt
 autoload -U promptinit; promptinit
 prompt pure
+
+# NVM
+source /usr/share/nvm/init-nvm.sh
 #+END_SRC
 
 ** Terminal
