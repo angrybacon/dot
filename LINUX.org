@@ -14,7 +14,9 @@ Arch.
 
 #+BEGIN_SRC sh :tangle ~/.profile
 # Automatically start X
-[[ $(fgconsole 2>/dev/null) == 1 ]] && exec startx -- vt1
+if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
+  exec startx
+fi
 
 # Increase the Key-Repeat Rate
 xset r rate 200 50
@@ -111,13 +113,13 @@ prompt pure
 
 ** Terminal
 
-See [[config/alacritty.org]].
+See [[./config/alacritty.org]].
 
 * Desktop
 
 ** Compositor
 
-See [[config/picom.org]].
+See [[./config/picom.org]].
 
 ** Theme
 
@@ -142,11 +144,11 @@ Then run =kvantummanager= to select your theme.
 
 *** Qtile
 
-See [[config/qtile.org]].
+See [[./config/qtile.org]].
 
 *** XMonad
 
-See [[config/xmonad.org]].
+See [[./config/xmonad.org]].
 
 ** Sound
 
