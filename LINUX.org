@@ -42,6 +42,24 @@ cd /tmp/paru
 makepkg -si
 #+END_SRC
 
+Customize =/etc/pacman.conf=.
+
+#+BEGIN_SRC diff
+ [options]
++Color
++VerbosePkgLists
++IgnorePkg = emacs-git
+
++[extra]
++Include = /etc/pacman.d/mirrorlist
+
++[community]
++Include = /etc/pacman.d/mirrorlist
+
++[multilib]
++Include = /etc/pacman.d/mirrorlist
+#+END_SRC
+
 ** Visudo
 
 Run =visudo= in order to customize sudoers settings.
