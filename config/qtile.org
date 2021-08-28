@@ -154,7 +154,7 @@ def widget_list():
         'samples': 90,
         'type': 'box',
     }
-    font_size = 16
+    font_size = 18
     icon_size = 20
     spacer = {
         'background': colors['background'],
@@ -179,7 +179,7 @@ def widget_list():
         widget.Prompt(
             background=colors['background'],
             font='CodeNewRoman',
-            fontsize=font_size,
+            fontsize=font_size + 2,
         ),
         widget.Spacer(background=colors['background']),
         widget.Systray(
