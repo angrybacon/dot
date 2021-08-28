@@ -310,6 +310,33 @@ Set default font for classes in =/etc/fonts/local.conf=.
 .projectile
 #+END_SRC
 
+** Signed Commits
+
+1. First generate a key for your machine
+
+   #+BEGIN_SRC sh
+   gpg --full-gen-key
+   gpg --list-secret-keys --keyid-format LONG <email>
+   gpg --armor --export 1234567890ABCDEF
+   #+END_SRC
+
+2. Copy the public key to your Git hosting platform
+
+3. Add the secret key to your repository
+
+   #+BEGIN_SRC conf
+   [user]
+       signingkey = 1234567890ABCDEF
+   [commit]
+       gpgsign = true
+   #+END_SRC
+
+=~./profile=
+
+#+BEGIN_SRC sh
+export GPG_TTY=$TTY
+#+END_SRC
+
 * Plex
 
 ** Dependencies
