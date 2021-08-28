@@ -176,7 +176,11 @@ def widget_list():
             this_current_screen_border=colors['accent'],
         ),
         widget.Spacer(**spacer),
-        widget.Prompt(background=colors['background']),
+        widget.Prompt(
+            background=colors['background'],
+            font='CodeNewRoman',
+            fontsize=font_size,
+        ),
         widget.Spacer(background=colors['background']),
         widget.Systray(
             background=colors['background'],

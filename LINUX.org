@@ -226,6 +226,7 @@ Install my favorite fonts.
 #+BEGIN_SRC sh
 paru -S \
     noto-fonts-emoji \
+    otf-code-new-roman \
     ttf-google-sans \
     ttf-monaco \
     ttf-roboto \
@@ -280,7 +281,7 @@ Set default font for classes in =/etc/fonts/local.conf=.
       <string>monospace</string>
     </test>
     <edit name="family" mode="assign" binding="same">
-      <string>Monaco</string>
+      <string>Code New Roman</string>
     </edit>
   </match>
 </fontconfig>
@@ -402,7 +403,7 @@ paru -S steam
 paru -S \
     brave-bin chromium firefox \        # Browsers
     discord slack-desktop \             # Chat
-    cockatrice spotify vlc \            # Media
+    cockatrice spotify vlc \            # Entertainment
     qbittorrent \                       # Torrents
     piper \                             # System: peripherals
     gtop htop neofetch pfetch tree      # System: utilities
