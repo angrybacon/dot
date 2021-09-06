@@ -109,7 +109,7 @@ chsh -s $(which zsh)
 
 #+BEGIN_SRC sh :tangle ~/.zshrc
 # Add user-local path
-export PATH=$PATH:~/.bin/
+export PATH=$PATH:~/.bin/:~/Workspace/dot/scripts/
 
 # Aliases
 alias arecordvvv='arecord -vvv -f dat /dev/null'
@@ -170,6 +170,14 @@ See [[./config/qtile.org]].
 *** XMonad
 
 See [[./config/xmonad.org]].
+
+** Screenshots
+
+#+BEGIN_SRC sh
+paru -S ffcast slop xclip
+#+END_SRC
+
+Several scripts are available under [[./scripts/]].
 
 ** Sound
 
