@@ -122,6 +122,7 @@ alias ll='ls -ghlo'
 alias lll='ls -hl'
 alias ls='ls --color --group-directories-first'
 alias rsync='rsync --human-readable --info=progress2'
+alias sudo='sudo '
 alias tree='tree -C'
 
 # Prompt
