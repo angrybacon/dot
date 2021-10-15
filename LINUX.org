@@ -46,9 +46,10 @@ Customize =/etc/pacman.conf=.
 
 #+BEGIN_SRC diff
  [options]
++IgnorePkg = emacs-git
 +Color
 +VerbosePkgLists
-+IgnorePkg = emacs-git
++ParallelDownloads = 4
 
 +[extra]
 +Include = /etc/pacman.d/mirrorlist
