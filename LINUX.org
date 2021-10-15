@@ -236,6 +236,15 @@ makepkg -si
 
 See my Emacs configuration: [[https://github.com/angrybacon/dotemacs]].
 
+* Vim
+
+I mostly use Emacs but sometimes Vim too. So I need a very minor tweaks.
+
+#+BEGIN_SRC sh :tangle ~/.vimrc
+:syntax on
+:set cursorline
+#+END_SRC
+
 * Fonts
 
 ** Font Dependencies
