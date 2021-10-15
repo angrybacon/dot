@@ -423,7 +423,8 @@ systemctl start plexmediaserver.service
 
 #+BEGIN_SRC sh
 paru -S openssh
-ssh-keygen -t rsa -b 4096
+ssh-keygen -t ed25519
+xclip -sel clip < ~/.ssh/id_ed25519.pub
 #+END_SRC
 
 * Steam
