@@ -118,6 +118,9 @@ export HISTSIZE=10000
 export SAVEHIST=10000
 setopt share_history
 
+# Customize pager
+export PAGER=most
+
 # Aliases
 alias arecordvvv='arecord -vvv -f dat /dev/null'
 alias diff='diff --color'
@@ -450,5 +453,5 @@ paru -S \
     cockatrice spotify vlc \            # Entertainment
     qbittorrent \                       # Torrents
     piper \                             # System: peripherals
-    gtop htop neofetch pfetch tree      # System: utilities
+    gtop htop most tree                 # System: utilities
 #+END_SRC
