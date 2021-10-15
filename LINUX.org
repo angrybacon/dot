@@ -305,6 +305,7 @@ Set default font for classes in =/etc/fonts/local.conf=.
 	name = Mathieu Marques
 [core]
 	excludesfile = ~/.gitignore
+    ignorecase = true
 [pull]
 	rebase = true
 [rebase]
