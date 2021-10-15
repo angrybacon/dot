@@ -112,6 +112,12 @@ chsh -s $(which zsh)
 # Add user-local path
 export PATH=$PATH:~/.bin/:~/Workspace/dot/scripts/
 
+# Enable command history
+export HISTFILE=~/.zsh_history
+export HISTSIZE=10000
+export SAVEHIST=10000
+setopt share_history
+
 # Aliases
 alias arecordvvv='arecord -vvv -f dat /dev/null'
 alias diff='diff --color'
