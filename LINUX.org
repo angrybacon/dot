@@ -99,49 +99,7 @@ paru -S npm nvm yarn
 
 ** Zsh
 
-I like =zsh= with the =pure= prompt.
-
-#+BEGIN_SRC sh
-paru -S zsh zsh-pure-prompt-git
-chsh -s $(which zsh)
-#+END_SRC
-
-=~/.zshrc=
-
-#+BEGIN_SRC sh :tangle ~/.zshrc
-# Add user-local path
-export PATH=$PATH:~/.bin/:~/Workspace/dot/scripts/
-
-# Enable command history
-export HISTFILE=~/.zsh_history
-export HISTSIZE=10000
-export SAVEHIST=10000
-setopt share_history
-
-# Customize pager
-export PAGER=most
-
-# Aliases
-alias arecordvvv='arecord -vvv -f dat /dev/null'
-alias diff='diff --color'
-alias egrep='egrep --color'
-alias fgrep='fgrep --color'
-alias grep='grep --color --ignore-case'
-alias la='ll -A'
-alias ll='ls -ghlo'
-alias lll='ls -hl'
-alias ls='ls --color --group-directories-first --literal'
-alias rsync='rsync --human-readable --info=progress2'
-alias sudo='sudo '
-alias tree='tree -C'
-
-# Prompt
-autoload -U promptinit; promptinit
-prompt pure
-
-# NVM
-source /usr/share/nvm/init-nvm.sh
-#+END_SRC
+See [[./config/zsh.org]].
 
 ** Terminal
 
