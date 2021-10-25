@@ -55,6 +55,15 @@ alias sudo='sudo '
 alias tree='tree -C'
 #+END_SRC
 
+** Keys
+
+Add support for control-modified left and right to move by word.
+
+#+BEGIN_SRC sh
+bindkey "^[[1;5C" forward-word
+bindkey "^[[1;5D" backward-word
+#+END_SRC
+
 ** Prompt
 
 Depend on =zsh-pure-prompt=.
