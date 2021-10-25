@@ -8,13 +8,11 @@ transparency, shadows.
 
 * Installation
 
-Install the preferred fork or =picom= itself.
+Install =picom= or its preferred fork.
 
 #+BEGIN_SRC sh
 paru -S picom-ibhagwan-git
 #+END_SRC
-
-* Bootstrap
 
 To identify the compositor currently running, use =inxi=.
 
@@ -22,16 +20,28 @@ To identify the compositor currently running, use =inxi=.
 inxi -Gxx | grep compositor
 #+END_SRC
 
-Start the compositor on login.
-
-=~/.xinitrc=
-
-#+BEGIN_SRC diff
-+picom --experimental-backends &
-#+END_SRC
+Start the compositor on login by running =picom= in you =xinit= file. The
+=jonaburg= fork will require the =--experimental-backends= flag.
 
 * Configuration
 
-#+BEGIN_QUOTE
-Work in progress
-#+END_QUOTE
+Most of the below configuration comes from the default
+=/etc/xdg/picom.conf.example=.
+
+** Corners
+
+#+BEGIN_SRC conf
+corner-radius = 16.0;
+rounded-corners-exclude = [
+  "! name~=''",  # Exclude windows with no name such as WM bars
+];
+round-borders = 1;
+round-borders-exclude = [];
+#+END_SRC
+
+** Opacity
+
+#+BEGIN_SRC conf
+active-opacity = 1.0;
+inactive-opacity = .90;
+#+END_SRC

@@ -85,7 +85,7 @@ groups = [
     Group(label='\U000F0765', layout='monadtall', name='3'),
     Group(label='\U000F0765', layout='monadtall', name='4'),
     Group(label='\U000F0765', layout='monadtall', name='9'),
-    Group(label='\U000F0765', layout='monadwide', name='0'),
+    Group(label='\U000F0765', layout='monadtall', name='0'),
 ]
 
 
@@ -100,23 +100,21 @@ for i in groups:
 
 #+BEGIN_SRC python
 theme = {
-    'border_focus': '#5E81AC',
-    'border_normal': '#4C566A',
-    'border_width': 2,
+    'border_width': 0,
     'margin': 24,
 }
 
 
 layouts = [
-    layout.MonadTall(**theme, ratio=.6),
-    layout.MonadWide(**theme, ratio=.75),
+    layout.MonadTall(**theme, ratio=.7),
+    layout.MonadWide(**theme, ratio=.7),
 ]
 
 
 floating_layout = layout.Floating(
     float_rules=[
         *layout.Floating.default_float_rules,
-        # NOTE Run `xprop` to guess the appliation attributes
+        # NOTE Use `xprop` to guess the application attributes
         Match(title='branchdialog'),
         Match(title='pinentry'),
         Match(wm_class='confirmreset'),
