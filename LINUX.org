@@ -146,7 +146,7 @@ See [[./config/xmonad.org]].
 paru -S ffcast slop xclip
 #+END_SRC
 
-Several scripts are available under [[./scripts/]].
+Several scripts are available under [[./scripts/][scripts/]].
 
 ** Sound
 

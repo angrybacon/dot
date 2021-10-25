@@ -13,9 +13,10 @@ dunstify --replace $id --urgency low --timeout 1000 "Screenshot" "Recording in 1
 sleep 1
 
 # Capture
-path="/tmp/screencast.$(date '+%Y-%m-%d.%H:%M:%S').mp4"
+path="/home/angrybacon/Downloads/screencast.$(date '+%Y-%m-%d.%H:%M:%S').mp4"
 ffcast $region rec $path
 
 # Copy to the clipboard
-xclip -selection clipboard -target image/png $path
-dunstify --urgency low "Screencast" "Copied to the clipboard"
+# FIXME Wait for the record to be complete before accessing the path
+# xclip -selection clipboard -target video/mp4 $path
+dunstify --urgency low "Screencast" "Copied to $path"
