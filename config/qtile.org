@@ -1,5 +1,5 @@
 # -*- after-save-hook: (org-babel-tangle t); -*-
-#+TITLE: QTile
+#+TITLE: Qtile
 #+AUTHOR: Mathieu Marques
 #+PROPERTY: header-args:python :tangle ~/.config/qtile/config.py
 

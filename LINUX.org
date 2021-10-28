@@ -134,119 +134,18 @@ paru -S npm nvm yarn
 
 ** Zsh
 
-See [[./config/zsh.org]].
+See [[./config/zsh.org][config/zsh.org]].
 
 ** Terminal
 
-See [[./config/alacritty.org]].
-
-* Desktop
-
-** Compositor
-
-See [[./config/picom.org]].
-
-** Theme
-
-*** GTK
-
-#+BEGIN_SRC sh
-paru -S lxappearance materia-gtk-theme
-#+END_SRC
-
-Enable the theme in GTK settings through =lxappearance= and verify the
-configuration file =~/.config/gtk-3.0/settings.ini=.
-
-*** Qt
-
-#+BEGIN_SRC sh
-paru -S kvantum-qt5 kvantum-theme-materia
-#+END_SRC
-
-Then run =kvantummanager= to select your theme.
-
-** Window Manager
-
-*** Qtile
-
-See [[./config/qtile.org]].
-
-*** XMonad
-
-See [[./config/xmonad.org]].
-
-** Notifications
-
-See [[./config/dunst.org]].
-
-** Screenshots
-
-#+BEGIN_SRC sh
-paru -S ffcast slop xclip
-#+END_SRC
-
-Several scripts are available under [[./scripts/][scripts/]].
-
-** Sound
-
-#+BEGIN_SRC sh
-paru -S alsa-utils pavucontrol
-#+END_SRC
-
-Make sure that the devices are correctly selected in =pavucontrol= and that the
-=pulseaudio= server is running.
-
-#+BEGIN_SRC sh
-systemctl --user status pulseaudio.service
-systemctl --user status pulseaudio.socket
-#+END_SRC
-
-Use the following command to detect input sound.
-
-#+BEGIN_SRC sh
-arecord -vv -f dat /dev/null
-#+END_SRC
-
-* Emacs
-
-Install the preferred =gccemacs=. Details at http://akrl.sdf.org/gccemacs.html.
-CMake is necessary in order to compile the dependencies to =vterm= at runtime.
-
-#+BEGIN_SRC sh
-paru -S cmake libgccjit
-paru -G emacs-git
-#+END_SRC
-
-Edit =emacs-git/PKGBUILD= and enable just-in-time compilation.
-
-#+BEGIN_SRC diff
--JIT=              # Enable native just-in-time compilation. libgccjit is in AUR.
-+JIT="YES"         # Enable native just-in-time compilation. libgccjit is in AUR.
-#+END_SRC
-
-Install =emacs= with the new flags.
-
-#+BEGIN_SRC sh
-cd emacs-git/
-makepkg -si
-#+END_SRC
-
-See my Emacs configuration: [[https://github.com/angrybacon/dotemacs]].
-
-* Vim
-
-I mostly use Emacs but sometimes Vim too. So I need a very minor tweaks.
-
-#+BEGIN_SRC sh :tangle ~/.vimrc
-:syntax on
-:set cursorline
-#+END_SRC
+See [[./config/alacritty.org][config/alacritty.org]].
 
 * Fonts
 
 ** Font Dependencies
 
-Install my favorite fonts.
+Install my favorite fonts. Other sections from this document will assume these
+are already installed.
 
 #+BEGIN_SRC sh
 paru -S \
@@ -310,6 +209,108 @@ Set default font for classes in =/etc/fonts/local.conf=.
     </edit>
   </match>
 </fontconfig>
+#+END_SRC
+
+* Desktop
+
+** Compositor
+
+See [[./config/picom.org][config/picom.org]].
+
+** Theme
+
+*** GTK
+
+#+BEGIN_SRC sh
+paru -S lxappearance materia-gtk-theme
+#+END_SRC
+
+Enable the theme in GTK settings through =lxappearance= and verify the
+configuration file =~/.config/gtk-3.0/settings.ini=.
+
+*** Qt
+
+#+BEGIN_SRC sh
+paru -S kvantum-qt5 kvantum-theme-materia
+#+END_SRC
+
+Then run =kvantummanager= to select your theme.
+
+** Window Manager
+
+*** Qtile
+
+See [[./config/qtile.org][config/qtile.org]].
+
+*** XMonad
+
+See [[./config/xmonad.org][config/xmonad.org]].
+
+** Notifications
+
+See [[./config/dunst.org][config/dunst.org]].
+
+** Screenshots
+
+#+BEGIN_SRC sh
+paru -S ffcast slop xclip
+#+END_SRC
+
+Several scripts are available under [[./scripts/][scripts/]].
+
+** Sound
+
+#+BEGIN_SRC sh
+paru -S alsa-utils pavucontrol
+#+END_SRC
+
+Make sure that the devices are correctly selected in =pavucontrol= and that the
+=pulseaudio= server is running.
+
+#+BEGIN_SRC sh
+systemctl --user status pulseaudio.service
+systemctl --user status pulseaudio.socket
+#+END_SRC
+
+Use the following command to detect input sound.
+
+#+BEGIN_SRC sh
+arecord -vv -f dat /dev/null
+#+END_SRC
+
+* Emacs
+
+Install the preferred =gccemacs=. Details at http://akrl.sdf.org/gccemacs.html.
+CMake is necessary in order to compile the dependencies to =vterm= at runtime.
+
+#+BEGIN_SRC sh
+paru -S cmake libgccjit
+paru -G emacs-git
+#+END_SRC
+
+Edit =emacs-git/PKGBUILD= and enable just-in-time compilation.
+
+#+BEGIN_SRC diff
+-JIT=              # Enable native just-in-time compilation. libgccjit is in AUR.
++JIT="YES"         # Enable native just-in-time compilation. libgccjit is in AUR.
+#+END_SRC
+
+Install =emacs= with the new flags.
+
+#+BEGIN_SRC sh
+cd emacs-git/
+makepkg -si
+#+END_SRC
+
+See my Emacs configuration: [[https://github.com/angrybacon/dotemacs]].
+
+* Vim
+
+I mostly use Emacs but sometimes Vim too. So I need a very minor tweaks.
+
+#+BEGIN_SRC sh :tangle ~/.vimrc
+:syntax on
+:set cursorline
 #+END_SRC
 
 * Git

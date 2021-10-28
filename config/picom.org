@@ -34,6 +34,7 @@ Most of the below configuration comes from the default
 corner-radius = 16.0;
 rounded-corners-exclude = [
   "! name~=''",  # Exclude windows with no name such as WM bars
+  "class_i = 'Dunst'",
 ];
 round-borders = 1;
 round-borders-exclude = [];
