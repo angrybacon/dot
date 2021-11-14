@@ -11,6 +11,8 @@ See [[./LINUX.org]].
 
 * MacOS
 
+** Bootstrap
+
 Increase the key repeat rate beyond the naive limit that is enforced by macOS.
 
 #+BEGIN_SRC sh
@@ -22,3 +24,15 @@ Install core dependencies, somehow not present by default.
 #+BEGIN_SRC sh
 brew install coreutils most
 #+END_SRC
+
+This also prefixes GNU utilities with =g=. In order to use their real name, add
+the following to your =PATH= variable.
+
+#+BEGIN_SRC diff
++PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+#+END_SRC
+
+** iTerm Themes
+
+Retrieve the theme files here: https://iterm2colorschemes.com/ and import them
+directly in iTerm.
