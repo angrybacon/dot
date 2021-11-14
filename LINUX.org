@@ -77,14 +77,14 @@ cd /tmp/paru
 makepkg -si
 #+END_SRC
 
-Customize =/etc/pacman.conf=.
+Customize =/etc/pacman.conf= and enable additional repositories.
 
 #+BEGIN_SRC diff
  [options]
-+IgnorePkg = emacs-git
 +Color
-+VerbosePkgLists
++IgnorePkg = emacs-git
 +ParallelDownloads = 4
++VerbosePkgLists
 
 +[extra]
 +Include = /etc/pacman.d/mirrorlist
@@ -334,7 +334,6 @@ I mostly use Emacs but sometimes Vim too. So I need a very minor tweaks.
 
 #+BEGIN_SRC conf :tangle ~/.gitignore
 .dir-locals.el
-.projectile
 #+END_SRC
 
 ** Signed Commits
@@ -434,21 +433,26 @@ ssh-keygen -t ed25519
 xclip -sel clip < ~/.ssh/id_ed25519.pub
 #+END_SRC
 
-* Steam
+* Games
 
-Enable the =multilib= repositories in =/etc/pacman.conf=.
+** Battle.net
 
-#+BEGIN_SRC diff
--#[multilib]
--#Include = /etc/pacman.d/mirrorlist
-+[multilib]
-+Include = /etc/pacman.d/mirrorlist
-#+END_SRC
-
-Upgrade the system and install the =steam= package.
+Battlet.net applications run best under Lutris. It has many dependencies based
+on Wine. Follow the instructions at
+[[https://github.com/lutris/docs/blob/master/Battle.Net.md]] and install games
+from Lutris directly.
 
 #+BEGIN_SRC sh
-paru -Syu
+paru -S lutris
+#+END_SRC
+
+** Steam
+
+For Steam games that are officially supported on Linux, install the =steam=
+package after enabling =multilib= repositories in your Pacman configuration and
+ensuring your graphic drivers are Vulkan-enabled.
+
+#+BEGIN_SRC sh
 paru -S steam
 #+END_SRC
 
@@ -467,10 +471,11 @@ paru -S droidcam v4l2loopback-dkms linux-headers
 
 #+BEGIN_SRC sh
 paru -S \
-    brave-bin chromium firefox \        # Browsers
     discord slack-desktop zoom \        # Chat
     cockatrice spotify vlc \            # Entertainment
+    gimp \                              # Image
     qbittorrent \                       # Torrents
     piper \                             # System: peripherals
-    gtop htop most tree                 # System: utilities
+    gtop htop most tree \               # System: utilities
+    brave-bin chromium firefox          # Web
 #+END_SRC
