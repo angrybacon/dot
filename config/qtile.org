@@ -88,7 +88,7 @@ groups = [
     Group(label='\U000F0765', layout='monadtall', name='3'),
     Group(label='\U000F0765', layout='monadtall', name='4'),
     Group(label='\U000F0765', layout='monadtall', name='9'),
-    Group(label='\U000F0765', layout='monadtall', name='0'),
+    Group(label='\U000F0765', layout='monadwide', name='0'),
 ]
 
 
@@ -109,12 +109,13 @@ theme = {
 
 
 layouts = [
-    layout.MonadTall(**theme, ratio=.7),
-    layout.MonadWide(**theme, ratio=.7),
+    layout.MonadTall(**theme, ratio=.65),
+    layout.MonadWide(**theme, ratio=.70),
 ]
 
 
 floating_layout = layout.Floating(
+    border_width=0,
     float_rules=[
         *layout.Floating.default_float_rules,
         # NOTE Use `xprop` to guess the application attributes
@@ -139,12 +140,10 @@ wmname = 'LG3D'
 def widget_list():
     colors = {
         'accent': '#00BFA5',
-        'background': '#37474F',
         'foreground': '#ECEFF1',
         'muted': '#546E7A',
     }
     chart = {
-        'background': colors['background'],
         'border_color': colors['muted'],
         'border_width': 1,
         'fill_color': colors['accent'],
@@ -157,15 +156,11 @@ def widget_list():
     }
     font_size = 18
     icon_size = 20
-    spacer = {
-        'background': colors['background'],
-        'length': 8,
-    }
+    spacer = {'length': 8}
     return [
         widget.Spacer(**spacer),
         widget.GroupBox(
             active=colors['foreground'],
-            background=colors['background'],
             borderwidth=0,
             disable_drag=True,
             font='Material Design Icons',
@@ -176,26 +171,21 @@ def widget_list():
             padding=4,
             this_current_screen_border=colors['accent'],
         ),
-        widget.Spacer(**spacer),
-        widget.Prompt(
-            background=colors['background'],
-            font='CodeNewRoman',
-            fontsize=font_size + 2,
+        widget.Spacer(length=8),
+        widget.Prompt(font='CodeNewRoman', fontsize=font_size + 2),
+        widget.Spacer(),
+        widget.Systray(icon_size=icon_size, padding=12),
+        widget.Spacer(length=16),
+        widget.Volume(
+            fontsize=font_size,
+            foreground=colors['foreground'],
+            step=10,
         ),
-        widget.Spacer(background=colors['background']),
-        widget.Systray(
-            background=colors['background'],
-            icon_size=icon_size,
-            padding=12,
-        ),
-        widget.Spacer(**spacer),
-        widget.Spacer(**spacer),
+        widget.Spacer(length=16),
         widget.CPUGraph(**chart),
         widget.MemoryGraph(**chart),
-        widget.Spacer(**spacer),
-        widget.Spacer(**spacer),
+        widget.Spacer(length=16),
         widget.Clock(
-            background=colors['background'],
             fontsize=font_size,
             foreground=colors['foreground'],
             format='%d-%m %H:%M',
@@ -205,7 +195,11 @@ def widget_list():
     ]
 
 
-screens = [Screen(top=bar.Bar(widgets=widget_list(), size=40))]
+screens = [Screen(top=bar.Bar(
+    background='#37474F',
+    widgets=widget_list(),
+    size=40,
+))]
 #+END_SRC
 
 ** Mouse
