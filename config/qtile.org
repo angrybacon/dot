@@ -87,6 +87,10 @@ groups = [
     Group(label='\U000F0765', layout='monadtall', name='2'),
     Group(label='\U000F0765', layout='monadtall', name='3'),
     Group(label='\U000F0765', layout='monadtall', name='4'),
+    Group(label='\U000F0765', layout='monadtall', name='5'),
+    Group(label='\U000F0765', layout='monadtall', name='6'),
+    Group(label='\U000F0765', layout='monadtall', name='7'),
+    Group(label='\U000F0765', layout='monadtall', name='8'),
     Group(label='\U000F0765', layout='monadtall', name='9'),
     Group(label='\U000F0765', layout='monadwide', name='0'),
 ]
