@@ -63,6 +63,15 @@ Optionally, create a =.zprofile= link to the profile file.
 ln -s ~/.profile ~/.zprofile
 #+END_SRC
 
+=~/.Xresources=
+
+Customize X resources, for =xterm= mostly.
+
+#+BEGIN_SRC conf :tangle ~/.Xresources
+XTerm*faceName: monospace:style=Regular
+XTerm*faceSize: 14
+#+END_SRC
+
 ** Core Dependencies and =paru=
 
 #+BEGIN_SRC sh
@@ -174,10 +183,10 @@ Enable aliasing and hinting presets.
 
 #+BEGIN_SRC sh
 rm -f /etc/fonts/conf.d/10-hinting-slight.conf
-ln -s /etc/fonts/conf.avail/10-hinting-full.conf /etc/fonts/conf.d
-ln -s /etc/fonts/conf.avail/10-sub-pixel-rgb.conf /etc/fonts/conf.d
-ln -s /etc/fonts/conf.avail/11-lcdfilter-default.conf /etc/fonts/conf.d
-ln -s /etc/fonts/conf.avail/70-no-bitmaps.conf /etc/fonts/conf.d
+ln -s /usr/share/fontconfig/conf.avail/10-hinting-full.conf /etc/fonts/conf.d
+ln -s /usr/share/fontconfig/conf.avail/10-sub-pixel-rgb.conf /etc/fonts/conf.d
+ln -s /usr/share/fontconfig/conf.avail/11-lcdfilter-default.conf /etc/fonts/conf.d
+ln -s /usr/share/fontconfig/conf.avail/70-no-bitmaps.conf /etc/fonts/conf.d
 #+END_SRC
 
 Uncomment FreeType hinting in =/etc/profile.d/freetype2.sh=.
@@ -483,10 +492,12 @@ paru -S droidcam v4l2loopback-dkms linux-headers
 #+BEGIN_SRC sh
 paru -S \
     discord slack-desktop zoom \        # Chat
-    cockatrice spotify vlc \            # Entertainment
-    gimp \                              # Image
+    cockatrice spotify \                # Entertainment: applications
+    obs-studio vlc \                    # Entertainment: utilities
+    flameshot gimp \                    # Image
     qbittorrent \                       # Torrents
+    btop gtop htop \                    # System: monitors
     piper \                             # System: peripherals
-    gtop htop most tree \               # System: utilities
-    brave-bin chromium firefox          # Web
+    gdu most tree \                     # System: utilities
+    brave-bin chromium librewolf-bin    # Web
 #+END_SRC
