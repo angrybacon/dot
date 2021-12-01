@@ -102,7 +102,7 @@ groups = [
 for i in groups:
     keys.extend([
         Key([mod], i.name, lazy.group[i.name].toscreen()),
-        Key([mod, 'shift'], i.name, lazy.window.togroup(i.name)),
+        Key([mod, 'control'], i.name, lazy.window.togroup(i.name)),
     ])
 #+END_SRC
 

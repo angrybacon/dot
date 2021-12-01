@@ -33,8 +33,8 @@ Most of the below configuration comes from the default
 #+BEGIN_SRC conf
 corner-radius = 16.0;
 rounded-corners-exclude = [
-  "! name~=''",  # Exclude windows with no name such as WM bars
-  "class_i = 'Dunst'",
+  "! name~=''",                         # Exclude windows with no name such as WM bars
+  "class_i = 'Dunst'",                  # Dunst corners are set in the Dunst configuration
 ];
 round-borders = 1;
 round-borders-exclude = [];
