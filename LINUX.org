@@ -130,6 +130,17 @@ don't support NVM paths.
 paru -S npm nvm yarn
 #+END_SRC
 
+** Python
+
+Python 3 comes with =venv= to manage virtual environments. For Python 2,
+=virtualenv= is required.
+
+#+BEGIN_SRC sh
+paru -S python python-virtualenv
+#+END_SRC
+
+Then create environments with either =python -m venv name= or =virtualenv name=.
+
 * Shell
 
 ** Zsh
