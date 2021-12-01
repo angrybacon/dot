@@ -74,6 +74,9 @@ keys = [
     Key([mod], 'Down', lazy.layout.down()),
     Key([mod], 'Left', lazy.layout.left()),
     Key([mod], 'Right', lazy.layout.right()),
+    # Screenshot
+    Key([mod, 'shift'], '3', lazy.spawn(['flameshot', 'gui'])),
+    Key([mod, 'shift'], '4', lazy.spawn(['flameshot', 'screen', '--clipboard'])),
 ]
 #+END_SRC
 
