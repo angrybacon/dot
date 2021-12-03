@@ -63,6 +63,9 @@ keys = [
     # Screenshot
     Key([mod, 'shift'], '3', lazy.spawn(['flameshot', 'gui'])),
     Key([mod, 'shift'], '4', lazy.spawn(['flameshot', 'screen', '--clipboard'])),
+    # Media
+    Key([], "XF86AudioLowerVolume", lazy.spawn("amixer -D pulse sset Master 10%-")),
+    Key([], "XF86AudioRaiseVolume", lazy.spawn("amixer -D pulse sset Master 10%+")),
 ]
 #+END_SRC
 
