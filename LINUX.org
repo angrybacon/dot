@@ -376,16 +376,28 @@ I mostly use Emacs but sometimes Vim too so very minor tweaks are enough.
 
 ** Dependencies
 
-Install the server.
+Install the server after making sure your DNS settings are correctly set.
 
 #+BEGIN_SRC sh
 paru -S plex-media-server
 #+END_SRC
 
-** Permissions
+** Mounting the External Hard Drive
 
-Create a mount point for an external drive named =Phoenix= that the =plex= user
-will be able to access.
+*** Automatically
+
+#+BEGIN_SRC sh
+paru -S udiskie udisks2
+#+END_SRC
+
+Start =udiskie= on boot in your =xinit=. It will automatically mount external
+drives under =/run/media/username/=. Optionnally keep =udiskie= in the tray with
+=--tray=.
+
+*** Manually
+
+Given an external drive named =Phoenix=, create a mount point under =/media= for
+the =plex= user to access it.
 
 #+BEGIN_SRC sh
 sudo mkdir -p /media/phoenix
@@ -401,6 +413,36 @@ corresponding entry at the bottom of =/etc/fstab=.
 
 Reboot and confirm that the drive is correctly mounted to the expected location.
 
+** Permissions
+
+First verify which group you and Plex belong to.
+
+#+BEGIN_SRC sh
+groups
+groups plex
+#+END_SRC
+
+Add Plex to a shared group and change the media ownership to match that group.
+
+#+BEGIN_QUOTE
+Below instructions assume a setup from =udiskie= defaults where the media is
+located under =/run/media/username/=. It also assumes you assume to a =storage=
+group. Adjust accordingly.
+#+END_QUOTE
+
+#+BEGIN_SRC sh
+sudo usermod -a -G storage plex
+sudo chown angrybacon:storage /run/media/angrybacon
+sudo chmod 750 /run/media/angrybacon
+sudo setfacl -m g:storage:rwx /run/media/angrybacon
+#+END_SRC
+
+Finally restart the service to apply the new permissions.
+
+#+BEGIN_SRC sh
+systemctl restart plexmediaserver.service
+#+END_SRC
+
 ** Start the Service Automatically on Startup
 
 Enable the server for future sessions automatically and optionally start it now.
@@ -414,24 +456,14 @@ Visit http://localhost:32400/web and add the media libraries.
 
 ** Fix the Claim Server Prompt
 
-To grant writing permissions to the =plex= user on the preference file, first
-stop the server.
+This usually happens the preference files don't have the correct permission
+and/or ownership.
 
-#+BEGIN_SRC sh
-systemctl stop plexmediaserver.service
-#+END_SRC
-
-Confirm the location of the preference file. It should be somewhere in
-=/var/lib/plex/=. Then update its owner.
+Confirm the location of the preference files, they should be somewhere in
+=/var/lib/plex/=. Then fix the ownership after having stopped the Plex server.
 
 #+BEGIN_SRC sh
 sudo chown -R plex:plex /var/lib/plex
-#+END_SRC
-
-Start the server again.
-
-#+BEGIN_SRC sh
-systemctl start plexmediaserver.service
 #+END_SRC
 
 * SSH
