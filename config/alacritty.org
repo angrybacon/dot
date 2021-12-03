@@ -24,8 +24,8 @@ The specified padding pixels are scaled by DPI.
 #+BEGIN_SRC yaml
 window:
   padding:
-   x: 8
-   y: 8
+   x: 16
+   y: 16
 
   dynamic_padding: true
 #+END_SRC
@@ -51,10 +51,10 @@ font:
   italic:
     style: Italic
 
-  size: 14.0
+  size: 13.0
 
   offset:
-    x: -1
+    x: 0
     y: -1
 
   glyph_offset:

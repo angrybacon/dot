@@ -13,23 +13,10 @@ Arch.
 =~/.xinitrc=
 
 #+BEGIN_SRC sh :shebang "#!/bin/sh" :tangle ~/.xinitrc
-userresources=$HOME/.Xresources
-usermodmap=$HOME/.Xmodmap
-sysresources=/etc/X11/xinit/.Xresources
-sysmodmap=/etc/X11/xinit/.Xmodmap
-
 # Merge-in defaults and keymaps
-if [ -f $sysresources ]; then
-    xrdb -merge $sysresources
-fi
-if [ -f $sysmodmap ]; then
-    xmodmap $sysmodmap
-fi
+userresources=$HOME/.Xresources
 if [ -f "$userresources" ]; then
     xrdb -merge "$userresources"
-fi
-if [ -f "$usermodmap" ]; then
-    xmodmap "$usermodmap"
 fi
 
 # Start additional programs
@@ -43,7 +30,6 @@ fi
 # Bootstrap
 xset r rate 200 50
 picom &
-# picom --experimental-backends &
 nitrogen --restore &
 qtile start
 #+END_SRC
@@ -75,7 +61,7 @@ XTerm*faceSize: 14
 ** Core Dependencies and =paru=
 
 #+BEGIN_SRC sh
-pacman -S base-devel cmake git
+pacman -S base-devel git
 #+END_SRC
 
 Paru is now stable enough that it should be preferred over =yay=.
@@ -124,19 +110,16 @@ Run =visudo= in order to customize sudoers settings.
 
 ** Node.js
 
-Install the Node version manager. See https://github.com/nvm-sh/nvm for more
-details.
-
-#+BEGIN_SRC emacs-lisp
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash
-nvm install node
-#+END_SRC
-
-And install additional utilities =npm= and =yarn= globally in case packages
-don't support NVM paths.
+Install the package manager =yarn= and the Node version manager =nvm=.
 
 #+BEGIN_SRC sh
-paru -S npm nvm yarn
+paru -S nvm yarn
+#+END_SRC
+
+In order to use =nvm=, source its bootstrap file in your shell configuration.
+
+#+BEGIN_SRC sh
+source /usr/share/nvm/init-nvm.sh
 #+END_SRC
 
 ** Python
@@ -217,7 +200,7 @@ Set default font for classes in =/etc/fonts/local.conf=.
       <string>sans-serif</string>
     </test>
     <edit name="family" mode="assign" binding="same">
-      <string>Roboto</string>
+      <string>Google Sans</string>
     </edit>
   </match>
   <match target="pattern">
@@ -304,7 +287,7 @@ Install the preferred =gccemacs=. Details at http://akrl.sdf.org/gccemacs.html.
 CMake is necessary in order to compile the dependencies to =vterm= at runtime.
 
 #+BEGIN_SRC sh
-paru -S cmake libgccjit
+paru -S cmake libgccjit noto-fonts-emoji
 paru -G emacs-git
 #+END_SRC
 
@@ -326,7 +309,13 @@ See my Emacs configuration: [[https://github.com/angrybacon/dotemacs]].
 
 * Vim
 
-I mostly use Emacs but sometimes Vim too. So I need a very minor tweaks.
+Install =vim= or =gvim=.
+
+#+BEGIN_SRC sh
+paru -S vim
+#+END_SRC
+
+I mostly use Emacs but sometimes Vim too so very minor tweaks are enough.
 
 #+BEGIN_SRC sh :tangle ~/.vimrc
 :syntax on
@@ -339,15 +328,15 @@ I mostly use Emacs but sometimes Vim too. So I need a very minor tweaks.
 
 #+BEGIN_SRC conf :tangle ~/.gitconfig
 [user]
-	email = mathieumarques78@gmail.com
-	name = Mathieu Marques
+    email = mathieumarques78@gmail.com
+    name = Mathieu Marques
 [core]
-	excludesfile = ~/.gitignore
+    excludesfile = ~/.gitignore
     ignorecase = true
 [pull]
-	rebase = true
+    rebase = true
 [rebase]
-	autosquash = true
+    autosquash = true
 #+END_SRC
 
 =~/.gitignore=
@@ -379,8 +368,8 @@ I mostly use Emacs but sometimes Vim too. So I need a very minor tweaks.
 
 =~./profile=
 
-#+BEGIN_SRC sh
-export GPG_TTY=$TTY
+#+BEGIN_SRC diff
++export GPG_TTY=$TTY
 #+END_SRC
 
 * Plex
@@ -448,7 +437,7 @@ systemctl start plexmediaserver.service
 * SSH
 
 #+BEGIN_SRC sh
-paru -S openssh
+paru -S openssh xclip
 ssh-keygen -t ed25519
 xclip -sel clip < ~/.ssh/id_ed25519.pub
 #+END_SRC
@@ -491,13 +480,10 @@ paru -S droidcam v4l2loopback-dkms linux-headers
 
 #+BEGIN_SRC sh
 paru -S \
-    discord slack-desktop zoom \        # Chat
-    cockatrice spotify \                # Entertainment: applications
-    obs-studio vlc \                    # Entertainment: utilities
-    flameshot gimp \                    # Image
-    qbittorrent \                       # Torrents
-    btop gtop htop \                    # System: monitors
-    piper \                             # System: peripherals
-    gdu most tree \                     # System: utilities
-    brave-bin chromium librewolf-bin    # Web
+    discord_arch_electron slack-electron zoom-system-qt \
+    cockatrice obs-studio spotify vlc \
+    flameshot gimp \
+    qbittorrent \
+    btop gdu gtop htop piper most tree \
+    brave-bin chromium librewolf-bin
 #+END_SRC
