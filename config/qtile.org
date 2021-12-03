@@ -3,20 +3,6 @@
 #+AUTHOR: Mathieu Marques
 #+PROPERTY: header-args:python :tangle ~/.config/qtile/config.py
 
-* Disclaimer
-
-Menus on Chromium-based browsers are broken when used in non-fullscreen layouts.
-Disable blur events as a temporary fix. See
-https://github.com/qtile/qtile/issues/2404.
-
-=/usr/share/applications/brave-browser.desktop=
-
-#+BEGIN_SRC diff
- TryExec=brave
--Exec=brave %U
-+Exec=brave %U --disable-features=SendMouseLeaveEvents
-#+END_SRC
-
 * Installation
 
 #+BEGIN_SRC sh
@@ -110,7 +96,9 @@ for i in groups:
 
 #+BEGIN_SRC python
 theme = {
-    'border_width': 0,
+    'border_focus': '#8FBCBB',
+    'border_normal': '#6F6F6F',
+    'border_width': 4,
     'margin': 24,
 }
 
@@ -122,7 +110,7 @@ layouts = [
 
 
 floating_layout = layout.Floating(
-    border_width=0,
+    **theme,
     float_rules=[
         *layout.Floating.default_float_rules,
         # NOTE Use `xprop` to guess the application attributes
