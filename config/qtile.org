@@ -66,21 +66,22 @@ keys = [
 
 * Groups
 
-See https://fonts.google.com/icons for the glyph code points to use.
+Install Google's Material Design icon font. See https://fonts.google.com/icons
+for the glyph code points to use.
 
 #+BEGIN_SRC python
 groups_font = 'Material Design Icons'
 groups = [
-    Group(label='\U0000E5CD', layout='monadtall', name='1', spawn=['brave']),
-    Group(label='\U0000E5CD', layout='monadtall', name='2', spawn=['discord']),
-    Group(label='\U0000E5CD', layout='monadtall', name='3'),
-    Group(label='\U0000E5CD', layout='monadtall', name='4'),
-    Group(label='\U0000E5CD', layout='monadtall', name='5'),
-    Group(label='\U0000E5CD', layout='monadtall', name='6'),
-    Group(label='\U0000E5CD', layout='monadtall', name='7'),
-    Group(label='\U0000E5CD', layout='monadtall', name='8'),
-    Group(label='\U0000E5CD', layout='monadtall', name='9', spawn=['spotify']),
-    Group(label='\U0000E5CD', layout='monadwide', name='0'),
+    Group(label='\U0000EF4A', layout='monadtall', name='1', spawn=['brave']),
+    Group(label='\U0000EF4A', layout='monadtall', name='2', spawn=['discord']),
+    Group(label='\U0000EF4A', layout='monadtall', name='3'),
+    Group(label='\U0000EF4A', layout='monadtall', name='4'),
+    Group(label='\U0000EF4A', layout='monadtall', name='5'),
+    Group(label='\U0000EF4A', layout='monadtall', name='6'),
+    Group(label='\U0000EF4A', layout='monadtall', name='7'),
+    Group(label='\U0000EF4A', layout='monadtall', name='8'),
+    Group(label='\U0000EF4A', layout='monadtall', name='9', spawn=['spotify']),
+    Group(label='\U0000EF4A', layout='monadwide', name='0'),
 ]
 
 
@@ -140,7 +141,6 @@ def widget_list():
         'muted': '#546E7A',
     }
     chart = {
-        'border_color': colors['muted'],
         'border_width': 0,
         'fill_color': colors['accent'],
         'frequency': .3,
