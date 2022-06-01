@@ -6,28 +6,10 @@
 Use a compositor to handle complex graphic interactions eg. dragging,
 transparency, shadows.
 
-* Installation
+A default configuration for =picom= can be found in the documentation at
+=/usr/share/doc/picom/examples/picom.sample.conf=.
 
-Install =picom= or the preferred fork.
-
-#+BEGIN_SRC sh
-paru -S picom
-#+END_SRC
-
-To identify the compositor currently running, use =inxi=.
-
-#+BEGIN_SRC sh
-inxi -Gxx | grep compositor
-#+END_SRC
-
-Start the compositor on login by running =picom= in your =xinit= file. The
-=jonaburg= fork will require the =--experimental-backends= flag.
-
-* Configuration
-
-Most of the below configuration comes from the default =/etc/xdg/picom.conf=.
-
-** Backend
+* COMMENT Backend
 
 Specify the backend to use eg. =xrender=, =glx= or =xr_glx_hybrid=.
 
@@ -35,7 +17,7 @@ Specify the backend to use eg. =xrender=, =glx= or =xr_glx_hybrid=.
 backend = "glx";
 #+END_SRC
 
-** Shadows
+* Shadows
 
 Disable all shadows.
 
@@ -46,7 +28,7 @@ get shadow, unless explicitly requested using the =wintypes= option.
 shadow = false;                         # Disable all shadows
 #+END_SRC
 
-** Rounded Corners
+* COMMENT Rounded Corners
 
 Only available with =picom-ibhagwan-git=.
 
@@ -60,10 +42,16 @@ round-borders = 1;
 round-borders-exclude = [];
 #+END_SRC
 
-** Opacity
+* Opacity
 
 #+BEGIN_SRC conf
-active-opacity = 1.0;
-inactive-opacity = .96;
-menu-opacity = 1.0                      # Default opacity for dropdowns and popups
+inactive-opacity = .96;                 # Opacity for inactive windows
+#+END_SRC
+
+* Fading
+
+#+BEGIN_SRC conf
+fading = true;                          # Fade windows in and out
+fade-in-step = 0.06;                    # Change between step while fading in
+fade-out-step = 0.06;                   # Change between step while fading out
 #+END_SRC

@@ -4,40 +4,33 @@
 #+PROPERTY: header-args :results silent
 
 This file documents the steps I've followed to install my daily machine running
-Arch.
+Debian.
 
 * Bootstrap
 
 ** X
 
-=~/.xinitrc=
-
-#+BEGIN_SRC sh :shebang "#!/bin/sh" :tangle ~/.xinitrc
-# Merge-in defaults and keymaps
-userresources=$HOME/.Xresources
-if [ -f "$userresources" ]; then
-    xrdb -merge "$userresources"
-fi
-
-# Start additional programs
-if [ -d /etc/X11/xinit/xinitrc.d ] ; then
- for f in /etc/X11/xinit/xinitrc.d/?*.sh ; do
-  [ -x "$f" ] && . "$f"
- done
- unset f
-fi
-
-# Bootstrap
-xset r rate 200 50
-picom &
-nitrogen --restore &
-qtile start
-#+END_SRC
-
 =~/.profile=
 
+Add user binaries path.
+
 #+BEGIN_SRC sh :tangle ~/.profile
-# Automatically start X
+if [ -d "$HOME/.local/bin" ] ; then
+  PATH="$HOME/.local/bin:$PATH"
+fi
+#+END_SRC
+
+Add path for snaps.
+
+#+BEGIN_SRC sh :tangle ~/.profile
+if [ -d "/snap/bin" ] ; then
+  PATH="/snap/bin:$PATH"
+fi
+#+END_SRC
+
+Automatically start X.
+
+#+BEGIN_SRC sh :tangle ~/.profile
 if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
   exec startx
 fi
@@ -51,49 +44,49 @@ ln -s ~/.profile ~/.zprofile
 
 =~/.Xresources=
 
-Customize X resources, for =xterm= mostly.
+Increase the base DPI by 25% and set base font for XTerm.
 
 #+BEGIN_SRC conf :tangle ~/.Xresources
+Xft.dpi: 120
 XTerm*faceName: monospace:style=Regular
 XTerm*faceSize: 14
 #+END_SRC
 
-** Core Dependencies and =paru=
+=~/.xinitrc=
+
+Merge-in defaults.
+
+#+BEGIN_SRC sh :shebang "#!/bin/sh" :tangle ~/.xinitrc
+if [ -f "$HOME/.Xresources" ]; then
+  xrdb -merge "$HOME/.Xresources"
+fi
+#+END_SRC
+
+Bootstrap startup programs.
+
+#+BEGIN_SRC sh :shebang "#!/bin/sh" :tangle ~/.xinitrc
+xset r rate 200 50
+picom &
+qtile start
+#+END_SRC
+
+** Core Dependencies and Packages
 
 #+BEGIN_SRC sh
-pacman -S base-devel git
+sudo apt install git pcmanfm vim
 #+END_SRC
 
-Paru is now stable enough that it should be preferred over =yay=.
+** Snap
+
+*** Set a Maximum of Package Revisions to Keep
 
 #+BEGIN_SRC sh
-git clone https://aur.archlinux.org/paru.git /tmp/paru
-cd /tmp/paru
-makepkg -si
+sudo snap set system refresh.retain=2
 #+END_SRC
 
-Customize =/etc/pacman.conf= and enable additional repositories.
+** Visudo Settings
 
-#+BEGIN_SRC diff
- [options]
-+Color
-+IgnorePkg = emacs-git
-+ParallelDownloads = 4
-+VerbosePkgLists
-
-+[extra]
-+Include = /etc/pacman.d/mirrorlist
-
-+[community]
-+Include = /etc/pacman.d/mirrorlist
-
-+[multilib]
-+Include = /etc/pacman.d/mirrorlist
-#+END_SRC
-
-** Visudo
-
-Run =visudo= in order to customize sudoers settings.
+Run =sudo visudo= in order to customize sudoers settings.
 
 *** Change the Default Editor
 
@@ -105,37 +98,18 @@ Run =visudo= in order to customize sudoers settings.
 
 #+BEGIN_SRC diff
 -Defaults env_reset
-+Defaults env_reset,pwfeedback
++Defaults env_reset, pwfeedback
 #+END_SRC
-
-** Node.js
-
-Install the package manager =yarn= and the Node version manager =nvm=.
-
-#+BEGIN_SRC sh
-paru -S nvm yarn
-#+END_SRC
-
-In order to use =nvm=, source its bootstrap file in your shell configuration.
-
-#+BEGIN_SRC sh
-source /usr/share/nvm/init-nvm.sh
-#+END_SRC
-
-** Python
-
-Python 3 comes with =venv= to manage virtual environments. For Python 2,
-=virtualenv= is required.
-
-#+BEGIN_SRC sh
-paru -S python python-virtualenv
-#+END_SRC
-
-Then create environments with either =python -m venv name= or =virtualenv name=.
 
 * Shell
 
 ** Zsh
+
+Install =zsh= then set it as your default shell.
+
+#+BEGIN_SRC sh
+chsh -s $(which zsh)
+#+END_SRC
 
 See [[./config/zsh.org][config/zsh.org]].
 
@@ -147,52 +121,30 @@ See [[./config/alacritty.org][config/alacritty.org]].
 
 ** Font Dependencies
 
-Install my favorite fonts. Other sections from this document will assume these
-are already installed.
+Other sections from this document will assume these fonts are already installed:
 
-#+BEGIN_SRC sh
-paru -S \
-    noto-fonts-emoji \
-    otf-code-new-roman \
-    ttf-google-sans \
-    ttf-monaco \
-    ttf-roboto \
-    ttf-roboto-slab
-#+END_SRC
+- Cascadia Code
+- Google Sans
+- Roboto Slab
 
-** Aliasing and Hinting
-
-Enable aliasing and hinting presets.
-
-#+BEGIN_SRC sh
-rm -f /etc/fonts/conf.d/10-hinting-slight.conf
-ln -s /usr/share/fontconfig/conf.avail/10-hinting-full.conf /etc/fonts/conf.d
-ln -s /usr/share/fontconfig/conf.avail/10-sub-pixel-rgb.conf /etc/fonts/conf.d
-ln -s /usr/share/fontconfig/conf.avail/11-lcdfilter-default.conf /etc/fonts/conf.d
-ln -s /usr/share/fontconfig/conf.avail/70-no-bitmaps.conf /etc/fonts/conf.d
-#+END_SRC
-
-Uncomment FreeType hinting in =/etc/profile.d/freetype2.sh=.
-
-#+BEGIN_SRC diff
--# export FREETYPE_PROPERTIES="truetype:interpreter-version=40"
-+export FREETYPE_PROPERTIES="truetype:interpreter-version=40"
-#+END_SRC
+To manually install the fonts, download their respective TTF or OTF files and
+move them to =/usr/local/share/fonts/=. Run =fc-cache= to ensure the font cache
+integrity.
 
 ** Font Preferences
 
-Set default font for classes in =/etc/fonts/local.conf=.
+Set default fonts for =monospace=, =serif= and =sans-serif= classes.
 
-#+BEGIN_SRC xml :tangle /sudo:://etc/fonts/local.conf
+#+BEGIN_SRC xml :tangle /sudo::/etc/fonts/local.conf
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE fontconfig SYSTEM "urn:fontconfig:fonts.dtd">
 <fontconfig>
   <match target="pattern">
     <test qual="any" name="family">
-      <string>serif</string>
+      <string>monospace</string>
     </test>
     <edit name="family" mode="assign" binding="same">
-      <string>Roboto Slab</string>
+      <string>Cascadia Code</string>
     </edit>
   </match>
   <match target="pattern">
@@ -205,10 +157,10 @@ Set default font for classes in =/etc/fonts/local.conf=.
   </match>
   <match target="pattern">
     <test qual="any" name="family">
-      <string>monospace</string>
+      <string>serif</string>
     </test>
     <edit name="family" mode="assign" binding="same">
-      <string>Code New Roman</string>
+      <string>Roboto Slab</string>
     </edit>
   </match>
 </fontconfig>
@@ -220,7 +172,7 @@ Set default font for classes in =/etc/fonts/local.conf=.
 
 See [[./config/picom.org][config/picom.org]].
 
-** Theme
+** TODO Theme
 
 *** GTK
 
@@ -249,11 +201,11 @@ See [[./config/qtile.org][config/qtile.org]].
 
 See [[./config/xmonad.org][config/xmonad.org]].
 
-** Notifications
+** TODO Notifications
 
 See [[./config/dunst.org][config/dunst.org]].
 
-** Screenshots
+** TODO Screenshots
 
 #+BEGIN_SRC sh
 paru -S ffcast slop xclip
@@ -263,10 +215,6 @@ Several scripts are available under [[./scripts/][scripts/]].
 
 ** Sound
 
-#+BEGIN_SRC sh
-paru -S alsa-utils pavucontrol
-#+END_SRC
-
 Make sure that the devices are correctly selected in =pavucontrol= and that the
 =pulseaudio= server is running.
 
@@ -275,7 +223,7 @@ systemctl --user status pulseaudio.service
 systemctl --user status pulseaudio.socket
 #+END_SRC
 
-Use the following command to detect input sound.
+Use the following command to detect input sound. Requires =alsa-utils=.
 
 #+BEGIN_SRC sh
 arecord -vv -f dat /dev/null
@@ -286,36 +234,14 @@ arecord -vv -f dat /dev/null
 Install the preferred =gccemacs=. Details at http://akrl.sdf.org/gccemacs.html.
 CMake is necessary in order to compile the dependencies to =vterm= at runtime.
 
-#+BEGIN_SRC sh
-paru -S cmake libgccjit noto-fonts-emoji
-paru -G emacs-git
-#+END_SRC
+See https://github.com/alexmurray/emacs-snap for the Snap package.
 
-Edit =emacs-git/PKGBUILD= and enable just-in-time compilation.
-
-#+BEGIN_SRC diff
--JIT=              # Enable native just-in-time compilation. libgccjit is in AUR.
-+JIT="YES"         # Enable native just-in-time compilation. libgccjit is in AUR.
-#+END_SRC
-
-Install =emacs= with the new flags.
-
-#+BEGIN_SRC sh
-cd emacs-git/
-makepkg -si
-#+END_SRC
-
-See my Emacs configuration: [[https://github.com/angrybacon/dotemacs]].
+See https://github.com/angrybacon/dotemacs for my configuration.
 
 * Vim
 
-Install =vim= or =gvim=.
-
-#+BEGIN_SRC sh
-paru -S vim
-#+END_SRC
-
-I mostly use Emacs but sometimes Vim too so very minor tweaks are enough.
+Install =vim= or =gvim=. I mostly use Emacs but sometimes Vim too so very minor
+tweaks are enough.
 
 #+BEGIN_SRC sh :tangle ~/.vimrc
 :syntax on
@@ -323,6 +249,8 @@ I mostly use Emacs but sometimes Vim too so very minor tweaks are enough.
 #+END_SRC
 
 * Git
+
+** Base Configuration
 
 =~/.gitconfig=
 
@@ -345,7 +273,7 @@ I mostly use Emacs but sometimes Vim too so very minor tweaks are enough.
 .dir-locals.el
 #+END_SRC
 
-** Signed Commits
+** TODO Signed Commits
 
 1. First generate a key for your machine
 
@@ -379,10 +307,12 @@ I mostly use Emacs but sometimes Vim too so very minor tweaks are enough.
 Install the server after making sure your DNS settings are correctly set.
 
 #+BEGIN_SRC sh
-paru -S plex-media-server
+sudo snap install plexmediaserver
 #+END_SRC
 
-** Mounting the External Hard Drive
+Confirm that the server is running by visiting [[http://localhost:32400/web]].
+
+** TODO Mounting the External Hard Drive
 
 *** Automatically
 
@@ -413,7 +343,7 @@ corresponding entry at the bottom of =/etc/fstab=.
 
 Reboot and confirm that the drive is correctly mounted to the expected location.
 
-** Permissions
+** TODO Permissions
 
 First verify which group you and Plex belong to.
 
@@ -443,7 +373,7 @@ Finally restart the service to apply the new permissions.
 systemctl restart plexmediaserver.service
 #+END_SRC
 
-** Start the Service Automatically on Startup
+** TODO Start the Service Automatically on Startup
 
 Enable the server for future sessions automatically and optionally start it now.
 
@@ -454,7 +384,7 @@ systemctl enable plexmediaserver.service
 
 Visit http://localhost:32400/web and add the media libraries.
 
-** Fix the Claim Server Prompt
+** TODO Fix the Claim Server Prompt
 
 This usually happens the preference files don't have the correct permission
 and/or ownership.
@@ -474,7 +404,7 @@ ssh-keygen -t ed25519
 xclip -sel clip < ~/.ssh/id_ed25519.pub
 #+END_SRC
 
-* Games
+* TODO Games
 
 ** Battle.net
 
@@ -497,9 +427,7 @@ ensuring your graphic drivers are Vulkan-enabled.
 paru -S steam
 #+END_SRC
 
-* Pheripherals
-
-** Video
+* TODO Pheripherals
 
 Use your Android phone as a webcam. It is possible that =linux-headers= should
 be installed manually, if so restarting might be necessary.
@@ -508,7 +436,7 @@ be installed manually, if so restarting might be necessary.
 paru -S droidcam v4l2loopback-dkms linux-headers
 #+END_SRC
 
-* Other Utilities
+* TODO Other Utilities
 
 #+BEGIN_SRC sh
 paru -S \
@@ -516,6 +444,6 @@ paru -S \
     cockatrice obs-studio spotify vlc \
     flameshot gimp \
     qbittorrent \
-    btop gdu gtop htop piper most tree \
+    btop gdu gtop htop piper most rsync tree \
     brave-bin chromium librewolf-bin
 #+END_SRC

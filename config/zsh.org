@@ -3,25 +3,13 @@
 #+AUTHOR: Mathieu Marques
 #+PROPERTY: header-args:sh :tangle ~/.zshrc
 
-* Installation
-
-#+BEGIN_SRC sh :tangle no
-paru -S zsh zsh-pure-prompt most
-chsh -s $(which zsh)
-#+END_SRC
-
-* Configuration
-
-** Path
-
-Add user-local paths.
+* Parsing Arguments
 
 #+BEGIN_SRC sh
-export PATH=$PATH:~/.bin/:~/Workspace/dot/scripts/
-source /usr/share/nvm/init-nvm.sh
+unsetopt nomatch
 #+END_SRC
 
-** Command History
+* Command History
 
 #+BEGIN_SRC sh
 export HISTFILE=~/.zsh_history
@@ -30,7 +18,7 @@ export SAVEHIST=1000
 setopt share_history
 #+END_SRC
 
-** Pager
+* Pager
 
 Customize the default pager. Depend on =most=.
 
@@ -38,9 +26,10 @@ Customize the default pager. Depend on =most=.
 export PAGER=most
 #+END_SRC
 
-** Aliases
+* Aliases
 
 #+BEGIN_SRC sh
+alias arecordvv='arecord -vv -f dat /dev/null'
 alias arecordvvv='arecord -vvv -f dat /dev/null'
 alias diff='diff --color'
 alias egrep='egrep --color'
@@ -55,7 +44,7 @@ alias sudo='sudo '
 alias tree='tree -C'
 #+END_SRC
 
-** Keys
+* Keys
 
 Add support for control-modified left and right to move by word.
 
@@ -64,11 +53,12 @@ bindkey "^[[1;5C" forward-word
 bindkey "^[[1;5D" backward-word
 #+END_SRC
 
-** Prompt
+* Prompt
 
-Depend on =zsh-pure-prompt=.
+See https://github.com/sindresorhus/pure to install the =pure= prompt.
 
 #+BEGIN_SRC sh
+fpath+=$HOME/.zsh/pure
 autoload -U promptinit; promptinit
 prompt pure
 #+END_SRC

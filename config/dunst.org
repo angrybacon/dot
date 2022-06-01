@@ -2,14 +2,6 @@
 #+TITLE: Dunst
 #+AUTHOR: Mathieu Marques
 
-* Installation
-
-#+BEGIN_SRC sh
-paru -S dunst
-#+END_SRC
-
-* Configuration
-
 A default configuration file can be found at
 [[https://github.com/dunst-project/dunst]].
 
@@ -24,7 +16,7 @@ A default configuration file can be found at
 <<colors>>
 #+END_SRC
 
-** Geometry
+* Geometry
 
 Set padding for the notifications.
 
@@ -47,7 +39,7 @@ offset = 12x52
 origin = top-right
 #+END_SRC
 
-** Borders
+* Borders
 
 #+BEGIN_SRC conf :noweb-ref borders
 separator_height = 2                # Draw a line between notifications. Set to 0 to disable
@@ -63,7 +55,7 @@ exceeds half of the notification height to avoid clipping text and/or icons.
 corner_radius = 8
 #+END_SRC
 
-** Idle Cleanup
+* Idle Cleanup
 
 Don't remove messages if the user is idle for longer than =idle_threshold=
 seconds. Set to 0 to disable. A client can set the =transient= hint to bypass
@@ -73,14 +65,14 @@ this.
 idle_threshold = 0
 #+END_SRC
 
-** Text
+* Text
 
 #+BEGIN_SRC conf :noweb-ref text
 font = Google Sans 16
 # word_wrap = yes
 #+END_SRC
 
-** Actions
+* Actions
 
 Defines list of actions for each mouse event Possible values are:
 
@@ -103,7 +95,7 @@ mouse_middle_click = close_all
 mouse_right_click = close_current
 #+END_SRC
 
-** Colors
+* Colors
 
 #+BEGIN_SRC conf :noweb-ref colors
 [urgency_critical]

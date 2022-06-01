@@ -3,21 +3,13 @@
 #+AUTHOR: Mathieu Marques
 #+PROPERTY: header-args:yaml :tangle ~/.config/alacritty/alacritty.yml
 
-* Installation
-
-#+BEGIN_SRC sh
-paru -S alacritty
-#+END_SRC
-
-* Configuration
-
-** Bootstrap
+* Bootstrap
 
 #+BEGIN_SRC yaml
 live_config_reload: true
 #+END_SRC
 
-** Window Configuration
+* Window Configuration
 
 The specified padding pixels are scaled by DPI.
 
@@ -30,7 +22,7 @@ window:
   dynamic_padding: true
 #+END_SRC
 
-** Scroll
+* Scroll
 
 #+BEGIN_SRC yaml
 scrolling:
@@ -38,7 +30,7 @@ scrolling:
   multiplier: 4
 #+END_SRC
 
-** Font Configuration
+* Font Configuration
 
 #+BEGIN_SRC yaml
 font:
@@ -62,7 +54,7 @@ font:
     y: 0
 #+END_SRC
 
-** Colors
+* Colors
 
 Zenburn theme, courtesy of [[https://github.com/aarowill/base16-alacritty]].
 
@@ -105,7 +97,7 @@ colors:
     - { index: 21, color: '#C0C0C0' }
 #+END_SRC
 
-** Bell
+* Bell
 
 The bell is rung every time the BEL control character is received.
 
@@ -116,7 +108,7 @@ bell:
     args: ["--urgency", "low", "Alacritty bell"]
 #+END_SRC
 
-** Background
+* Background
 
 Window opacity as a floating point number from =0.0= to =1.0=. The value =0.0=
 is completely transparent and =1.0= is opaque. This is best handled by the
@@ -126,7 +118,7 @@ compositor.
 background_opacity: 1.0
 #+END_SRC
 
-** Cursor
+* Cursor
 
 Customize cursor appearance. The 3 supported styles are =Block=, =Underline= and
 =Beam=.

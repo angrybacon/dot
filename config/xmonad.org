@@ -3,15 +3,7 @@
 #+AUTHOR: Mathieu Marques
 #+PROPERTY: header-args:haskell :tangle ~/.config/xmonad/xmonad2.hs
 
-* Installation
-
-#+BEGIN_SRC sh
-paru -S xmonad xmonad-contrib
-#+END_SRC
-
-* Configuration
-
-** Bootstrap
+* Bootstrap
 
 #+BEGIN_SRC haskell
 import Data.Monoid
@@ -30,7 +22,7 @@ myModMask :: KeyMask
 myModMask = mod4Mask
 #+END_SRC
 
-** Terminal
+* Terminal
 
 #+BEGIN_SRC haskell
 -- The preferred terminal program, which is used in a binding below and by
@@ -40,7 +32,7 @@ myTerminal :: String
 myTerminal = "alacritty"
 #+END_SRC
 
-** Focus
+* Focus
 
 #+BEGIN_SRC haskell
 -- Whether focus follows the mouse pointer.
@@ -48,7 +40,7 @@ myFocusFollowsMouse :: Bool
 myFocusFollowsMouse = True
 #+END_SRC
 
-** Workspaces
+* Workspaces
 
 #+BEGIN_SRC haskell
 -- The default number of workspaces (virtual screens) and their names.
@@ -63,7 +55,7 @@ myFocusFollowsMouse = True
 myWorkspaces = ["1","2","3","4","5","6","7","8","9"]
 #+END_SRC
 
-** Keys Bindings
+* Keys Bindings
 
 #+BEGIN_SRC haskell
 ------------------------------------------------------------------------
@@ -180,7 +172,7 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
     ]
 #+END_SRC
 
-** Layouts
+* Layouts
 
 #+BEGIN_SRC haskell
 ------------------------------------------------------------------------
@@ -219,7 +211,7 @@ myFocusedBorderColor = "#ff0000"
 myNormalBorderColor = "#dddddd"
 #+END_SRC
 
-** Windows
+* Windows
 
 #+BEGIN_SRC haskell
 ------------------------------------------------------------------------
@@ -244,9 +236,9 @@ myManageHook = composeAll
     , resource  =? "kdesktop"       --> doIgnore ]
 #+END_SRC
 
-** Events
+* Events
 
-*** X
+** X
 
 #+BEGIN_SRC haskell
 ------------------------------------------------------------------------
@@ -264,7 +256,7 @@ myManageHook = composeAll
 myEventHook = mempty
 #+END_SRC
 
-*** Logs
+** Logs
 
 #+BEGIN_SRC haskell
 ------------------------------------------------------------------------
@@ -282,7 +274,7 @@ myEventHook = mempty
 myLogHook = return ()
 #+END_SRC
 
-*** Startup
+** Startup
 
 #+BEGIN_SRC haskell
 ------------------------------------------------------------------------
@@ -302,7 +294,7 @@ myLogHook = return ()
 myStartupHook = return ()
 #+END_SRC
 
-** Run
+* Run
 
 Now run xmonad with all the defaults we set up. Run xmonad with the settings you
 specify. No need to modify this.
