@@ -3,34 +3,28 @@
 #+AUTHOR: Mathieu Marques
 #+PROPERTY: header-args:python :tangle ~/.config/qtile/config.py
 
-* Installation
+Run =qtile --check= in order to verify that your configuration can be loaded
+safely.
 
-#+BEGIN_SRC sh
-paru -S \
-    python-psutil \
-    qtile \
-    ttf-material-design-icons-git
-#+END_SRC
-
-* Configuration
-
-** Bootstrap
+* Bootstrap
 
 #+BEGIN_SRC python
 import os
 import subprocess
 from libqtile import bar, layout, widget
 from libqtile.command import lazy
-from libqtile.config import Drag, Group, Key, Match, Screen
+from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.utils import guess_terminal
 
 
 mod = 'mod4'
+control = 'control'
+shift = 'shift'
 home = os.path.expanduser('~')
 terminal = guess_terminal()
 #+END_SRC
 
-** Keys
+* Keys
 
 #+BEGIN_SRC python
 keys = [
@@ -38,64 +32,66 @@ keys = [
     Key([mod], 'Return', lazy.spawn(terminal)),
     Key([mod], 'space', lazy.spawncmd()),
     Key([mod], 'q', lazy.window.kill()),
-    Key([mod], 'r', lazy.restart()),
+    Key([mod, control], 'q', lazy.shutdown()),
+    Key([mod, control], 'r', lazy.reload_config()),
     # Layout
     Key([mod], 'Tab', lazy.layout.next()),
     Key([mod], 'f', lazy.window.toggle_fullscreen()),
     Key([mod], 'n', lazy.layout.reset()),
-    Key([mod, 'control'], 'Tab', lazy.next_layout()),
-    Key([mod, 'control'], 'Tab', lazy.next_layout()),
-    Key([mod, 'control'], 'h', lazy.layout.shrink_main()),
-    Key([mod, 'control'], 'j', lazy.layout.grow()),
-    Key([mod, 'control'], 'k', lazy.layout.shrink()),
-    Key([mod, 'control'], 'l', lazy.layout.grow_main()),
-    Key([mod, 'shift'], 'Tab', lazy.layout.previous()),
-    Key([mod, 'shift'], 'f', lazy.layout.flip()),
-    Key([mod, 'shift'], 'h', lazy.layout.shuffle_left()),
-    Key([mod, 'shift'], 'j', lazy.layout.shuffle_down()),
-    Key([mod, 'shift'], 'k', lazy.layout.shuffle_up()),
-    Key([mod, 'shift'], 'l', lazy.layout.shuffle_right()),
+    Key([mod, control], 'Tab', lazy.next_layout()),
+    Key([mod, control], 'Tab', lazy.next_layout()),
+    Key([mod, control], 'h', lazy.layout.shrink_main()),
+    Key([mod, control], 'j', lazy.layout.grow()),
+    Key([mod, control], 'k', lazy.layout.shrink()),
+    Key([mod, control], 'l', lazy.layout.grow_main()),
+    Key([mod, shift], 'Tab', lazy.layout.previous()),
+    Key([mod, shift], 'f', lazy.layout.flip()),
+    Key([mod, shift], 'h', lazy.layout.shuffle_left()),
+    Key([mod, shift], 'j', lazy.layout.shuffle_down()),
+    Key([mod, shift], 'k', lazy.layout.shuffle_up()),
+    Key([mod, shift], 'l', lazy.layout.shuffle_right()),
     # Focus
     Key([mod], 'Up', lazy.layout.up()),
     Key([mod], 'Down', lazy.layout.down()),
     Key([mod], 'Left', lazy.layout.left()),
     Key([mod], 'Right', lazy.layout.right()),
     # Screenshot
-    Key([mod, 'shift'], '3', lazy.spawn(['flameshot', 'gui'])),
-    Key([mod, 'shift'], '4', lazy.spawn(['flameshot', 'screen', '--clipboard'])),
+    Key([mod, shift], '3', lazy.spawn(['flameshot', 'gui'])),
+    Key([mod, shift], '4', lazy.spawn(['flameshot', 'screen', '--clipboard'])),
     # Media
     Key([], "XF86AudioLowerVolume", lazy.spawn("amixer -D pulse sset Master 10%-")),
     Key([], "XF86AudioRaiseVolume", lazy.spawn("amixer -D pulse sset Master 10%+")),
 ]
 #+END_SRC
 
-** Groups
+* Groups
 
-See https://materialdesignicons.com/.
+See https://fonts.google.com/icons for the glyph code points to use.
 
 #+BEGIN_SRC python
+groups_font = 'Material Design Icons'
 groups = [
-    Group(label='\U000F0765', layout='monadtall', name='1'),
-    Group(label='\U000F0765', layout='monadtall', name='2'),
-    Group(label='\U000F0765', layout='monadtall', name='3'),
-    Group(label='\U000F0765', layout='monadtall', name='4'),
-    Group(label='\U000F0765', layout='monadtall', name='5'),
-    Group(label='\U000F0765', layout='monadtall', name='6'),
-    Group(label='\U000F0765', layout='monadtall', name='7'),
-    Group(label='\U000F0765', layout='monadtall', name='8'),
-    Group(label='\U000F0765', layout='monadtall', name='9'),
-    Group(label='\U000F0765', layout='monadwide', name='0'),
+    Group(label='\U0000E5CD', layout='monadtall', name='1', spawn=['brave']),
+    Group(label='\U0000E5CD', layout='monadtall', name='2', spawn=['discord']),
+    Group(label='\U0000E5CD', layout='monadtall', name='3'),
+    Group(label='\U0000E5CD', layout='monadtall', name='4'),
+    Group(label='\U0000E5CD', layout='monadtall', name='5'),
+    Group(label='\U0000E5CD', layout='monadtall', name='6'),
+    Group(label='\U0000E5CD', layout='monadtall', name='7'),
+    Group(label='\U0000E5CD', layout='monadtall', name='8'),
+    Group(label='\U0000E5CD', layout='monadtall', name='9', spawn=['spotify']),
+    Group(label='\U0000E5CD', layout='monadwide', name='0'),
 ]
 
 
-for i in groups:
+for g in groups:
     keys.extend([
-        Key([mod], i.name, lazy.group[i.name].toscreen()),
-        Key([mod, 'control'], i.name, lazy.window.togroup(i.name)),
+        Key([mod], g.name, lazy.group[g.name].toscreen(toggle=True)),
+        Key([mod, control], g.name, lazy.window.togroup(g.name)),
     ])
 #+END_SRC
 
-** Layouts
+* Layouts
 
 #+BEGIN_SRC python
 theme = {
@@ -128,11 +124,13 @@ floating_layout = layout.Floating(
 
 
 auto_fullscreen = True
+auto_minimize = True
 focus_on_window_activation = 'smart'
+reconfigure_screens = True
 wmname = 'LG3D'
 #+END_SRC
 
-** Bar
+* Bar
 
 #+BEGIN_SRC python
 def widget_list():
@@ -143,25 +141,24 @@ def widget_list():
     }
     chart = {
         'border_color': colors['muted'],
-        'border_width': 1,
+        'border_width': 0,
         'fill_color': colors['accent'],
-        'frequency': 1,
+        'frequency': .3,
         'graph_color': colors['accent'],
-        'margin_x': 4,
+        'margin_x': 0,
         'margin_y': 8,
-        'samples': 90,
+        'padding': 8,
         'type': 'box',
     }
     font_size = 18
     icon_size = 20
-    spacer = {'length': 8}
     return [
-        widget.Spacer(**spacer),
+        widget.Spacer(length=8),
         widget.GroupBox(
             active=colors['foreground'],
             borderwidth=0,
             disable_drag=True,
-            font='Material Design Icons',
+            font=groups_font,
             fontsize=icon_size,
             highlight_method='text',
             inactive=colors['muted'],
@@ -169,10 +166,22 @@ def widget_list():
             padding=4,
             this_current_screen_border=colors['accent'],
         ),
-        widget.Spacer(length=8),
-        widget.Prompt(font='CodeNewRoman', fontsize=font_size + 2),
+        widget.Spacer(length=16),
+        widget.Prompt(
+            cursorblink=.2,
+            font='monospace',
+            fontsize=font_size,
+            ignore_dups_history=True,
+            prompt='Spawn: ',
+        ),
         widget.Spacer(),
         widget.Systray(icon_size=icon_size, padding=12),
+        widget.Spacer(length=16),
+        widget.CheckUpdates(
+            distro='Debian',
+            fontsize=font_size,
+            no_update_string='No updates',
+        ),
         widget.Spacer(length=16),
         widget.Volume(
             fontsize=font_size,
@@ -181,26 +190,25 @@ def widget_list():
         ),
         widget.Spacer(length=16),
         widget.CPUGraph(**chart),
+        widget.Spacer(length=16),
         widget.MemoryGraph(**chart),
+        widget.Spacer(length=16),
+        widget.NetGraph(**chart),
         widget.Spacer(length=16),
         widget.Clock(
             fontsize=font_size,
             foreground=colors['foreground'],
-            format='%d-%m %H:%M',
-            padding=4,
+            format='%d-%m %H:%M:%S',
+            width=font_size * 7,
         ),
-        widget.Spacer(**spacer),
+        widget.Spacer(length=8),
     ]
 
-
-screens = [Screen(top=bar.Bar(
-    background='#37474F',
-    widgets=widget_list(),
-    size=40,
-))]
+screens_top = bar.Bar(background='#37474F', widgets=widget_list(), size=40)
+screens = [Screen(top=screens_top)]
 #+END_SRC
 
-** Mouse
+* Mouse
 
 #+BEGIN_SRC python
 mouse = [
@@ -215,11 +223,12 @@ mouse = [
         'Button3',
         lazy.window.set_size_floating(),
         start=lazy.window.get_size(),
-    )
+    ),
+    Click([mod], 'Button2', lazy.window.bring_to_front()),
 ]
 
 dgroups_key_binder = None
-dgroups_app_rules = []
+dgroups_app_rules = []  # type: list
 follow_mouse_focus = True
 bring_front_click = False
 cursor_warp = False
