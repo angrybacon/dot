@@ -1,0 +1,77 @@
+# -*- after-save-hook: (org-babel-tangle t); -*-
+#+TITLE: Kitty
+#+AUTHOR: Mathieu Marques
+#+PROPERTY: header-args:conf :tangle ~/.config/kitty/kitty.conf
+
+A default configuration file can be found in =/usr/share/doc/kitty/kitty.conf=.
+
+* Font
+
+Configure a default font size.
+
+#+BEGIN_SRC conf
+font_size                   12.0
+#+END_SRC
+
+Set font families for face variants.
+
+#+BEGIN_SRC conf
+bold_font                   auto
+bold_italic_font            auto
+font_family                 monospace
+italic_font                 auto
+#+END_SRC
+
+Disable ligatures.
+
+#+BEGIN_SRC conf
+disable_ligatures           always
+#+END_SRC
+
+* Cursor
+
+#+BEGIN_SRC conf
+cursor_blink_interval       0.2
+cursor_shape                underline
+cursor_stop_blinking_after  0
+cursor_underline_thickness  2.0
+#+END_SRC
+
+* Theme
+
+#+BEGIN_SRC conf
+active_tab_background       #9C6992
+active_tab_foreground       #F0E4CF
+background                  #404040
+color0                      #404040
+color1                      #E3716E
+color10                     #8BAE68
+color11                     #D68C67
+color12                     #61ABDA
+color13                     #CF86C1
+color14                     #65B8C1
+color15                     #C0AB86
+color2                      #819B69
+color3                      #B77E64
+color4                      #6099C0
+color4                      #93E0E3
+color5                      #B279A7
+color6                      #66A5AD
+color7                      #F0E4CF
+color8                      #625A5B
+color9                      #EC8685
+cursor                      #F3EADB
+cursor_text_color           #404040
+foreground                  #F0E4CF
+inactive_tab_background     #555555
+inactive_tab_foreground     #F0E4CF
+selection_background        #746956
+selection_foreground        #F0E4CF
+#+END_SRC
+
+* Window Layout
+
+#+BEGIN_SRC conf
+window_padding_width        8
+placement_strategy          bottom-left
+#+END_SRC

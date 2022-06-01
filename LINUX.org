@@ -115,7 +115,7 @@ See [[./config/zsh.org][config/zsh.org]].
 
 ** Terminal
 
-See [[./config/alacritty.org][config/alacritty.org]].
+See [[./config/kitty.org][config/kitty.org]].
 
 * Fonts
 
