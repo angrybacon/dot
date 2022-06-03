@@ -6,11 +6,39 @@
 This file documents the steps I've followed to install my daily machine running
 Debian.
 
-* Bootstrap
+* Checklist
 
-** X
+** Install Core Dependencies and Packages
 
-=~/.profile=
+#+BEGIN_SRC sh
+sudo apt install git pcmanfm vim
+#+END_SRC
+
+** Set a Maximum History of Snap Revisions
+
+#+BEGIN_SRC sh
+sudo snap set system refresh.retain=2
+#+END_SRC
+
+** Configure Visudo
+
+Run =sudo visudo= in order to customize sudoers settings. Customize the default
+editor to use.
+
+#+BEGIN_SRC diff
++Defaults editor=/usr/bin/vim
+#+END_SRC
+
+Enable Asterisks During Password Prompts.
+
+#+BEGIN_SRC diff
+-Defaults env_reset
++Defaults env_reset, pwfeedback
+#+END_SRC
+
+* X
+
+** =~/.profile=
 
 Add user binaries path.
 
@@ -42,7 +70,7 @@ Optionally, create a =.zprofile= link to the profile file.
 ln -s ~/.profile ~/.zprofile
 #+END_SRC
 
-=~/.Xresources=
+** =~/.Xresources=
 
 Increase the base DPI by 25% and set base font for XTerm.
 
@@ -52,7 +80,7 @@ XTerm*faceName: monospace:style=Regular
 XTerm*faceSize: 14
 #+END_SRC
 
-=~/.xinitrc=
+** =~/.xinitrc=
 
 Merge-in defaults.
 
@@ -68,37 +96,6 @@ Bootstrap startup programs.
 xset r rate 200 50
 picom &
 qtile start
-#+END_SRC
-
-** Core Dependencies and Packages
-
-#+BEGIN_SRC sh
-sudo apt install git pcmanfm vim
-#+END_SRC
-
-** Snap
-
-*** Set a Maximum of Package Revisions to Keep
-
-#+BEGIN_SRC sh
-sudo snap set system refresh.retain=2
-#+END_SRC
-
-** Visudo Settings
-
-Run =sudo visudo= in order to customize sudoers settings.
-
-*** Change the Default Editor
-
-#+BEGIN_SRC diff
-+Defaults editor=/usr/bin/vim
-#+END_SRC
-
-*** Enable Asterisks During Password Prompts
-
-#+BEGIN_SRC diff
--Defaults env_reset
-+Defaults env_reset, pwfeedback
 #+END_SRC
 
 * Shell
@@ -172,26 +169,9 @@ Set default fonts for =monospace=, =serif= and =sans-serif= classes.
 
 See [[./config/picom.org][config/picom.org]].
 
-** TODO Theme
-
-*** GTK
-
-#+BEGIN_SRC sh
-paru -S lxappearance materia-gtk-theme
-#+END_SRC
-
-Enable the theme in GTK settings through =lxappearance= and verify the
-configuration file =~/.config/gtk-3.0/settings.ini=.
-
-*** Qt
-
-#+BEGIN_SRC sh
-paru -S kvantum-qt5 kvantum-theme-materia
-#+END_SRC
-
-Then run =kvantummanager= to select your theme.
-
 ** Window Manager
+
+I use =qtile= daily but other historical configuration can be found below.
 
 *** Qtile
 
@@ -207,27 +187,9 @@ See [[./config/dunst.org][config/dunst.org]].
 
 ** TODO Screenshots
 
-#+BEGIN_SRC sh
-paru -S ffcast slop xclip
-#+END_SRC
+See [[./config/flameshot.org][config/flameshot.org]].
 
 Several scripts are available under [[./scripts/][scripts/]].
-
-** Sound
-
-Make sure that the devices are correctly selected in =pavucontrol= and that the
-=pulseaudio= server is running.
-
-#+BEGIN_SRC sh
-systemctl --user status pulseaudio.service
-systemctl --user status pulseaudio.socket
-#+END_SRC
-
-Use the following command to detect input sound. Requires =alsa-utils=.
-
-#+BEGIN_SRC sh
-arecord -vv -f dat /dev/null
-#+END_SRC
 
 * Emacs
 
@@ -300,103 +262,7 @@ tweaks are enough.
 +export GPG_TTY=$TTY
 #+END_SRC
 
-* Plex
-
-** Dependencies
-
-Install the server after making sure your DNS settings are correctly set.
-
-#+BEGIN_SRC sh
-sudo snap install plexmediaserver
-#+END_SRC
-
-Confirm that the server is running by visiting [[http://localhost:32400/web]].
-
-** TODO Mounting the External Hard Drive
-
-*** Automatically
-
-#+BEGIN_SRC sh
-paru -S udiskie udisks2
-#+END_SRC
-
-Start =udiskie= on boot in your =xinit=. It will automatically mount external
-drives under =/run/media/username/=. Optionnally keep =udiskie= in the tray with
-=--tray=.
-
-*** Manually
-
-Given an external drive named =Phoenix=, create a mount point under =/media= for
-the =plex= user to access it.
-
-#+BEGIN_SRC sh
-sudo mkdir -p /media/phoenix
-sudo chmod -R /media
-#+END_SRC
-
-Retrieve the UUID of the drive (with =df= and =blkid= for instance) and add the
-corresponding entry at the bottom of =/etc/fstab=.
-
-#+BEGIN_SRC diff
-+UUID=1234-ABCD  /media/phoenix  exfat
-#+END_SRC
-
-Reboot and confirm that the drive is correctly mounted to the expected location.
-
-** TODO Permissions
-
-First verify which group you and Plex belong to.
-
-#+BEGIN_SRC sh
-groups
-groups plex
-#+END_SRC
-
-Add Plex to a shared group and change the media ownership to match that group.
-
-#+BEGIN_QUOTE
-Below instructions assume a setup from =udiskie= defaults where the media is
-located under =/run/media/username/=. It also assumes you assume to a =storage=
-group. Adjust accordingly.
-#+END_QUOTE
-
-#+BEGIN_SRC sh
-sudo usermod -a -G storage plex
-sudo chown angrybacon:storage /run/media/angrybacon
-sudo chmod 750 /run/media/angrybacon
-sudo setfacl -m g:storage:rwx /run/media/angrybacon
-#+END_SRC
-
-Finally restart the service to apply the new permissions.
-
-#+BEGIN_SRC sh
-systemctl restart plexmediaserver.service
-#+END_SRC
-
-** TODO Start the Service Automatically on Startup
-
-Enable the server for future sessions automatically and optionally start it now.
-
-#+BEGIN_SRC sh
-systemctl start plexmediaserver.service
-systemctl enable plexmediaserver.service
-#+END_SRC
-
-Visit http://localhost:32400/web and add the media libraries.
-
-** TODO Fix the Claim Server Prompt
-
-This usually happens the preference files don't have the correct permission
-and/or ownership.
-
-Confirm the location of the preference files, they should be somewhere in
-=/var/lib/plex/=. Then fix the ownership after having stopped the Plex server.
-
-#+BEGIN_SRC sh
-sudo chown -R plex:plex /var/lib/plex
-#+END_SRC
-
-* SSH
+* TODO SSH
 
 #+BEGIN_SRC sh
 paru -S openssh xclip
@@ -427,23 +293,20 @@ ensuring your graphic drivers are Vulkan-enabled.
 paru -S steam
 #+END_SRC
 
-* TODO Pheripherals
-
-Use your Android phone as a webcam. It is possible that =linux-headers= should
-be installed manually, if so restarting might be necessary.
+* Other Utilities
 
 #+BEGIN_SRC sh
-paru -S droidcam v4l2loopback-dkms linux-headers
+sudo apt install \
+    gdu htop most rsync tree \
+    flameshot gimp \
+    qbittorrent vlc
 #+END_SRC
 
-* TODO Other Utilities
-
 #+BEGIN_SRC sh
-paru -S \
-    discord_arch_electron slack-electron zoom-system-qt \
-    cockatrice obs-studio spotify vlc \
-    flameshot gimp \
-    qbittorrent \
-    btop gdu gtop htop piper most rsync tree \
-    brave-bin chromium librewolf-bin
+sudo snap install \
+    brave firefox \
+    btop \
+    discord slack \
+    spotify \
+    plexmediaserver
 #+END_SRC
