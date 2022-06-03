@@ -95,6 +95,7 @@ Bootstrap startup programs.
 #+BEGIN_SRC sh :shebang "#!/bin/sh" :tangle ~/.xinitrc
 xset r rate 200 50
 picom &
+pcmanfm --daemon-mode &
 qtile start
 #+END_SRC
 
