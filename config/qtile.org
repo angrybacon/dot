@@ -198,8 +198,7 @@ def widget_list():
         widget.Clock(
             fontsize=font_size,
             foreground=colors['foreground'],
-            format='%d-%m %H:%M:%S',
-            width=font_size * 7,
+            format='%d-%m %H:%M',
         ),
         widget.Spacer(length=8),
     ]
