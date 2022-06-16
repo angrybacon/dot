@@ -143,7 +143,7 @@ def widget_list():
     chart = {
         'border_width': 0,
         'fill_color': colors['accent'],
-        'frequency': .3,
+        'frequency': .5,
         'graph_color': colors['accent'],
         'margin_x': 0,
         'margin_y': 8,
@@ -162,8 +162,6 @@ def widget_list():
             fontsize=icon_size,
             highlight_method='text',
             inactive=colors['muted'],
-            margin=2,
-            padding=4,
             this_current_screen_border=colors['accent'],
         ),
         widget.Spacer(length=16),
@@ -175,13 +173,15 @@ def widget_list():
             prompt='Spawn: ',
         ),
         widget.Spacer(),
-        widget.Systray(icon_size=icon_size, padding=12),
-        widget.Spacer(length=16),
-        widget.CheckUpdates(
-            distro='Debian',
+        widget.Clock(
             fontsize=font_size,
-            no_update_string='No updates',
+            foreground=colors['foreground'],
+            format='%H:%M %B %d',
         ),
+        widget.Spacer(),
+        widget.CheckUpdates(distro='Debian', fontsize=font_size),
+        widget.Spacer(length=16),
+        widget.Systray(icon_size=icon_size, padding=12),
         widget.Spacer(length=16),
         widget.Volume(
             fontsize=font_size,
@@ -195,12 +195,6 @@ def widget_list():
         widget.Spacer(length=16),
         widget.NetGraph(**chart),
         widget.Spacer(length=16),
-        widget.Clock(
-            fontsize=font_size,
-            foreground=colors['foreground'],
-            format='%d-%m %H:%M',
-        ),
-        widget.Spacer(length=8),
     ]
 
 screens_top = bar.Bar(background='#37474F', widgets=widget_list(), size=40)
