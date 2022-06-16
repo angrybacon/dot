@@ -72,7 +72,12 @@ for the glyph code points to use.
 #+BEGIN_SRC python
 groups_font = 'Material Design Icons'
 groups = [
-    Group(label='\U0000EF4A', layout='monadtall', name='1', spawn=['brave']),
+    Group(
+        label='\U0000EF4A',
+        layout='monadtall',
+        name='1',
+        spawn=['google-chrome'],
+    ),
     Group(label='\U0000EF4A', layout='monadtall', name='2', spawn=['discord']),
     Group(label='\U0000EF4A', layout='monadtall', name='3'),
     Group(label='\U0000EF4A', layout='monadtall', name='4'),
