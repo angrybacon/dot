@@ -99,6 +99,24 @@ pcmanfm --daemon-mode &
 qtile start
 #+END_SRC
 
+** Automatically Mount External Drives
+
+Given an external hard drive /Phoenix/ plugged in =sdb=.
+
+#+BEGIN_SRC sh
+sudo mkdir /media/Phoenix               # Create the mount point
+sudo fdisk -l                           # Identify the drive
+sudo blkid | grep sdb                   # Retrieve the UUID
+#+END_SRC
+
+Edit =/etc/fstab= to add the drive mount point.
+
+#+BEGIN_SRC diff
++UUID=F8D2-30CF  /media/Phoenix  exfat  defaults  0  0
+#+END_SRC
+
+Confirm proper mouting with =sudo mount -a=.
+
 * Shell
 
 ** Zsh
