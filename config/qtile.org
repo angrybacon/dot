@@ -3,7 +3,7 @@
 #+AUTHOR: Mathieu Marques
 #+PROPERTY: header-args:python :tangle ~/.config/qtile/config.py
 
-Run =qtile --check= in order to verify that your configuration can be loaded
+Run =qtile check= in order to verify that your configuration can be loaded
 safely.
 
 * Bootstrap
@@ -21,7 +21,7 @@ mod = 'mod4'
 control = 'control'
 shift = 'shift'
 home = os.path.expanduser('~')
-terminal = guess_terminal()
+terminal = guess_terminal('kitty')
 #+END_SRC
 
 * Keys
@@ -59,8 +59,8 @@ keys = [
     Key([mod, shift], '3', lazy.spawn(['flameshot', 'gui'])),
     Key([mod, shift], '4', lazy.spawn(['flameshot', 'screen', '--clipboard'])),
     # Media
-    Key([], "XF86AudioLowerVolume", lazy.spawn("amixer -D pulse sset Master 10%-")),
-    Key([], "XF86AudioRaiseVolume", lazy.spawn("amixer -D pulse sset Master 10%+")),
+    Key([], "XF86AudioLowerVolume", lazy.spawn("amixer set Master 10%-")),
+    Key([], "XF86AudioRaiseVolume", lazy.spawn("amixer set Master 10%+")),
 ]
 #+END_SRC
 
@@ -72,16 +72,16 @@ for the glyph code points to use.
 #+BEGIN_SRC python
 groups_font = 'Material Design Icons'
 groups = [
-    Group(label='\U0000EF4A', layout='monadtall', name='1', spawn=['brave']),
-    Group(label='\U0000EF4A', layout='monadtall', name='2', spawn=['discord']),
-    Group(label='\U0000EF4A', layout='monadtall', name='3'),
-    Group(label='\U0000EF4A', layout='monadtall', name='4'),
-    Group(label='\U0000EF4A', layout='monadtall', name='5'),
-    Group(label='\U0000EF4A', layout='monadtall', name='6'),
-    Group(label='\U0000EF4A', layout='monadtall', name='7'),
-    Group(label='\U0000EF4A', layout='monadtall', name='8'),
-    Group(label='\U0000EF4A', layout='monadtall', name='9', spawn=['spotify']),
-    Group(label='\U0000EF4A', layout='monadwide', name='0'),
+    Group('1', label='\U0000EF4A', spawn=['brave']),
+    Group('2', label='\U0000EF4A', spawn=['discord']),
+    Group('3', label='\U0000EF4A'),
+    Group('4', label='\U0000EF4A'),
+    Group('5', label='\U0000EF4A'),
+    Group('6', label='\U0000EF4A'),
+    Group('7', label='\U0000EF4A'),
+    Group('8', label='\U0000EF4A'),
+    Group('9', label='\U0000EF4A', spawn=['spotify']),
+    Group('0', label='\U0000EF4A'),
 ]
 
 
@@ -95,22 +95,23 @@ for g in groups:
 * Layouts
 
 #+BEGIN_SRC python
-theme = {
-    'border_focus': '#8FBCBB',
-    'border_normal': '#6F6F6F',
-    'border_width': 4,
+layouts_theme = {
+    'border_focus': '#616161',
+    'border_normal': '#424242',
+    'border_width': 1,
     'margin': 24,
+    'single_border_width': 0,
 }
 
 
 layouts = [
-    layout.MonadTall(**theme, ratio=.65),
-    layout.MonadWide(**theme, ratio=.70),
+    layout.MonadTall(**layouts_theme, ratio=.65),
+    layout.MonadWide(**layouts_theme, ratio=.70),
 ]
 
 
 floating_layout = layout.Floating(
-    **theme,
+    **layouts_theme,
     float_rules=[
         *layout.Floating.default_float_rules,
         # NOTE Use `xprop` to guess the application attributes
@@ -134,7 +135,7 @@ wmname = 'LG3D'
 * Bar
 
 #+BEGIN_SRC python
-def widget_list():
+def widgets_list():
     colors = {
         'accent': '#00BFA5',
         'foreground': '#ECEFF1',
@@ -179,7 +180,7 @@ def widget_list():
             format='%H:%M %B %d',
         ),
         widget.Spacer(),
-        widget.CheckUpdates(distro='Debian', fontsize=font_size),
+        widget.CheckUpdates(distro='Fedora', fontsize=font_size),
         widget.Spacer(length=16),
         widget.Systray(icon_size=icon_size, padding=12),
         widget.Spacer(length=16),
@@ -197,8 +198,8 @@ def widget_list():
         widget.Spacer(length=16),
     ]
 
-screens_top = bar.Bar(background='#37474F', widgets=widget_list(), size=40)
-screens = [Screen(top=screens_top)]
+screens_bar = bar.Bar(background='#ECEFF10D', widgets=widgets_list(), size=40)
+screens = [Screen(top=screens_bar)]
 #+END_SRC
 
 * Mouse

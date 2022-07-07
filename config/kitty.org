@@ -72,6 +72,6 @@ selection_foreground        #F0E4CF
 * Window Layout
 
 #+BEGIN_SRC conf
+confirm_os_window_close     0
 window_padding_width        8
-placement_strategy          bottom-left
 #+END_SRC
