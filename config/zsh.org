@@ -59,8 +59,16 @@ See https://github.com/sindresorhus/pure to install the =pure= prompt.
 
 #+BEGIN_SRC sh
 fpath+=$HOME/.zsh/pure
-autoload -U promptinit; promptinit
+autoload -U promptinit
+promptinit
 prompt pure
+#+END_SRC
+
+* Completion
+
+#+BEGIN_SRC sh
+autoload compinit
+compinit -i
 #+END_SRC
 
 * Node Version Manager

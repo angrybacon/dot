@@ -7,7 +7,7 @@ and over from one machine to another during installations.
 
 * Linux
 
-See [[./LINUX.org]].
+See [[./LINUX.org][LINUX.org]].
 
 * MacOS
 
