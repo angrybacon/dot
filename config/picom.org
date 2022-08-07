@@ -60,6 +60,21 @@ opacity-rule = [
 ];
 #+END_SRC
 
+* Blur
+
+The =dual_kawase= blur is only enabled with =--experimental-backends=.
+
+#+BEGIN_SRC conf
+# blur-background = false;
+blur-background-exclude = [
+  "_GTK_FRAME_EXTENTS@:c",
+  "window_type = 'desktop'",
+  "window_type = 'dock'",
+];
+blur-method = "dual_kawase";
+blur-strength = 8;
+#+END_SRC
+
 * Fading
 
 #+BEGIN_SRC conf
