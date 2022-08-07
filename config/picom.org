@@ -46,7 +46,18 @@ round-borders-exclude = [];
 * Opacity
 
 #+BEGIN_SRC conf
-inactive-opacity = .96;                 # Opacity for inactive windows
+active-opacity = 1;                     # Default opacity for active windows
+inactive-opacity = .66;                 # Opacity for inactive windows
+inactive-opacity-override = false;
+opacity-rule = [
+  "80:class_i = 'brave-browser' && !focused",
+  "90:class_i = 'emacs' && focused",
+  "90:class_i = 'spotify' && focused",
+  "90:class_i = 'kitty' && focused",
+  "80:window_type = 'dropdown_menu'",
+  "80:window_type = 'menu'",
+  "80:window_type = 'popup_menu'",
+];
 #+END_SRC
 
 * Fading
