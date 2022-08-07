@@ -3,6 +3,20 @@
 #+AUTHOR: Mathieu Marques
 #+PROPERTY: header-args:python :tangle ~/.config/qtile/config.py
 
+* Installation
+
+Create a desktop entry under =/usr/share/xsessions/= in order to select Qtile as
+your preferred option from the login manager.
+
+#+BEGIN_SRC conf
+[Desktop Entry]
+Name=Qtile
+Comment=Qtile Session
+Exec=qtile start
+Type=Application
+Keywords=wm;tiling
+#+END_SRC
+
 Run =qtile check= in order to verify that your configuration can be loaded
 safely.
 

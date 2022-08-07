@@ -56,12 +56,10 @@ if [ -d "/snap/bin" ] ; then
 fi
 #+END_SRC
 
-Automatically start X.
+Increase the keyboard repeat rate.
 
 #+BEGIN_SRC sh :tangle ~/.profile
-if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
-  exec startx
-fi
+xset r rate 200 50
 #+END_SRC
 
 Optionally, create a =.zprofile= link to the profile file.
@@ -93,10 +91,11 @@ fi
 Bootstrap startup programs.
 
 #+BEGIN_SRC sh :shebang "#!/bin/sh" :tangle ~/.xinitrc
-xset r rate 200 50
-picom &
-pcmanfm --daemon-mode &
-qtile start
+picom --experimental-backends -b
+
+if [ -f "$HOME/.fehbg" ]; then
+  ~/.fehbg &
+fi
 #+END_SRC
 
 ** Automatically Mount External Drives
@@ -168,7 +167,7 @@ Set default fonts for =monospace=, =serif= and =sans-serif= classes.
       <string>sans-serif</string>
     </test>
     <edit name="family" mode="assign" binding="same">
-      <string>Google Sans</string>
+      <string>Product Sans</string>
     </edit>
   </match>
   <match target="pattern">
@@ -199,6 +198,21 @@ See [[./config/qtile.org][config/qtile.org]].
 *** XMonad
 
 See [[./config/xmonad.org][config/xmonad.org]].
+
+** Default Applications
+
+#+BEGIN_SRC conf :tangle ~/.config/mimeapps.list
+[Default Applications]
+text/html=brave_brave.desktop
+x-scheme-handler/http=brave_brave.desktop
+x-scheme-handler/https=brave_brave.desktop
+video/mp4=vlc_vlc.desktop
+video/x-matroska=vlc_vlc.desktop
+
+[Added Associations]
+video/mp4=vlc_vlc.desktop
+video/x-matroska=vlc_vlc.desktop;
+#+END_SRC
 
 ** TODO Notifications
 
