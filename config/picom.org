@@ -6,6 +6,10 @@
 Use a compositor to handle complex graphic interactions eg. dragging,
 transparency, shadows.
 
+The available window types as per the EWMH standard are =combo=, =desktop=,
+=dialog=, =dnd=, =dock=, =dropdown_menu=, =menu=, =normal=, =notification=,
+=popup_menu=, =splash=, =toolbar=, =tooltip=, =unknown= and =utility=.
+
 * Backend
 
 Specify the backend to use eg. =xrender=, =glx= or =xr_glx_hybrid=.
@@ -38,6 +42,7 @@ rounded-corners-exclude = [
   "window_type = 'dropdown_menu'",
   "window_type = 'menu'",
   "window_type = 'popup_menu'",
+  "window_type = 'tooltip'",
 ];
 round-borders = 1;
 round-borders-exclude = [];
@@ -47,22 +52,26 @@ round-borders-exclude = [];
 
 #+BEGIN_SRC conf
 active-opacity = 1;                     # Default opacity for active windows
-inactive-opacity = .66;                 # Opacity for inactive windows
+inactive-opacity = .65;                 # Opacity for inactive windows
 inactive-opacity-override = false;
 opacity-rule = [
-  "80:class_i = 'brave-browser' && !focused",
+  # Active overwrites
   "90:class_i = 'emacs' && focused",
   "90:class_i = 'spotify' && focused",
   "90:class_i = 'kitty' && focused",
+  # Inactive overwrites
+  "90:class_i = 'brave-browser' && !focused",
+  # Decoration overwrites
   "80:window_type = 'dropdown_menu'",
   "80:window_type = 'menu'",
   "80:window_type = 'popup_menu'",
+  "80:window_type = 'tooltip'",
 ];
 #+END_SRC
 
 * Blur
 
-The =dual_kawase= blur is only enabled with =--experimental-backends=.
+The =dual_kawase= method is only enabled with =--experimental-backends=.
 
 #+BEGIN_SRC conf
 # blur-background = false;
