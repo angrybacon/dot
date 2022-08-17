@@ -14,12 +14,6 @@ Debian.
 sudo apt install git pcmanfm vim
 #+END_SRC
 
-** Set a Maximum History of Snap Revisions
-
-#+BEGIN_SRC sh
-sudo snap set system refresh.retain=2
-#+END_SRC
-
 ** Configure Visudo
 
 Run =sudo visudo= in order to customize sudoers settings. Customize the default
@@ -45,14 +39,6 @@ Add user binaries path.
 #+BEGIN_SRC sh :tangle ~/.profile
 if [ -d "$HOME/.local/bin" ] ; then
   PATH="$HOME/.local/bin:$PATH"
-fi
-#+END_SRC
-
-Add path for snaps.
-
-#+BEGIN_SRC sh :tangle ~/.profile
-if [ -d "/snap/bin" ] ; then
-  PATH="/snap/bin:$PATH"
 fi
 #+END_SRC
 
@@ -203,15 +189,15 @@ See [[./config/xmonad.org][config/xmonad.org]].
 
 #+BEGIN_SRC conf :tangle ~/.config/mimeapps.list
 [Default Applications]
-text/html=brave_brave.desktop
-x-scheme-handler/http=brave_brave.desktop
-x-scheme-handler/https=brave_brave.desktop
-video/mp4=vlc_vlc.desktop
-video/x-matroska=vlc_vlc.desktop
+text/html=com.brave.Browser.desktop
+x-scheme-handler/http=com.brave.Browser.desktop
+x-scheme-handler/https=com.brave.Browser.desktop
+video/mp4=org.videolan.VLC.desktop
+video/x-matroska=org.videolan.VLC.desktop
 
 [Added Associations]
-video/mp4=vlc_vlc.desktop
-video/x-matroska=vlc_vlc.desktop;
+video/mp4=org.videolan.VLC.desktop
+video/x-matroska=org.videolan.VLC.desktop
 #+END_SRC
 
 ** TODO Notifications
@@ -226,10 +212,8 @@ Several scripts are available under [[./scripts/][scripts/]].
 
 * Emacs
 
-Install the preferred =gccemacs=. Details at http://akrl.sdf.org/gccemacs.html.
-CMake is necessary in order to compile the dependencies to =vterm= at runtime.
-
-See https://github.com/alexmurray/emacs-snap for the Snap package.
+Emacs now ships with native compilation by default /almost/ everywhere. More
+details at [[http://akrl.sdf.org/gccemacs.html]].
 
 See https://github.com/angrybacon/dotemacs for my configuration.
 
@@ -329,17 +313,19 @@ paru -S steam
 * Other Utilities
 
 #+BEGIN_SRC sh
-sudo apt install \
-    gdu htop most rsync tree \
-    flameshot gimp \
-    qbittorrent vlc
+sudo dnf install \
+    deluge flameshot kitty gimp \       # Applications
+    feh \                               # Background
+    baobab ncdu pcmanfm \               # Files
+    btop htop \                         # Monitors
+    neofetch ripgrep tree xclip xset    # Terminal utilities
 #+END_SRC
 
 #+BEGIN_SRC sh
-sudo snap install \
-    brave firefox \
-    btop \
-    discord slack \
-    spotify \
-    plexmediaserver
+flatpak install \
+    com.brave.Browser \
+    com.discordapp.Discord \
+    com.slack.Slack \
+    com.spotify.Client \
+    org.videolan.VLC
 #+END_SRC
