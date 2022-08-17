@@ -49,16 +49,15 @@ keys = [
     Key([mod, control], 'q', lazy.shutdown()),
     Key([mod, control], 'r', lazy.reload_config()),
     # Layout
-    Key([mod], 'Tab', lazy.layout.next()),
     Key([mod], 'f', lazy.window.toggle_fullscreen()),
-    Key([mod], 'n', lazy.layout.reset()),
-    Key([mod, control], 'Tab', lazy.next_layout()),
+    Key([mod], 'n', lazy.layout.next()),
+    Key([mod], 'p', lazy.layout.previous()),
     Key([mod, control], 'Tab', lazy.next_layout()),
     Key([mod, control], 'h', lazy.layout.shrink_main()),
     Key([mod, control], 'j', lazy.layout.grow()),
     Key([mod, control], 'k', lazy.layout.shrink()),
     Key([mod, control], 'l', lazy.layout.grow_main()),
-    Key([mod, shift], 'Tab', lazy.layout.previous()),
+    Key([mod, control], 'n', lazy.layout.reset()),
     Key([mod, shift], 'f', lazy.layout.flip()),
     Key([mod, shift], 'h', lazy.layout.shuffle_left()),
     Key([mod, shift], 'j', lazy.layout.shuffle_down()),
@@ -113,7 +112,7 @@ layouts_theme = {
     'border_focus': '#616161',
     'border_normal': '#424242',
     'border_width': 1,
-    'margin': 24,
+    'margin': 36,
     'single_border_width': 0,
 }
 
@@ -151,15 +150,16 @@ wmname = 'LG3D'
 #+BEGIN_SRC python
 def widgets_list():
     colors = {
-        'accent': '#00BFA5',
-        'foreground': '#ECEFF1',
-        'muted': '#546E7A',
+        'accent': '#93E0E3',
+        'chart': '#7F9F7F',
+        'foreground': '#DCDCCC',
+        'muted': '#656566',
     }
     chart = {
         'border_width': 0,
-        'fill_color': colors['accent'],
+        'fill_color': colors['chart'],
         'frequency': .5,
-        'graph_color': colors['accent'],
+        'graph_color': colors['chart'],
         'margin_x': 0,
         'margin_y': 8,
         'padding': 8,
@@ -212,7 +212,7 @@ def widgets_list():
         widget.Spacer(length=16),
     ]
 
-screens_bar = bar.Bar(background='#ECEFF10D', widgets=widgets_list(), size=40)
+screens_bar = bar.Bar(background='#FAFAFA0D', widgets=widgets_list(), size=48)
 screens = [Screen(top=screens_bar)]
 #+END_SRC
 
