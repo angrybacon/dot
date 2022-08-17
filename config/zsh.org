@@ -77,8 +77,35 @@ compinit -i
 
 * Node Version Manager
 
+Bootstrap NVM.
+
 #+BEGIN_SRC sh
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+#+END_SRC
+
+Automatically read =.nvmrc= at the root of your project to use the preferred
+Node.js version.
+
+#+BEGIN_SRC sh
+load-nvmrc() {
+  local defaultVersion="$(nvm version)"
+  local nvmrc="$(nvm_find_nvmrc)"
+  if [ -n "$nvmrc" ]; then
+    local newVersion=$(nvm version "$(cat "${nvmrc}")")
+    if [ "$newVersion" = "N/A" ]; then
+      nvm install
+    elif [ "$newVersion" != "$defaultVersion" ]; then
+      nvm use
+    fi
+  elif [ "$defaultVersion" != "$(nvm version default)" ]; then
+    echo "Reverting to nvm default version"
+    nvm use default
+  fi
+}
+
+autoload -U add-zsh-hook
+add-zsh-hook chpwd load-nvmrc
+load-nvmrc
 #+END_SRC
