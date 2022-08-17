@@ -165,8 +165,8 @@ def widgets_list():
         'padding': 8,
         'type': 'box',
     }
-    font_size = 18
-    icon_size = 20
+    font_size = 20
+    icon_size = 22
     return [
         widget.Spacer(length=8),
         widget.GroupBox(

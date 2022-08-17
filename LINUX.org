@@ -56,10 +56,10 @@ ln -s ~/.profile ~/.zprofile
 
 ** =~/.Xresources=
 
-Increase the base DPI by 25% and set base font for XTerm.
+Increase the base DPI by 50% and set base font for XTerm.
 
 #+BEGIN_SRC conf :tangle ~/.Xresources
-Xft.dpi: 120
+Xft.dpi: 144
 XTerm*faceName: monospace:style=Regular
 XTerm*faceSize: 14
 #+END_SRC

@@ -10,7 +10,7 @@ A default configuration file can be found in =/usr/share/doc/kitty/kitty.conf=.
 Configure a default font size.
 
 #+BEGIN_SRC conf
-font_size                   12.0
+font_size                   10.0
 #+END_SRC
 
 Set font families for face variants.
