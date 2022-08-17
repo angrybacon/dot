@@ -22,7 +22,7 @@ defaults write -g KeyRepeat -int 1
 Install core dependencies, somehow not present by default.
 
 #+BEGIN_SRC sh
-brew install coreutils most
+brew install coreutils
 #+END_SRC
 
 This also prefixes GNU utilities with =g=. In order to use their real name, add

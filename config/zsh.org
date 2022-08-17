@@ -20,10 +20,12 @@ setopt share_history
 
 * Pager
 
-Customize the default pager. Depend on =most=.
+Customize the default pager as well the pager used with =man=.
 
 #+BEGIN_SRC sh
-export PAGER=most
+export LESS="--raw-control-chars --squeeze-blank-lines --use-color"
+export MANPAGER='less --long-prompt +Gg'
+export PAGER=less
 #+END_SRC
 
 * Aliases
@@ -31,14 +33,16 @@ export PAGER=most
 #+BEGIN_SRC sh
 alias arecordvv='arecord -vv -f dat /dev/null'
 alias arecordvvv='arecord -vvv -f dat /dev/null'
+alias df='df --human-readable'
 alias diff='diff --color'
+alias du='du --human-readable'
 alias egrep='egrep --color'
 alias fgrep='fgrep --color'
 alias grep='grep --color --ignore-case'
 alias la='ll -A'
 alias ll='ls -ghlo'
 alias lll='ls -hl'
-alias ls='ls --color --group-directories-first --literal'
+alias ls='ls --color --group-directories-first --literal -v'
 alias rsync='rsync --human-readable --info=progress2'
 alias sudo='sudo '
 alias tree='tree -C'
