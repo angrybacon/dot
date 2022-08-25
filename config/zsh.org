@@ -75,6 +75,12 @@ autoload compinit
 compinit -i
 #+END_SRC
 
+Allow case-insensitive completion candidates.
+
+#+BEGIN_SRC sh
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+#+END_SRC
+
 * Node Version Manager
 
 Bootstrap NVM.
