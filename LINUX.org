@@ -1,31 +1,35 @@
-# -*- after-save-hook: (org-babel-tangle t); -*-
 #+TITLE: Linux
 #+AUTHOR: Mathieu Marques
 #+PROPERTY: header-args :results silent
 
-This file documents the steps I've followed to install my daily machine running
-Debian.
+This file documents the steps I've followed to install my daily machines,
+usually running either Arch or Fedora.
 
 * Checklist
 
 ** Install Core Dependencies and Packages
 
 #+BEGIN_SRC sh
-sudo apt install git pcmanfm vim
+paru -S \
+    cmake git openssh \                 # Core
+    highlight xclip \                   # Utilities
+    vi vim                              # Editors
+#+END_SRC
+
+#+BEGIN_SRC sh
+sudo dnf install \
+    cmake git openssh \                 # Core
+    highlight xclip \                   # Utilities
+    vi vim                              # Editors
 #+END_SRC
 
 ** Configure Visudo
 
 Run =sudo visudo= in order to customize sudoers settings. Customize the default
-editor to use.
+editor to use and enable asterisk feedback in password prompts.
 
 #+BEGIN_SRC diff
 +Defaults editor=/usr/bin/vim
-#+END_SRC
-
-Enable Asterisks During Password Prompts.
-
-#+BEGIN_SRC diff
 -Defaults env_reset
 +Defaults env_reset, pwfeedback
 #+END_SRC
@@ -48,37 +52,20 @@ Increase the keyboard repeat rate.
 xset r rate 200 50
 #+END_SRC
 
-Optionally, create a =.zprofile= link to the profile file.
-
-#+BEGIN_SRC sh
-ln -s ~/.profile ~/.zprofile
-#+END_SRC
-
 ** =~/.Xresources=
 
-Increase the base DPI by 50% and set base font for XTerm.
+Increase the base DPI by 25%.
 
 #+BEGIN_SRC conf :tangle ~/.Xresources
-Xft.dpi: 144
-XTerm*faceName: monospace:style=Regular
-XTerm*faceSize: 14
+Xft.dpi: 132
 #+END_SRC
 
-** =~/.xinitrc=
+** =~/.xprofile=
 
-Merge-in defaults.
-
-#+BEGIN_SRC sh :shebang "#!/bin/sh" :tangle ~/.xinitrc
-if [ -f "$HOME/.Xresources" ]; then
-  xrdb -merge "$HOME/.Xresources"
-fi
-#+END_SRC
-
-Bootstrap startup programs.
-
-#+BEGIN_SRC sh :shebang "#!/bin/sh" :tangle ~/.xinitrc
+#+BEGIN_SRC sh :tangle ~/.xprofile
 picom --experimental-backends -b
 
+~/.fehbg &
 if [ -f "$HOME/.fehbg" ]; then
   ~/.fehbg &
 fi
@@ -110,6 +97,7 @@ Install =zsh= then set it as your default shell.
 
 #+BEGIN_SRC sh
 chsh -s $(which zsh)
+ln -s ~/.profile ~/.zprofile
 #+END_SRC
 
 See [[./config/zsh.org][config/zsh.org]].
@@ -124,11 +112,11 @@ See [[./config/kitty.org][config/kitty.org]].
 
 Other sections from this document will assume these fonts are already installed:
 
-- Cascadia Code
-- Google Sans
-- Roboto Slab
+- /Cascadia Code/
+- /Google Sans/ or /Product Sans/
+- /Roboto Slab/
 
-To manually install the fonts, download their respective TTF or OTF files and
+If manually installing the fonts, download their respective TTF or OTF files and
 move them to =/usr/local/share/fonts/=. Run =fc-cache= to ensure the font cache
 integrity.
 
@@ -169,6 +157,14 @@ Set default fonts for =monospace=, =serif= and =sans-serif= classes.
 
 * Desktop
 
+** Background
+
+Install =feh= and run it once to initialize the bootstrap executable.
+
+#+BEGIN_SRC sh
+feh --bg-fill Pictures/Wallpapers/filename.ext
+#+END_SRC
+
 ** Compositor
 
 See [[./config/picom.org][config/picom.org]].
@@ -176,6 +172,10 @@ See [[./config/picom.org][config/picom.org]].
 ** Window Manager
 
 I use =qtile= daily but other historical configuration can be found below.
+
+*** EXWM
+
+See [[https://github.com/angrybacon/dotemacs/blob/master/DESKTOP.org]].
 
 *** Qtile
 
@@ -187,17 +187,22 @@ See [[./config/xmonad.org][config/xmonad.org]].
 
 ** Default Applications
 
-#+BEGIN_SRC conf :tangle ~/.config/mimeapps.list
+Prefer settings those through GUI but in case of failure, edit
+=~/.config/mimeapps.list=.
+
+#+BEGIN_SRC conf
 [Default Applications]
-text/html=com.brave.Browser.desktop
-x-scheme-handler/http=com.brave.Browser.desktop
-x-scheme-handler/https=com.brave.Browser.desktop
-video/mp4=org.videolan.VLC.desktop
-video/x-matroska=org.videolan.VLC.desktop
+text/html=brave-browser.desktop
+x-scheme-handler/http=brave-browser.desktop
+x-scheme-handler/https=brave-browser.desktop
+x-scheme-handler/about=brave-browser.desktop
+x-scheme-handler/unknown=brave-browser.desktop
+video/mp4=vlc.desktop
+video/x-matroska=vlc.desktop
 
 [Added Associations]
-video/mp4=org.videolan.VLC.desktop
-video/x-matroska=org.videolan.VLC.desktop
+video/mp4=vlc.desktop
+video/x-matroska=vlc.desktop
 #+END_SRC
 
 ** TODO Notifications
@@ -207,8 +212,6 @@ See [[./config/dunst.org][config/dunst.org]].
 ** TODO Screenshots
 
 See [[./config/flameshot.org][config/flameshot.org]].
-
-Several scripts are available under [[./scripts/][scripts/]].
 
 * Emacs
 
@@ -231,7 +234,7 @@ tweaks are enough.
 
 ** Base Configuration
 
-=~/.gitconfig=
+Default settings for all Git projects.
 
 #+BEGIN_SRC conf :tangle ~/.gitconfig
 [user]
@@ -246,68 +249,19 @@ tweaks are enough.
     autosquash = true
 #+END_SRC
 
-=~/.gitignore=
+Default ignore list for all Git projects.
 
 #+BEGIN_SRC conf :tangle ~/.gitignore
 .dir-locals.el
 #+END_SRC
 
-** TODO Signed Commits
+* SSH
 
-1. First generate a key for your machine
-
-   #+BEGIN_SRC sh
-   gpg --full-gen-key
-   gpg --list-secret-keys --keyid-format LONG <email>
-   gpg --armor --export 1234567890ABCDEF
-   #+END_SRC
-
-2. Copy the public key to your Git hosting platform
-
-3. Add the secret key to your repository
-
-   #+BEGIN_SRC conf
-   [user]
-       signingkey = 1234567890ABCDEF
-   [commit]
-       gpgsign = true
-   #+END_SRC
-
-=~./profile=
-
-#+BEGIN_SRC diff
-+export GPG_TTY=$TTY
-#+END_SRC
-
-* TODO SSH
+Create your public key and push it to the clipboard for further use.
 
 #+BEGIN_SRC sh
-paru -S openssh xclip
 ssh-keygen -t ed25519
 xclip -sel clip < ~/.ssh/id_ed25519.pub
-#+END_SRC
-
-* TODO Games
-
-** Battle.net
-
-Battlet.net applications run best under Lutris. It has many dependencies based
-on Wine. Follow the instructions at
-[[https://github.com/lutris/docs/blob/master/Battle.Net.md]] and install games
-from Lutris directly.
-
-#+BEGIN_SRC sh
-paru -S lutris
-#+END_SRC
-
-** Steam
-
-For Steam games that are officially supported on Linux, install the =steam=
-package after enabling =multilib= repositories in your Pacman configuration and
-ensuring your graphic drivers are Vulkan-enabled.
-
-#+BEGIN_SRC sh
-paru -S steam
 #+END_SRC
 
 * Other Utilities
@@ -315,10 +269,9 @@ paru -S steam
 #+BEGIN_SRC sh
 sudo dnf install \
     deluge flameshot kitty gimp \       # Applications
-    feh \                               # Background
     baobab ncdu pcmanfm \               # Files
     btop htop \                         # Monitors
-    neofetch ripgrep tree xclip xset    # Terminal utilities
+    neofetch ripgrep tree               # Terminal utilities
 #+END_SRC
 
 #+BEGIN_SRC sh
@@ -329,3 +282,9 @@ flatpak install \
     com.spotify.Client \
     org.videolan.VLC
 #+END_SRC
+
+* COMMENT Local Variables
+
+# Local Variables:
+# after-save-hook: (org-babel-tangle t)
+# End:

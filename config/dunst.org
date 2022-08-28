@@ -1,4 +1,3 @@
-# -*- after-save-hook: (org-babel-tangle t); -*-
 #+TITLE: Dunst
 #+AUTHOR: Mathieu Marques
 
@@ -21,15 +20,15 @@ A default configuration file can be found at
 Set padding for the notifications.
 
 #+BEGIN_SRC conf :noweb-ref geometry
-padding = 8                         # Vertical padding in pixels
-horizontal_padding = 16             # Horizontal padding in pixels
+padding = 8                             # Vertical padding in pixels
+horizontal_padding = 16                 # Horizontal padding in pixels
 #+END_SRC
 
 Set size geometry for the notification frame.
 
 #+BEGIN_SRC conf :noweb-ref geometry
-height = 300                        # Maximum height for a single notification
-width = (200, 800)                  # Dynamic width
+height = 300                            # Maximum height for a notification
+width = (200, 800)                      # Dynamic width
 #+END_SRC
 
 Add offset to the anchor.
@@ -42,9 +41,9 @@ origin = top-right
 * Borders
 
 #+BEGIN_SRC conf :noweb-ref borders
-separator_height = 2                # Draw a line between notifications. Set to 0 to disable
-frame_color = "#78909C"             # External border color
-frame_width = 1                     # border size in pixels. Set to 0 to disable
+separator_height = 2                    # Draw a line between notifications
+frame_color = "#78909C"                 # External border color
+frame_width = 1                         # Border size in pixels
 #+END_SRC
 
 Define the corner radius of the notification window in pixels. If the radius is
@@ -113,3 +112,9 @@ mouse_right_click = close_current
     foreground = "#FAFAFA"
     timeout = 8
 #+END_SRC
+
+* COMMENT Local Variables
+
+# Local Variables:
+# after-save-hook: (org-babel-tangle t)
+# End:

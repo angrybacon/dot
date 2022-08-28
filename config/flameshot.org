@@ -1,5 +1,4 @@
-# -*- after-save-hook: (org-babel-tangle t); -*-
-#+TITLE: Alacritty
+#+TITLE: Flameshot
 #+AUTHOR: Mathieu Marques
 #+PROPERTY: header-args:conf :tangle ~/.config/flameshot/flameshot.ini
 
@@ -20,3 +19,9 @@ showStartupLaunchMessage=false
 uiColor=#F0DFAF
 userColors=picker, #3F3F3F, #F0DFAF, #DFAF8F, #CC9393, #DC8CC3, #7F9F7F, #8CD0D3
 #+END_SRC
+
+* COMMENT Local Variables
+
+# Local Variables:
+# after-save-hook: (org-babel-tangle t)
+# End:

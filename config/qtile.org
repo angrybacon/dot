@@ -1,4 +1,3 @@
-# -*- after-save-hook: (org-babel-tangle t); -*-
 #+TITLE: Qtile
 #+AUTHOR: Mathieu Marques
 #+PROPERTY: header-args:python :tangle ~/.config/qtile/config.py
@@ -17,8 +16,8 @@ Type=Application
 Keywords=wm;tiling
 #+END_SRC
 
-Run =qtile check= in order to verify that your configuration can be loaded
-safely.
+Install =mypy= using =pip= and run =qtile check= in order to verify that your
+configuration can be loaded safely.
 
 * Bootstrap
 
@@ -241,3 +240,9 @@ follow_mouse_focus = True
 bring_front_click = False
 cursor_warp = False
 #+END_SRC
+
+* COMMENT Local Variables
+
+# Local Variables:
+# after-save-hook: (org-babel-tangle t)
+# End:
