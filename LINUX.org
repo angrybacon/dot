@@ -34,6 +34,11 @@ editor to use and enable asterisk feedback in password prompts.
 +Defaults env_reset, pwfeedback
 #+END_SRC
 
+** Create Default Home Directories
+
+If they are not already, create the initial home directories with
+=xdg-user-dirs-update=.
+
 * X
 
 ** =~/.profile=
@@ -222,12 +227,21 @@ See https://github.com/angrybacon/dotemacs for my configuration.
 
 * Vim
 
-Install =vim= or =gvim=. I mostly use Emacs but sometimes Vim too so very minor
-tweaks are enough.
+I mostly use Emacs but sometimes Vim too so minor tweaks are enough.
 
-#+BEGIN_SRC sh :tangle ~/.vimrc
-:syntax on
-:set cursorline
+See [[./config/vim.org][config/vim.org]].
+
+The above configuration tangles to =/etc/vimrc.local=. Load it from the
+system-wide configuration at =/etc/vimrc=.
+
+#+BEGIN_SRC diff
++:source /etc/vimrc.local
+#+END_SRC
+
+And link it to your user.
+
+#+BEGIN_SRC sh
+ln -s /etc/vimrc.local ~/.vimrc
 #+END_SRC
 
 * Git

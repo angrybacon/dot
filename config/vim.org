@@ -1,0 +1,50 @@
+#+TITLE: Vim
+#+AUTHOR: Mathieu Marques
+#+PROPERTY: header-args:vimrc :tangle /sudo::/etc/vimrc.local
+
+* Theme
+
+Enable syntax highlighting and apply theme.
+
+#+BEGIN_SRC vimrc
+:colorscheme desert
+:syntax on
+#+END_SRC
+
+Highlight current line.
+
+#+BEGIN_SRC vimrc
+:set cursorline
+#+END_SRC
+
+* Cursor
+
+Automatically change cursor shape with states.
+
+#+BEGIN_SRC vimrc
+let &t_SI = "\e[6 q"
+let &t_EI = "\e[2 q"
+#+END_SRC
+
+Set the initial cursor shape.
+
+#+BEGIN_SRC vimrc
+augroup ResetCursorShape
+   au!
+   autocmd VimEnter * normal! :startinsert :stopinsert
+augroup END
+#+END_SRC
+
+Remove delay when resetting the cursor shape.
+
+#+BEGIN_SRC vimrc
+set ttimeout
+set ttimeoutlen=1
+set ttyfast
+#+END_SRC
+
+* COMMENT Local Variables
+
+# Local Variables:
+# after-save-hook: (org-babel-tangle t)
+# End:
