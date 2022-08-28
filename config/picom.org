@@ -3,7 +3,8 @@
 #+PROPERTY: header-args:conf :tangle ~/.config/picom/picom.conf
 
 Use a compositor to handle complex graphic interactions eg. dragging,
-transparency, shadows.
+transparency, shadows. The below configuration assumes the following fork is
+being used: [[https://github.com/jonaburg/picom]].
 
 The available window types as per the EWMH standard are =combo=, =desktop=,
 =dialog=, =dnd=, =dock=, =dropdown_menu=, =menu=, =normal=, =notification=,
@@ -21,13 +22,16 @@ glx-no-stencil = true
 
 * Shadows
 
-Disable all shadows.
-
 Note that desktop windows ie. windows with ='_NET_WM_WINDOW_TYPE_DESKTOP'= never
 get shadow, unless explicitly requested using the =wintypes= option.
 
 #+BEGIN_SRC conf
-shadow = false;                         # Disable all shadows
+shadow = true;
+shadow-exclude = ["window_type = 'combo'"];
+shadow-offset-x = -24;
+shadow-offset-y = -24;
+shadow-opacity = .25;
+shadow-radius = 24;
 #+END_SRC
 
 * Rounded Corners
@@ -36,6 +40,7 @@ shadow = false;                         # Disable all shadows
 corner-radius = 24.0;
 rounded-corners-exclude = [
   "!name~=''",                          # Exclude windows with no name ie. bars
+  "window_type = 'combo'",
   "window_type = 'desktop'",
   "window_type = 'dock'",
   "window_type = 'dropdown_menu'",
