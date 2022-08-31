@@ -26,7 +26,9 @@ import os
 import subprocess
 from libqtile import bar, layout, widget
 from libqtile.command import lazy
-from libqtile.config import Click, Drag, Group, Key, Match, Screen
+from libqtile.config import (
+    Click, Drag, DropDown, Group, Key, Match, Screen, ScratchPad,
+)
 from libqtile.utils import guess_terminal
 
 
@@ -34,7 +36,14 @@ mod = 'mod4'
 control = 'control'
 shift = 'shift'
 home = os.path.expanduser('~')
-terminal = guess_terminal('kitty')
+terminal = guess_terminal(['kitty', 'alacritty'])
+#+END_SRC
+
+Variables used in the =CheckUpdates= bar widget.
+
+#+BEGIN_SRC python
+update_command = terminal + ' sudo dnf update'
+update_distribution = 'Fedora'
 #+END_SRC
 
 * Keys
@@ -42,9 +51,9 @@ terminal = guess_terminal('kitty')
 #+BEGIN_SRC python
 keys = [
     # Meta
-    Key([mod], 'Return', lazy.spawn(terminal)),
     Key([mod], 'space', lazy.spawncmd()),
     Key([mod], 'q', lazy.window.kill()),
+    Key([mod, control], 'Return', lazy.spawn(terminal)),
     Key([mod, control], 'q', lazy.shutdown()),
     Key([mod, control], 'r', lazy.reload_config()),
     # Layout
@@ -104,12 +113,29 @@ for g in groups:
     ])
 #+END_SRC
 
+* Scratchpad
+
+Define a scratchpad slot with a dedicated terminal.
+
+#+BEGIN_SRC python
+scratchpad_geometry = {'height': .8, 'width': .6, 'x': .2, 'y': .1}
+scratchpad_dropdown = DropDown('terminal', terminal, **scratchpad_geometry)
+groups.append(ScratchPad('scratchpad', [scratchpad_dropdown]))
+#+END_SRC
+
+Bind the dropdown key.
+
+#+BEGIN_SRC python
+scratchpad = lazy.group['scratchpad']
+keys.append(Key([mod], 'Return', scratchpad.dropdown_toggle('terminal')))
+#+END_SRC
+
 * Layouts
 
 #+BEGIN_SRC python
 layouts_theme = {
-    'border_focus': '#616161',
-    'border_normal': '#424242',
+    'border_focus': '#656555',
+    'border_normal': '#5F5F5F',
     'border_width': 1,
     'margin': 36,
     'single_border_width': 0,
@@ -193,9 +219,12 @@ def widgets_list():
             format='%H:%M %B %d',
         ),
         widget.Spacer(),
-        widget.CheckUpdates(distro='Fedora', fontsize=font_size),
-        widget.Spacer(length=16),
-        widget.Systray(icon_size=icon_size, padding=12),
+        widget.CheckUpdates(
+            display_format='{updates} updates',
+            distro=update_distribution,
+            fontsize=font_size,
+            mouse_callbacks={'Button1': lazy.spawn(update_command)},
+        ),
         widget.Spacer(length=16),
         widget.Volume(
             fontsize=font_size,
@@ -211,7 +240,7 @@ def widgets_list():
         widget.Spacer(length=16),
     ]
 
-screens_bar = bar.Bar(background='#FAFAFA0D', widgets=widgets_list(), size=48)
+screens_bar = bar.Bar(background='#FAFAFA0D', size=48, widgets=widgets_list())
 screens = [Screen(top=screens_bar)]
 #+END_SRC
 
@@ -231,7 +260,6 @@ mouse = [
         lazy.window.set_size_floating(),
         start=lazy.window.get_size(),
     ),
-    Click([mod], 'Button2', lazy.window.bring_to_front()),
 ]
 
 dgroups_key_binder = None
@@ -245,4 +273,5 @@ cursor_warp = False
 
 # Local Variables:
 # after-save-hook: (org-babel-tangle t)
+# eval: (when (require 'rainbow-mode nil :noerror) (rainbow-mode 1))
 # End:

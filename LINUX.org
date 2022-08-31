@@ -11,16 +11,16 @@ usually running either Arch or Fedora.
 
 #+BEGIN_SRC sh
 paru -S \
-    cmake git openssh \                 # Core
-    highlight xclip \                   # Utilities
-    vi vim                              # Editors
+    cmake git openssh \
+    highlight xclip \
+    vi vim
 #+END_SRC
 
 #+BEGIN_SRC sh
 sudo dnf install \
-    cmake git openssh \                 # Core
-    highlight xclip \                   # Utilities
-    vi vim                              # Editors
+    cmake git openssh \
+    highlight xclip \
+    vi vim
 #+END_SRC
 
 ** Configure Visudo
@@ -39,23 +39,37 @@ editor to use and enable asterisk feedback in password prompts.
 If they are not already, create the initial home directories with
 =xdg-user-dirs-update=.
 
-* X
+* Shell
 
-** =~/.profile=
+** User Session
 
-Add user binaries path.
+Edit =~/.profile= to set the path for user binaries and increase the keyboard
+repeat rate.
 
 #+BEGIN_SRC sh :tangle ~/.profile
 if [ -d "$HOME/.local/bin" ] ; then
   PATH="$HOME/.local/bin:$PATH"
 fi
-#+END_SRC
 
-Increase the keyboard repeat rate.
-
-#+BEGIN_SRC sh :tangle ~/.profile
 xset r rate 200 50
 #+END_SRC
+
+** Zsh
+
+Install =zsh= then set it as your default shell.
+
+#+BEGIN_SRC sh
+chsh -s $(which zsh)
+ln -s ~/.profile ~/.zprofile
+#+END_SRC
+
+See [[./config/zsh.org][config/zsh.org]].
+
+** Terminal
+
+See [[./config/kitty.org][config/kitty.org]].
+
+* X
 
 ** =~/.Xresources=
 
@@ -65,15 +79,18 @@ Increase the base DPI by 25%.
 Xft.dpi: 132
 #+END_SRC
 
+** =~/.xinitrc=
+
+#+BEGIN_SRC sh :shebang "#!/bin/sh" :tangle ~/.xinitrc
+[ -f /etc/xprofile ] && . /etc/xprofile
+[ -f "$HOME/.xprofile" ] && . ~/.xprofile
+#+END_SRC
+
 ** =~/.xprofile=
 
 #+BEGIN_SRC sh :tangle ~/.xprofile
+[ -f "$HOME/.fehbg" ] && ~/.fehbg &
 picom --experimental-backends -b
-
-~/.fehbg &
-if [ -f "$HOME/.fehbg" ]; then
-  ~/.fehbg &
-fi
 #+END_SRC
 
 ** Automatically Mount External Drives
@@ -93,23 +110,6 @@ Edit =/etc/fstab= to add the drive mount point.
 #+END_SRC
 
 Confirm proper mouting with =sudo mount -a=.
-
-* Shell
-
-** Zsh
-
-Install =zsh= then set it as your default shell.
-
-#+BEGIN_SRC sh
-chsh -s $(which zsh)
-ln -s ~/.profile ~/.zprofile
-#+END_SRC
-
-See [[./config/zsh.org][config/zsh.org]].
-
-** Terminal
-
-See [[./config/kitty.org][config/kitty.org]].
 
 * Fonts
 
@@ -235,7 +235,9 @@ The above configuration tangles to =/etc/vimrc.local=. Load it from the
 system-wide configuration at =/etc/vimrc=.
 
 #+BEGIN_SRC diff
-+:source /etc/vimrc.local
++if filereadable("/etc/vimrc.local")
++  source /etc/vimrc.local
++endif
 #+END_SRC
 
 And link it to your user.
@@ -282,10 +284,10 @@ xclip -sel clip < ~/.ssh/id_ed25519.pub
 
 #+BEGIN_SRC sh
 sudo dnf install \
-    deluge flameshot kitty gimp \       # Applications
-    baobab ncdu pcmanfm \               # Files
-    btop htop \                         # Monitors
-    neofetch ripgrep tree               # Terminal utilities
+    deluge feh flameshot kitty gimp \
+    baobab ncdu pcmanfm \
+    btop htop \
+    neofetch ripgrep tree
 #+END_SRC
 
 #+BEGIN_SRC sh
