@@ -296,6 +296,14 @@ notify-send --urgency=low "Cron" "Successfully updated permissions under ~/Video
 Run it at every hour of the day to ensure new files also have the right
 permissions.
 
+* Slack
+
+Paste the following specifications into the theme field to apply Zenburn colors.
+
+#+BEGIN_SRC text
+#3F3F3F,#121212,#7F9F7F,#FFFFFD,#5F5F5F,#DCDCCC,#93E0E3,#CC9393,#DFAF8F,#383838
+#+END_SRC
+
 * Other Utilities
 
 #+BEGIN_SRC sh
@@ -319,4 +327,5 @@ flatpak install \
 
 # Local Variables:
 # after-save-hook: (org-babel-tangle t)
+# eval: (when (require 'rainbow-mode nil :noerror) (rainbow-mode 1))
 # End:
