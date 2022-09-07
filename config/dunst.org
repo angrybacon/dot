@@ -20,7 +20,7 @@ A default configuration file can be found at
 Set padding for the notifications.
 
 #+BEGIN_SRC conf :noweb-ref geometry
-padding = 8                             # Vertical padding in pixels
+padding = 12                            # Vertical padding in pixels
 horizontal_padding = 16                 # Horizontal padding in pixels
 #+END_SRC
 
@@ -28,22 +28,22 @@ Set size geometry for the notification frame.
 
 #+BEGIN_SRC conf :noweb-ref geometry
 height = 300                            # Maximum height for a notification
-width = (200, 800)                      # Dynamic width
+width = (200, 800)                      # Width range
 #+END_SRC
 
 Add offset to the anchor.
 
 #+BEGIN_SRC conf :noweb-ref geometry
-offset = 12x52
+offset = 12x48
 origin = top-right
 #+END_SRC
 
 * Borders
 
 #+BEGIN_SRC conf :noweb-ref borders
-separator_height = 2                    # Draw a line between notifications
-frame_color = "#78909C"                 # External border color
-frame_width = 1                         # Border size in pixels
+separator_height = 1                    # Draw a line between notifications
+frame_color = "#4F4F4F"                 # External border color
+frame_width = 0                         # Border size in pixels
 #+END_SRC
 
 Define the corner radius of the notification window in pixels. If the radius is
@@ -51,7 +51,7 @@ Define the corner radius of the notification window in pixels. If the radius is
 exceeds half of the notification height to avoid clipping text and/or icons.
 
 #+BEGIN_SRC conf :noweb-ref borders
-corner_radius = 8
+corner_radius = 2
 #+END_SRC
 
 * Idle Cleanup
@@ -67,8 +67,7 @@ idle_threshold = 0
 * Text
 
 #+BEGIN_SRC conf :noweb-ref text
-font = Google Sans 16
-# word_wrap = yes
+font = Sans 12
 #+END_SRC
 
 * Actions
@@ -98,18 +97,18 @@ mouse_right_click = close_current
 
 #+BEGIN_SRC conf :noweb-ref colors
 [urgency_critical]
-    background = "#E53935"
-    foreground = "#FAFAFA"
+    background = "#CC9393"
+    foreground = "#FFFFFD"
     timeout = 0
 
 [urgency_low]
-    background = "#607D8B"
-    foreground = "#FAFAFA"
+    background = "#494949"
+    foreground = "#DCDCCC"
     timeout = 4
 
 [urgency_normal]
-    background = "#009688"
-    foreground = "#FAFAFA"
+    background = "#8CD0D3"
+    foreground = "#383838"
     timeout = 8
 #+END_SRC
 
@@ -117,4 +116,5 @@ mouse_right_click = close_current
 
 # Local Variables:
 # after-save-hook: (org-babel-tangle t)
+# eval: (when (require 'rainbow-mode nil :noerror) (rainbow-mode 1))
 # End:

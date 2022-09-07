@@ -269,6 +269,7 @@ Default ignore list for all Git projects.
 
 #+BEGIN_SRC conf :tangle ~/.gitignore
 .dir-locals.el
+.nvmrc
 #+END_SRC
 
 * SSH
@@ -279,6 +280,21 @@ Create your public key and push it to the clipboard for further use.
 ssh-keygen -t ed25519
 xclip -sel clip < ~/.ssh/id_ed25519.pub
 #+END_SRC
+
+* Media
+
+This block exports to a script that resets the media folders with the right
+permissions.
+
+#+HEADER: :mkdirp yes :shebang "#!/bin/sh"
+#+BEGIN_SRC sh :tangle ~/Scripts/fix-media-permissions.sh
+find ~/Videos -type d \! -perm 775 -exec chmod 775 {} \; -print
+find ~/Videos -type f \! -perm 664 -exec chmod 664 {} \; -print
+notify-send --urgency=low "Cron" "Successfully updated permissions under ~/Videos/"
+#+END_SRC
+
+Run it at every hour of the day to ensure new files also have the right
+permissions.
 
 * Other Utilities
 

@@ -101,7 +101,7 @@ groups = [
     Group('6', label='\U0000EF4A'),
     Group('7', label='\U0000EF4A'),
     Group('8', label='\U0000EF4A'),
-    Group('9', label='\U0000EF4A', spawn=['spotify']),
+    Group('9', label='\U0000EF4A'),
     Group('0', label='\U0000EF4A'),
 ]
 
