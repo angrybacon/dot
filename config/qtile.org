@@ -37,6 +37,7 @@ control = 'control'
 shift = 'shift'
 home = os.path.expanduser('~')
 terminal = guess_terminal(['kitty', 'alacritty'])
+file_manager = 'nautilus -w'
 #+END_SRC
 
 Variables used in the =CheckUpdates= bar widget.
@@ -44,6 +45,14 @@ Variables used in the =CheckUpdates= bar widget.
 #+BEGIN_SRC python
 update_command = terminal + ' sudo dnf update'
 update_distribution = 'Fedora'
+#+END_SRC
+
+Commands used for the keys and volume widget.
+
+#+BEGIN_SRC python
+volume_down = 'amixer -q sset Master 10%-'
+volume_toggle = 'amixer -q set Master toggle'
+volume_up = 'amixer -q sset Master 10%+'
 #+END_SRC
 
 * Keys
@@ -57,6 +66,7 @@ keys = [
     Key([mod, control], 'q', lazy.shutdown()),
     Key([mod, control], 'r', lazy.reload_config()),
     # Layout
+    Key([mod], 'e', lazy.spawn(file_manager)),
     Key([mod], 'f', lazy.window.toggle_fullscreen()),
     Key([mod], 'n', lazy.layout.next()),
     Key([mod], 'p', lazy.layout.previous()),
@@ -80,8 +90,9 @@ keys = [
     Key([mod, shift], '3', lazy.spawn(['flameshot', 'gui'])),
     Key([mod, shift], '4', lazy.spawn(['flameshot', 'screen', '--clipboard'])),
     # Media
-    Key([], "XF86AudioLowerVolume", lazy.spawn("amixer set Master 10%-")),
-    Key([], "XF86AudioRaiseVolume", lazy.spawn("amixer set Master 10%+")),
+    Key([], 'XF86AudioLowerVolume', lazy.spawn(volume_down)),
+    Key([], 'XF86AudioMute', lazy.spawn(volume_toggle)),
+    Key([], 'XF86AudioRaiseVolume', lazy.spawn(volume_up)),
 ]
 #+END_SRC
 
@@ -92,10 +103,14 @@ for the glyph code points to use.
 
 #+BEGIN_SRC python
 groups_font = 'Material Design Icons'
+groups_web = [Match(wm_class='brave'), Match(wm_class='firefox')]
+groups_game = [Match(wm_class='lutris'), Match(wm_class='Steam')]
+groups_social = [Match(wm_class='discord'), Match(wm_class='slack')]
+
 groups = [
-    Group('1', label='\U0000EF4A', spawn=['brave']),
-    Group('2', label='\U0000EF4A', spawn=['discord']),
-    Group('3', label='\U0000EF4A'),
+    Group('1', label='\U0000EF4A', matches=groups_web, spawn=['brave']),
+    Group('2', label='\U0000EF4A', matches=groups_social),
+    Group('3', label='\U0000EF4A', matches=groups_game),
     Group('4', label='\U0000EF4A'),
     Group('5', label='\U0000EF4A'),
     Group('6', label='\U0000EF4A'),
@@ -138,16 +153,23 @@ layouts_theme = {
     'border_normal': '#5F5F5F',
     'border_width': 1,
     'margin': 36,
-    'single_border_width': 0,
+    'single_border_width': 1,
 }
 
 
 layouts = [
     layout.MonadTall(**layouts_theme, ratio=.65),
-    layout.MonadWide(**layouts_theme, ratio=.70),
+    layout.MonadWide(**layouts_theme, ratio=.6),
 ]
 
+auto_fullscreen = True
+auto_minimize = True
+focus_on_window_activation = 'smart'
+reconfigure_screens = True
+wmname = 'LG3D'
+#+END_SRC
 
+#+BEGIN_SRC python
 floating_layout = layout.Floating(
     **layouts_theme,
     float_rules=[
@@ -159,15 +181,9 @@ floating_layout = layout.Floating(
         Match(wm_class='makebranch'),
         Match(wm_class='maketag'),
         Match(wm_class='ssh-askpass'),
+        Match(title='', wm_class='zoom'),
     ],
 )
-
-
-auto_fullscreen = True
-auto_minimize = True
-focus_on_window_activation = 'smart'
-reconfigure_screens = True
-wmname = 'LG3D'
 #+END_SRC
 
 * Bar
@@ -223,13 +239,21 @@ def widgets_list():
             display_format='{updates} updates',
             distro=update_distribution,
             fontsize=font_size,
-            mouse_callbacks={'Button1': lazy.spawn(update_command)},
+            mouse_callbacks={
+                'Button1': lazy.spawn(update_command),
+                'Button3': scratchpad.dropdown_toggle('terminal'),
+            },
+            update_interval=60 * 60,
         ),
+        widget.Spacer(length=16),
+        widget.Systray(padding=0),
         widget.Spacer(length=16),
         widget.Volume(
             fontsize=font_size,
             foreground=colors['foreground'],
-            step=10,
+            mouse_callbacks={'Button3': lazy.spawn('blueman-manager')},
+            volume_down_command=volume_down,
+            volume_up_command=volume_up,
         ),
         widget.Spacer(length=16),
         widget.CPUGraph(**chart),

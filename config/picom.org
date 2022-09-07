@@ -27,7 +27,6 @@ get shadow, unless explicitly requested using the =wintypes= option.
 
 #+BEGIN_SRC conf
 shadow = true;
-shadow-exclude = ["window_type = 'combo'"];
 shadow-offset-x = -24;
 shadow-offset-y = -24;
 shadow-opacity = .25;
@@ -37,7 +36,7 @@ shadow-radius = 24;
 * Rounded Corners
 
 #+BEGIN_SRC conf
-corner-radius = 24.0;
+corner-radius = 16.0;
 rounded-corners-exclude = [
   "!name~=''",                          # Exclude windows with no name ie. bars
   "window_type = 'combo'",
@@ -49,7 +48,6 @@ rounded-corners-exclude = [
   "window_type = 'tooltip'",
 ];
 round-borders = 1;
-round-borders-exclude = [];
 #+END_SRC
 
 * Opacity
@@ -78,7 +76,6 @@ opacity-rule = [
 The =dual_kawase= method is only enabled with =--experimental-backends=.
 
 #+BEGIN_SRC conf
-# blur-background = false;
 blur-background-exclude = [
   "_GTK_FRAME_EXTENTS@:c",
   "window_type = 'desktop'",
