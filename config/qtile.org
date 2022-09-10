@@ -19,6 +19,13 @@ Keywords=wm;tiling
 Install =mypy= using =pip= and run =qtile check= in order to verify that your
 configuration can be loaded safely.
 
+In case of failure to reload the configuration through the predefined key
+bindings, Qtile can be reloaded from the command line.
+
+#+BEGIN_SRC sh :results silent
+qtile cmd-obj -o cmd -f reload_config
+#+END_SRC
+
 * Bootstrap
 
 #+BEGIN_SRC python
@@ -103,12 +110,21 @@ for the glyph code points to use.
 
 #+BEGIN_SRC python
 groups_font = 'Material Design Icons'
-groups_web = [Match(wm_class='brave'), Match(wm_class='firefox')]
-groups_game = [Match(wm_class='lutris'), Match(wm_class='Steam')]
-groups_social = [Match(wm_class='discord'), Match(wm_class='slack')]
+
+klasses = {
+    'game': ['Steam', 'lutris'],
+    'music': ['spotify'],
+    'social': ['discord', 'slack'],
+    'web': ['brave', 'firefox', 'google-chrome'],
+}
+
+groups_game = [Match(wm_class=klass) for klass in klasses['game']]
+groups_music = [Match(wm_class=klass) for klass in klasses['music']]
+groups_social = [Match(wm_class=klass) for klass in klasses['social']]
+groups_web = [Match(wm_class=klass) for klass in klasses['web']]
 
 groups = [
-    Group('1', label='\U0000EF4A', matches=groups_web, spawn=['brave']),
+    Group('1', label='\U0000EF4A', matches=groups_web),
     Group('2', label='\U0000EF4A', matches=groups_social),
     Group('3', label='\U0000EF4A', matches=groups_game),
     Group('4', label='\U0000EF4A'),
@@ -116,7 +132,7 @@ groups = [
     Group('6', label='\U0000EF4A'),
     Group('7', label='\U0000EF4A'),
     Group('8', label='\U0000EF4A'),
-    Group('9', label='\U0000EF4A'),
+    Group('9', label='\U0000EF4A', matches=groups_music),
     Group('0', label='\U0000EF4A'),
 ]
 
