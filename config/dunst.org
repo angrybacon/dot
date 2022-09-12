@@ -29,7 +29,7 @@ Set size geometry for the notification frame.
 
 #+BEGIN_SRC conf :noweb-ref geometry
 height = 300                            # Maximum height for a notification
-width = (200, 800)                      # Width range
+width = (200, 400)                      # Width range
 #+END_SRC
 
 Add offset to the anchor.
@@ -41,9 +41,10 @@ origin = top-right
 
 * Borders
 
+Disable borders.
+
 #+BEGIN_SRC conf :noweb-ref borders
-separator_height = 1                    # Draw a line between notifications
-frame_color = "#4F4F4F"                 # External border color
+separator_height = 0                    # Draw a line between notifications
 frame_width = 0                         # Border size in pixels
 #+END_SRC
 
@@ -98,18 +99,18 @@ mouse_right_click = close_current
 
 #+BEGIN_SRC conf :noweb-ref colors
 [urgency_critical]
-    background = "#CC9393"
+    background = "#CC9393BF"
     foreground = "#FFFFFD"
     timeout = 0
 
 [urgency_low]
-    background = "#494949"
-    foreground = "#DCDCCC"
+    background = "#49494980"
+    foreground = "#FFFFEF"
     timeout = 4
 
 [urgency_normal]
-    background = "#8CD0D3"
-    foreground = "#383838"
+    background = "#8CD0D380"
+    foreground = "#FFFFEF"
     timeout = 8
 #+END_SRC
 

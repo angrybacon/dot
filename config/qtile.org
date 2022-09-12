@@ -5,8 +5,8 @@
 
 * Installation
 
-Create a desktop entry under =/usr/share/xsessions/= in order to select Qtile as
-your preferred option from the login manager.
+If missing, create a desktop entry under =/usr/share/xsessions/= in order to
+select Qtile as your preferred option from the login manager.
 
 #+BEGIN_SRC conf
 [Desktop Entry]
@@ -21,7 +21,7 @@ Install =mypy= using =pip= and run =qtile check= in order to verify that your
 configuration can be loaded safely.
 
 In case of failure to reload the configuration through the predefined key
-bindings, Qtile can be reloaded from the command line.
+binding, Qtile can be reloaded from the command line directly.
 
 #+BEGIN_SRC sh :results silent
 qtile cmd-obj -o cmd -f reload_config
@@ -48,14 +48,14 @@ terminal = guess_terminal(['kitty', 'alacritty'])
 file_manager = 'nautilus -w'
 #+END_SRC
 
-Variables used in the =CheckUpdates= bar widget.
+Variables used in the =CheckUpdates= widget.
 
 #+BEGIN_SRC python
 update_command = terminal + ' sudo dnf update'
 update_distribution = 'Fedora'
 #+END_SRC
 
-Commands used for the keys and volume widget.
+Commands used for the keys and =Volume= widget.
 
 #+BEGIN_SRC python
 volume_down = 'amixer -q sset Master 10%-'
@@ -137,7 +137,6 @@ groups = [
     Group('0', label='\U0000EF4A'),
 ]
 
-
 for g in groups:
     keys.extend([
         Key([mod], g.name, lazy.group[g.name].toscreen(toggle=True)),
@@ -173,7 +172,6 @@ layouts_theme = {
     'single_border_width': 1,
 }
 
-
 layouts = [
     layout.MonadTall(**layouts_theme, ratio=.65),
     layout.MonadWide(**layouts_theme, ratio=.6),
@@ -197,6 +195,7 @@ floating_layout = layout.Floating(
         Match(wm_class='confirmreset'),
         Match(wm_class='makebranch'),
         Match(wm_class='maketag'),
+        Match(wm_class='pinentry-gtk-2'),
         Match(wm_class='ssh-askpass'),
         Match(title='', wm_class='zoom'),
     ],
@@ -255,11 +254,9 @@ def widgets_list():
         widget.CheckUpdates(
             display_format='{updates} updates',
             distro=update_distribution,
+            execute=update_command,
             fontsize=font_size,
-            mouse_callbacks={
-                'Button1': lazy.spawn(update_command),
-                'Button3': scratchpad.dropdown_toggle('terminal'),
-            },
+            mouse_callbacks={'Button3': scratchpad.dropdown_toggle('terminal')},
             update_interval=60 * 60,
         ),
         widget.Spacer(length=16),
@@ -281,7 +278,7 @@ def widgets_list():
         widget.Spacer(length=16),
     ]
 
-screens_bar = bar.Bar(background='#FAFAFA0D', size=48, widgets=widgets_list())
+screens_bar = bar.Bar(background='#49494940', size=48, widgets=widgets_list())
 screens = [Screen(top=screens_bar)]
 #+END_SRC
 

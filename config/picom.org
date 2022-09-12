@@ -5,7 +5,7 @@
 
 Use a compositor to handle complex graphic interactions eg. dragging,
 transparency, shadows. The below configuration assumes the following fork is
-being used: [[https://github.com/jonaburg/picom]].
+being used: [[https://github.com/ibhagwan/picom]].
 
 The available window types as per the EWMH standard are =combo=, =desktop=,
 =dialog=, =dnd=, =dock=, =dropdown_menu=, =menu=, =normal=, =notification=,
@@ -38,6 +38,7 @@ shadow-radius = 24;
 
 #+BEGIN_SRC conf
 corner-radius = 16.0;
+round-borders = 1;
 rounded-corners-exclude = [
   "!name~=''",                          # Exclude windows with no name ie. bars
   "window_type = 'combo'",
@@ -48,7 +49,6 @@ rounded-corners-exclude = [
   "window_type = 'popup_menu'",
   "window_type = 'tooltip'",
 ];
-round-borders = 1;
 #+END_SRC
 
 * Opacity
@@ -60,15 +60,15 @@ inactive-opacity-override = false;
 opacity-rule = [
   # Active overwrites
   "90:class_i = 'emacs' && focused",
-  "90:class_i = 'spotify' && focused",
   "90:class_i = 'kitty' && focused",
+  "90:class_i = 'spotify' && focused",
   # Inactive overwrites
-  "90:class_i = 'brave-browser' && !focused",
+  "90:role = 'browser' && !focused",
   # Decoration overwrites
-  "80:window_type = 'dropdown_menu'",
-  "80:window_type = 'menu'",
-  "80:window_type = 'popup_menu'",
-  "80:window_type = 'tooltip'",
+  "70:window_type = 'dropdown_menu'",
+  "70:window_type = 'menu'",            # Browser context menus
+  "70:window_type = 'popup_menu'",      # Context menus, tray menus
+  "70:window_type = 'tooltip'",         # Browser tooltips
 ];
 #+END_SRC
 
@@ -83,15 +83,14 @@ blur-background-exclude = [
   "window_type = 'dock'",
 ];
 blur-method = "dual_kawase";
-blur-strength = 8;
+blur-strength = 12;
 #+END_SRC
 
 * Fading
 
 #+BEGIN_SRC conf
 fading = true;                          # Fade windows in and out
-fade-in-step = 0.04;                    # Step rate when fading in
-fade-out-step = 0.04;                   # Step rate when fading out
+fade-delta = 4;                         # Time between fading steps
 #+END_SRC
 
 * COMMENT Local Variables
