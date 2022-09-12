@@ -1,5 +1,6 @@
 #+TITLE: Qtile
 #+AUTHOR: Mathieu Marques
+#+PROPERTY: header-args :mkdirp yes
 #+PROPERTY: header-args:python :tangle ~/.config/qtile/config.py
 
 * Installation

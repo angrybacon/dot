@@ -1,6 +1,7 @@
 #+TITLE: XMonad
 #+AUTHOR: Mathieu Marques
-#+PROPERTY: header-args:haskell :tangle ~/.config/xmonad/xmonad2.hs
+#+PROPERTY: header-args :mkdirp yes
+#+PROPERTY: header-args:haskell :tangle ~/.config/xmonad/xmonad.hs
 
 * Bootstrap
 

@@ -1,5 +1,6 @@
 #+TITLE: Kitty
 #+AUTHOR: Mathieu Marques
+#+PROPERTY: header-args :mkdirp yes
 #+PROPERTY: header-args:conf :tangle ~/.config/kitty/kitty.conf
 
 A default configuration file can be found in =/usr/share/doc/kitty/kitty.conf=.

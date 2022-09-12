@@ -1,5 +1,6 @@
 #+TITLE: Dunst
 #+AUTHOR: Mathieu Marques
+#+PROPERTY: header-args :mkdirp yes
 
 A default configuration file can be found at
 [[https://github.com/dunst-project/dunst]].

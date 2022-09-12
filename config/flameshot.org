@@ -1,11 +1,12 @@
 #+TITLE: Flameshot
 #+AUTHOR: Mathieu Marques
+#+PROPERTY: header-args :mkdirp yes
 #+PROPERTY: header-args:conf :tangle ~/.config/flameshot/flameshot.ini
 
 #+BEGIN_SRC conf
 [General]
-buttons=@Variant(\0\0\0\x7f\0\0\0\vQList<int>\0\0\0\0\r\0\0\0\0\0\0\0\x1\0\0\0\x2\0\0\0\x3\0\0\0\x4\0\0\0\x6\0\0\0\x12\0\0\0\xf\0\0\0\x13\0\0\0\a\0\0\0\b\0\0\0\r\0\0\0\x17)
-contrastOpacity=51
+buttons=@Variant(\0\0\0\x7f\0\0\0\vQList<int>\0\0\0\0\xe\0\0\0\0\0\0\0\x1\0\0\0\x2\0\0\0\x3\0\0\0\x4\0\0\0\x6\0\0\0\x12\0\0\0\xf\0\0\0\x13\0\0\0\a\0\0\0\b\0\0\0\v\0\0\0\r\0\0\0\x17)
+contrastOpacity=50
 contrastUiColor=#DC8CC3
 copyPathAfterSave=true
 disabledTrayIcon=true
@@ -24,4 +25,5 @@ userColors=picker, #3F3F3F, #F0DFAF, #DFAF8F, #CC9393, #DC8CC3, #7F9F7F, #8CD0D3
 
 # Local Variables:
 # after-save-hook: (org-babel-tangle t)
+# eval: (when (require 'rainbow-mode nil :noerror) (rainbow-mode 1))
 # End:

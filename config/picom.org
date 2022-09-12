@@ -1,5 +1,6 @@
 #+TITLE: Picom
 #+AUTHOR: Mathieu Marques
+#+PROPERTY: header-args :mkdirp yes
 #+PROPERTY: header-args:conf :tangle ~/.config/picom/picom.conf
 
 Use a compositor to handle complex graphic interactions eg. dragging,

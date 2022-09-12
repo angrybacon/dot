@@ -1,5 +1,6 @@
 #+TITLE: Alacritty
 #+AUTHOR: Mathieu Marques
+#+PROPERTY: header-args :mkdirp yes
 #+PROPERTY: header-args:yaml :tangle ~/.config/alacritty/alacritty.yml
 
 * Bootstrap

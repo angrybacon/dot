@@ -146,7 +146,7 @@ Set default fonts for =monospace=, =serif= and =sans-serif= classes.
       <string>sans-serif</string>
     </test>
     <edit name="family" mode="assign" binding="same">
-      <string>Product Sans</string>
+      <string>Google Sans</string>
     </edit>
   </match>
   <match target="pattern">

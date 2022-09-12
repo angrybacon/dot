@@ -4,18 +4,10 @@
 
 * Theme
 
-Install the Zenburn color scheme.
-
-#+BEGIN_SRC sh
-git clone https://github.com/jnurmine/Zenburn /tmp/zenburn
-mkdir -p ~/.vim/colors
-cp /tmp/zenburn/colors/zenburn.vim ~/.vim/colors/
-#+END_SRC
-
-Enable syntax highlighting and apply theme.
+Enable syntax highlighting.
 
 #+BEGIN_SRC vimrc
-:colors zenburn
+:colors desert
 :syntax on
 #+END_SRC
 
