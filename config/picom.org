@@ -17,8 +17,10 @@ Specify the backend to use eg. =xrender=, =glx= or =xr_glx_hybrid=.
 
 #+BEGIN_SRC conf
 backend = "glx";
-glx-copy-from-front = false
-glx-no-stencil = true
+glx-copy-from-front = false;
+glx-no-stencil = true;
+use-damage = false;
+vsync = true;
 #+END_SRC
 
 * Shadows
