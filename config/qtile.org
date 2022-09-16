@@ -100,6 +100,9 @@ keys = [
     # Media
     Key([], 'XF86AudioLowerVolume', lazy.spawn(volume_down)),
     Key([], 'XF86AudioMute', lazy.spawn(volume_toggle)),
+    Key([], 'XF86AudioNext', lazy.spawn('playerctl next')),
+    Key([], 'XF86AudioPlay', lazy.spawn('playerctl play-pause')),
+    Key([], 'XF86AudioPrev', lazy.spawn('playerctl previous')),
     Key([], 'XF86AudioRaiseVolume', lazy.spawn(volume_up)),
 ]
 #+END_SRC
