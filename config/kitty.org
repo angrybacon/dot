@@ -34,7 +34,7 @@ disable_ligatures           always
 cursor_blink_interval       0.2
 cursor_shape                underline
 cursor_stop_blinking_after  0
-cursor_underline_thickness  2.0
+shell_integration           no-cursor
 #+END_SRC
 
 * Theme
@@ -80,4 +80,5 @@ window_padding_width        8
 
 # Local Variables:
 # after-save-hook: (org-babel-tangle t)
+# eval: (when (require 'rainbow-mode nil :noerror) (rainbow-mode 1))
 # End:

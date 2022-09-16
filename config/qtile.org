@@ -45,14 +45,14 @@ control = 'control'
 shift = 'shift'
 home = os.path.expanduser('~')
 terminal = guess_terminal(['kitty', 'alacritty'])
-file_manager = 'nautilus -w'
+file_manager = 'thunar'
 #+END_SRC
 
 Variables used in the =CheckUpdates= widget.
 
 #+BEGIN_SRC python
-update_command = terminal + ' sudo dnf update'
-update_distribution = 'Fedora'
+update_command = terminal + ' paru -Syu'
+update_distribution = 'Arch_checkupdates'
 #+END_SRC
 
 Commands used for the keys and =Volume= widget.

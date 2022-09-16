@@ -3,7 +3,7 @@
 #+PROPERTY: header-args :results silent
 
 This file documents the steps I've followed to install my daily machines,
-usually running either Arch or Fedora.
+usually running either Arch or Fedora. Adapt accordingly.
 
 * Checklist
 
@@ -11,13 +11,6 @@ usually running either Arch or Fedora.
 
 #+BEGIN_SRC sh
 paru -S \
-    cmake git openssh \
-    highlight xclip \
-    vi vim
-#+END_SRC
-
-#+BEGIN_SRC sh
-sudo dnf install \
     cmake git openssh \
     highlight xclip \
     vi vim
@@ -79,18 +72,11 @@ Increase the base DPI by 25%.
 Xft.dpi: 132
 #+END_SRC
 
-** =~/.xinitrc=
-
-#+BEGIN_SRC sh :shebang "#!/bin/sh" :tangle ~/.xinitrc
-[ -f /etc/xprofile ] && . /etc/xprofile
-[ -f "$HOME/.xprofile" ] && . ~/.xprofile
-#+END_SRC
-
 ** =~/.xprofile=
 
 #+BEGIN_SRC sh :tangle ~/.xprofile
 [ -f "$HOME/.fehbg" ] && ~/.fehbg &
-picom --experimental-backends -b
+picom --daemon
 #+END_SRC
 
 ** Automatically Mount External Drives
@@ -232,18 +218,12 @@ I mostly use Emacs but sometimes Vim too so minor tweaks are enough.
 See [[./config/vim.org][config/vim.org]].
 
 The above configuration tangles to =/etc/vimrc.local=. Load it from the
-system-wide configuration at =/etc/vimrc=.
+system-wide configuration in =/etc/vimrc=.
 
 #+BEGIN_SRC diff
 +if filereadable("/etc/vimrc.local")
 +  source /etc/vimrc.local
 +endif
-#+END_SRC
-
-And link it to your user.
-
-#+BEGIN_SRC sh
-ln -s /etc/vimrc.local ~/.vimrc
 #+END_SRC
 
 * Git
@@ -258,7 +238,7 @@ Default settings for all Git projects.
     name = Mathieu Marques
 [core]
     excludesfile = ~/.gitignore
-    ignorecase = true
+    ignorecase = false
 [pull]
     rebase = true
 [rebase]
@@ -307,20 +287,11 @@ Paste the following specifications into the theme field to apply Zenburn colors.
 * Other Utilities
 
 #+BEGIN_SRC sh
-sudo dnf install \
-    deluge feh flameshot kitty gimp \
-    baobab ncdu pcmanfm \
+paru \
+    deluge feh flameshot gimp kitty \
+    duf ncdu thunar \
     btop htop \
     neofetch ripgrep tree
-#+END_SRC
-
-#+BEGIN_SRC sh
-flatpak install \
-    com.brave.Browser \
-    com.discordapp.Discord \
-    com.slack.Slack \
-    com.spotify.Client \
-    org.videolan.VLC
 #+END_SRC
 
 * COMMENT Local Variables
