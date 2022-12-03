@@ -52,8 +52,10 @@ Define the corner radius of the notification window in pixels. If the radius is
 0, you have no rounded corners. The radius will be automatically lowered if it
 exceeds half of the notification height to avoid clipping text and/or icons.
 
+Disable rounded corners since they are handled by the compositor.
+
 #+BEGIN_SRC conf :noweb-ref borders
-corner_radius = 2
+corner_radius = 0
 #+END_SRC
 
 * Idle Cleanup
@@ -109,7 +111,7 @@ mouse_right_click = close_current
     timeout = 4
 
 [urgency_normal]
-    background = "#8CD0D380"
+    background = "#7CB8BB80"
     foreground = "#FFFFEF"
     timeout = 8
 #+END_SRC
