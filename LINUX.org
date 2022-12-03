@@ -44,6 +44,10 @@ if [ -d "$HOME/.local/bin" ] ; then
   PATH="$HOME/.local/bin:$PATH"
 fi
 
+if [ -d "$HOME/Scripts" ] ; then
+  PATH="$HOME/Scripts:$PATH"
+fi
+
 xset r rate 200 50
 #+END_SRC
 
@@ -268,6 +272,7 @@ permissions.
 
 #+HEADER: :mkdirp yes :shebang "#!/bin/sh"
 #+BEGIN_SRC sh :tangle ~/Scripts/fix-media-permissions.sh
+chmod 775 ~/
 find ~/Videos -type d \! -perm 775 -exec chmod 775 {} \; -print
 find ~/Videos -type f \! -perm 664 -exec chmod 664 {} \; -print
 notify-send --urgency=low "Cron" "Successfully updated permissions under ~/Videos/"
