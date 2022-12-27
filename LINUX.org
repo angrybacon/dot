@@ -16,6 +16,19 @@ paru -S \
     vi vim
 #+END_SRC
 
+** Install Other Programs
+
+#+BEGIN_SRC sh
+paru -S \
+    feh flameshot \
+    duf ncdu thunar \
+    btop htop \
+    kitty neofetch ripgrep tree \
+    deluge-gtk plex-media-server \
+    gimp obs-studio flameshot \
+    playerctl spotify
+#+END_SRC
+
 ** Configure Visudo
 
 Run =sudo visudo= in order to customize sudoers settings. Customize the default
@@ -111,6 +124,13 @@ Other sections from this document will assume these fonts are already installed:
 - /Google Sans/ or /Product Sans/
 - /Roboto Slab/
 
+#+BEGIN_SRC sh
+paru -S \
+    ttf-google-sans \
+    ttf-material-design-icons \
+    ttf-roboto-slab
+#+END_SRC
+
 If manually installing the fonts, download their respective TTF or OTF files and
 move them to =/usr/local/share/fonts/=. Run =fc-cache= to ensure the font cache
 integrity.
@@ -157,7 +177,7 @@ Set default fonts for =monospace=, =serif= and =sans-serif= classes.
 Install =feh= and run it once to initialize the bootstrap executable.
 
 #+BEGIN_SRC sh
-feh --bg-fill Pictures/Wallpapers/filename.ext
+feh --bg-fill ~/Pictures/Wallpapers/filename.ext
 #+END_SRC
 
 ** Compositor
@@ -287,16 +307,6 @@ Paste the following specifications into the theme field to apply Zenburn colors.
 
 #+BEGIN_SRC text
 #3F3F3F,#121212,#7F9F7F,#FFFFFD,#5F5F5F,#DCDCCC,#93E0E3,#CC9393,#DFAF8F,#383838
-#+END_SRC
-
-* Other Utilities
-
-#+BEGIN_SRC sh
-paru \
-    deluge feh flameshot gimp kitty \
-    duf ncdu thunar \
-    btop htop \
-    neofetch ripgrep tree
 #+END_SRC
 
 * COMMENT Local Variables
