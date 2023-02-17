@@ -27,6 +27,13 @@ export MANPAGER='less --long-prompt +Gg'
 export PAGER=less
 #+END_SRC
 
+Prefer g-prefixed binaries on macOS.
+
+#+BEGIN_SRC sh :tangle (if (eq system-type 'darwin) "~/.zshrc" "no")
+export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+export PATH="/usr/local/sbin:/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+#+END_SRC
+
 * Aliases
 
 #+BEGIN_SRC sh
