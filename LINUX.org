@@ -60,7 +60,9 @@ fi
 if [ -d "$HOME/Scripts" ] ; then
   PATH="$HOME/Scripts:$PATH"
 fi
+#+END_SRC
 
+#+BEGIN_SRC sh :tangle  (if (eq system-type 'gnu/linux) "~/.profile" "no")
 xset r rate 200 50
 #+END_SRC
 
@@ -85,13 +87,13 @@ See [[./config/kitty.org][config/kitty.org]].
 
 Increase the base DPI by 25%.
 
-#+BEGIN_SRC conf :tangle ~/.Xresources
+#+BEGIN_SRC conf :tangle (if (eq system-type 'gnu/linux) "~/.Xresources" "no")
 Xft.dpi: 132
 #+END_SRC
 
 ** =~/.xprofile=
 
-#+BEGIN_SRC sh :tangle ~/.xprofile
+#+BEGIN_SRC sh :tangle (if (eq system-type 'gnu/linux) "~/.xprofile" "no")
 [ -f "$HOME/.fehbg" ] && ~/.fehbg &
 picom --daemon
 #+END_SRC
@@ -139,7 +141,7 @@ integrity.
 
 Set default fonts for =monospace=, =serif= and =sans-serif= classes.
 
-#+BEGIN_SRC xml :tangle /sudo::/etc/fonts/local.conf
+#+BEGIN_SRC xml :tangle (if (eq system-type 'gnu/linux) "/sudo::/etc/fonts/local.conf" "no")
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE fontconfig SYSTEM "urn:fontconfig:fonts.dtd">
 <fontconfig>
@@ -261,19 +263,31 @@ Default settings for all Git projects.
     email = mathieumarques78@gmail.com
     name = Mathieu Marques
 [core]
+    attributesfile = ~/.gitattributes
     excludesfile = ~/.gitignore
     ignorecase = false
+[diff "lisp"]
+    xfuncname = "^(((;;;+ )|\\(|([ \t]+\\(((cl-|el-patch-)?def(un|var|macro|method|custom)|gb/))).*)$"
+[diff "org"]
+    xfuncname = "^(\\*+ +.*)$"
 [pull]
     rebase = true
 [rebase]
     autosquash = true
 #+END_SRC
 
+#+BEGIN_SRC conf :tangle ~/.gitattributes
+*.el diff=lisp
+*.org diff=org
+#+END_SRC
+
 Default ignore list for all Git projects.
 
 #+BEGIN_SRC conf :tangle ~/.gitignore
+.DS_Store
 .dir-locals.el
 .nvmrc
+TODO.org
 #+END_SRC
 
 * SSH

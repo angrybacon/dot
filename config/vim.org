@@ -2,9 +2,15 @@
 #+AUTHOR: Mathieu Marques
 #+PROPERTY: header-args:vimrc :tangle /sudo::/etc/vimrc.local
 
+Optionally link the configuration to the user-local path.
+
+#+BEGIN_SRC sh :results silent
+ln -s /etc/vimrc.local ~/.vimrc
+#+END_SRC
+
 * Theme
 
-Enable syntax highlighting.
+Enable syntax highlighting and apply =desert= theme.
 
 #+BEGIN_SRC vimrc
 :colors desert
