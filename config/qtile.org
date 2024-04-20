@@ -186,6 +186,7 @@ layouts_theme = {
 layouts = [
     layout.MonadTall(**layouts_theme, ratio=.65),
     layout.MonadWide(**layouts_theme, ratio=.6),
+    layout.Columns(**layouts_theme, ratio=.5),
 ]
 
 auto_fullscreen = True
