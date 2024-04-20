@@ -48,6 +48,7 @@ home = os.path.expanduser('~')
 Application commands.
 
 #+BEGIN_SRC python
+bluetooth_manager = 'blueman-manager'
 file_manager = 'thunar'
 terminal = 'kitty'
 #+END_SRC
@@ -80,6 +81,8 @@ keys = [
     Key([mod, control], 'Return', lazy.spawn(terminal)),
     Key([mod, control], 'q', lazy.shutdown()),
     Key([mod, control], 'r', lazy.reload_config()),
+    # Applications
+    Key([mod], 'b', lazy.spawn(bluetooth_manager)),
     # Layout
     Key([mod], 'Down', lazy.layout.down()),
     Key([mod], 'Left', lazy.layout.left()),
@@ -271,7 +274,7 @@ def widgets_list():
         widget.Volume(
             fontsize=font_size,
             foreground=colors['foreground'],
-            mouse_callbacks={'Button3': lazy.spawn('blueman-manager')},
+            mouse_callbacks={'Button3': lazy.spawn(bluetooth_manager)},
             volume_down_command=volume_down,
             volume_up_command=volume_up,
         ),
