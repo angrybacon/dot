@@ -225,13 +225,12 @@ def widgets_list():
     }
     chart = {
         'border_width': 0,
-        'fill_color': colors['chart'],
-        'frequency': .5,
+        'fill_color': colors['chart'] + '.50',
+        'frequency': .25,
         'graph_color': colors['chart'],
+        'line_width': 1,
         'margin_x': 0,
         'margin_y': 8,
-        'padding': 8,
-        'type': 'box',
     }
     text = {
         'fontsize': 20,
@@ -287,7 +286,7 @@ def widgets_list():
         widget.Spacer(length=16),
     ]
 
-screens_bar = bar.Bar(background='#49494940', size=48, widgets=widgets_list())
+screens_bar = bar.Bar(background='#494949.25', size=48, widgets=widgets_list())
 screens = [Screen(top=screens_bar)]
 #+END_SRC
 
