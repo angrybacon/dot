@@ -232,7 +232,11 @@ def widgets_list():
         'padding': 8,
         'type': 'box',
     }
-    font_size = 20
+    text = {
+        'fontsize': 20,
+        'foreground': colors['foreground'],
+        'padding': 0,
+    }
     return [
         widget.Spacer(length=8),
         widget.GroupBox(
@@ -247,24 +251,20 @@ def widgets_list():
         ),
         widget.Spacer(length=16),
         widget.Prompt(
-            cursorblink=.2,
+            **text,
+            cursorblink=.25,
             font='monospace',
-            fontsize=font_size,
             ignore_dups_history=True,
             prompt='Spawn: ',
         ),
         widget.Spacer(),
-        widget.Clock(
-            fontsize=font_size,
-            foreground=colors['foreground'],
-            format='%H:%M %B %d',
-        ),
+        widget.Clock(**text, format='%H:%M %B %d'),
         widget.Spacer(),
         widget.CheckUpdates(
+            **text,
             display_format='{updates} updates',
             distro=update_distribution,
             execute=update_command,
-            fontsize=font_size,
             mouse_callbacks={'Button3': scratchpad.dropdown_toggle('terminal')},
             update_interval=60 * 60,
         ),
@@ -272,12 +272,13 @@ def widgets_list():
         widget.Systray(padding=0),
         widget.Spacer(length=16),
         widget.Volume(
-            fontsize=font_size,
-            foreground=colors['foreground'],
+            **text,
             mouse_callbacks={'Button3': lazy.spawn(bluetooth_manager)},
             volume_down_command=volume_down,
             volume_up_command=volume_up,
         ),
+        widget.Spacer(length=16),
+        widget.KeyboardLayout(**text, configured_keyboards=['us', 'us intl']),
         widget.Spacer(length=16),
         widget.CPUGraph(**chart),
         widget.Spacer(length=16),
