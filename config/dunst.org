@@ -66,6 +66,7 @@ this.
 
 #+BEGIN_SRC conf :noweb-ref idle
 idle_threshold = 0
+show_age_threshold = -1
 #+END_SRC
 
 * Text

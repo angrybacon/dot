@@ -17,8 +17,8 @@ Type=Application
 Keywords=wm;tiling
 #+END_SRC
 
-Install =mypy= using =pip= and run =qtile check= in order to verify that your
-configuration can be loaded safely.
+Install =mypy= and run =qtile check= in order to verify that your configuration
+can be loaded safely. In addition, some widgets may depend on =psutil=.
 
 In case of failure to reload the configuration through the predefined key
 binding, Qtile can be reloaded from the command line directly.
@@ -37,30 +37,37 @@ from libqtile.command import lazy
 from libqtile.config import (
     Click, Drag, DropDown, Group, Key, Match, Screen, ScratchPad,
 )
-from libqtile.utils import guess_terminal
 
 
 mod = 'mod4'
 control = 'control'
 shift = 'shift'
 home = os.path.expanduser('~')
-terminal = guess_terminal(['kitty', 'alacritty'])
+#+END_SRC
+
+Application commands.
+
+#+BEGIN_SRC python
 file_manager = 'thunar'
+terminal = 'kitty'
 #+END_SRC
 
 Variables used in the =CheckUpdates= widget.
 
 #+BEGIN_SRC python
-update_command = terminal + ' paru -Syu'
+update_command = terminal + ' yay -Syu'
 update_distribution = 'Arch_checkupdates'
 #+END_SRC
 
-Commands used for the keys and =Volume= widget.
+Commands for media keys.
 
 #+BEGIN_SRC python
-volume_down = 'amixer -q sset Master 10%-'
-volume_toggle = 'amixer -q set Master toggle'
-volume_up = 'amixer -q sset Master 10%+'
+player_next = 'playerctl next'
+player_previous = 'playerctl previous'
+player_toggle = 'playerctl play-pause'
+volume_down = 'pulsemixer --change-volume -5 --unmute'
+volume_toggle = 'pulsemixer  --toggle-mute'
+volume_up = 'pulsemixer --change-volume +5 --unmute'
 #+END_SRC
 
 * Keys
@@ -74,6 +81,10 @@ keys = [
     Key([mod, control], 'q', lazy.shutdown()),
     Key([mod, control], 'r', lazy.reload_config()),
     # Layout
+    Key([mod], 'Down', lazy.layout.down()),
+    Key([mod], 'Left', lazy.layout.left()),
+    Key([mod], 'Right', lazy.layout.right()),
+    Key([mod], 'Up', lazy.layout.up()),
     Key([mod], 'e', lazy.spawn(file_manager)),
     Key([mod], 'f', lazy.window.toggle_fullscreen()),
     Key([mod], 'n', lazy.layout.next()),
@@ -89,21 +100,17 @@ keys = [
     Key([mod, shift], 'j', lazy.layout.shuffle_down()),
     Key([mod, shift], 'k', lazy.layout.shuffle_up()),
     Key([mod, shift], 'l', lazy.layout.shuffle_right()),
-    # Focus
-    Key([mod], 'Up', lazy.layout.up()),
-    Key([mod], 'Down', lazy.layout.down()),
-    Key([mod], 'Left', lazy.layout.left()),
-    Key([mod], 'Right', lazy.layout.right()),
-    # Screenshot
-    Key([mod, shift], '3', lazy.spawn(['flameshot', 'gui'])),
-    Key([mod, shift], '4', lazy.spawn(['flameshot', 'screen', '--clipboard'])),
     # Media
     Key([], 'XF86AudioLowerVolume', lazy.spawn(volume_down)),
     Key([], 'XF86AudioMute', lazy.spawn(volume_toggle)),
-    Key([], 'XF86AudioNext', lazy.spawn('playerctl next')),
-    Key([], 'XF86AudioPlay', lazy.spawn('playerctl play-pause')),
-    Key([], 'XF86AudioPrev', lazy.spawn('playerctl previous')),
+    Key([], 'XF86AudioNext', lazy.spawn(player_next)),
+    Key([], 'XF86AudioPlay', lazy.spawn(player_toggle)),
+    Key([], 'XF86AudioPrev', lazy.spawn(player_previous)),
     Key([], 'XF86AudioRaiseVolume', lazy.spawn(volume_up)),
+    # Screenshot
+    Key([mod, shift], '3', lazy.spawn(['flameshot', 'gui'])),
+    Key([mod, shift], '4', lazy.spawn(['flameshot', 'screen'])),
+    Key([mod, shift, control], '4', lazy.spawn(['flameshot', 'screen', '-c'])),
 ]
 #+END_SRC
 
@@ -113,13 +120,11 @@ Install Google's Material Design icon font. See https://fonts.google.com/icons
 for the glyph code points to use.
 
 #+BEGIN_SRC python
-groups_font = 'Material Design Icons'
-
 klasses = {
-    'game': ['Steam', 'lutris'],
+    'game': ['battle.net.exe', 'lutris', 'steam', 'steamwebhelper'],
     'music': ['spotify'],
     'social': ['discord', 'slack'],
-    'web': ['brave', 'firefox', 'google-chrome'],
+    'web': ['brave', 'brave-browser', 'firefox', 'google-chrome'],
 }
 
 groups_game = [Match(wm_class=klass) for klass in klasses['game']]
@@ -200,7 +205,6 @@ floating_layout = layout.Floating(
         Match(wm_class='maketag'),
         Match(wm_class='pinentry-gtk-2'),
         Match(wm_class='ssh-askpass'),
-        Match(title='', wm_class='zoom'),
     ],
 )
 #+END_SRC
@@ -226,15 +230,14 @@ def widgets_list():
         'type': 'box',
     }
     font_size = 20
-    icon_size = 22
     return [
         widget.Spacer(length=8),
         widget.GroupBox(
             active=colors['foreground'],
             borderwidth=0,
             disable_drag=True,
-            font=groups_font,
-            fontsize=icon_size,
+            font='Material Design Icons',
+            fontsize=24,
             highlight_method='text',
             inactive=colors['muted'],
             this_current_screen_border=colors['accent'],

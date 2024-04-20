@@ -10,7 +10,7 @@ usually running either Arch or Fedora. Adapt accordingly.
 ** Install Core Dependencies and Packages
 
 #+BEGIN_SRC sh
-paru -S \
+yay -S \
     cmake git openssh \
     highlight xclip \
     vi vim
@@ -19,7 +19,7 @@ paru -S \
 ** Install Other Programs
 
 #+BEGIN_SRC sh
-paru -S \
+yay -S \
     feh flameshot \
     duf ncdu thunar \
     btop htop \
@@ -52,7 +52,7 @@ If they are not already, create the initial home directories with
 Edit =~/.profile= to set the path for user binaries and increase the keyboard
 repeat rate.
 
-#+BEGIN_SRC sh :tangle ~/.profile
+#+BEGIN_SRC sh :tangle (if (eq system-type 'gnu/linux) "~/.profile" "no")
 if [ -d "$HOME/.local/bin" ] ; then
   PATH="$HOME/.local/bin:$PATH"
 fi
@@ -60,10 +60,8 @@ fi
 if [ -d "$HOME/Scripts" ] ; then
   PATH="$HOME/Scripts:$PATH"
 fi
-#+END_SRC
 
-#+BEGIN_SRC sh :tangle  (if (eq system-type 'gnu/linux) "~/.profile" "no")
-xset r rate 200 50
+xset r rate 200 40
 #+END_SRC
 
 ** Zsh
@@ -127,7 +125,7 @@ Other sections from this document will assume these fonts are already installed:
 - /Roboto Slab/
 
 #+BEGIN_SRC sh
-paru -S \
+yay -S \
     ttf-google-sans \
     ttf-material-design-icons \
     ttf-roboto-slab
@@ -207,17 +205,14 @@ See [[./config/xmonad.org][config/xmonad.org]].
 Prefer settings those through GUI but in case of failure, edit
 =~/.config/mimeapps.list=.
 
-#+BEGIN_SRC conf
+#+BEGIN_SRC conf :tangle (if (eq system-type 'gnu/linux) "~/.config/mimeapps.list" "no")
 [Default Applications]
 text/html=brave-browser.desktop
 x-scheme-handler/http=brave-browser.desktop
 x-scheme-handler/https=brave-browser.desktop
 x-scheme-handler/about=brave-browser.desktop
 x-scheme-handler/unknown=brave-browser.desktop
-video/mp4=vlc.desktop
-video/x-matroska=vlc.desktop
-
-[Added Associations]
+audio/mp3=vlc.desktop
 video/mp4=vlc.desktop
 video/x-matroska=vlc.desktop
 #+END_SRC
@@ -314,14 +309,6 @@ notify-send --urgency=low "Cron" "Successfully updated permissions under ~/Video
 
 Run it at every hour of the day to ensure new files also have the right
 permissions.
-
-* Slack
-
-Paste the following specifications into the theme field to apply Zenburn colors.
-
-#+BEGIN_SRC text
-#3F3F3F,#121212,#7F9F7F,#FFFFFD,#5F5F5F,#DCDCCC,#93E0E3,#CC9393,#DFAF8F,#383838
-#+END_SRC
 
 * COMMENT Local Variables
 

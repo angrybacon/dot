@@ -4,12 +4,26 @@
 #+PROPERTY: header-args:conf :tangle ~/.config/picom/picom.conf
 
 Use a compositor to handle complex graphic interactions eg. dragging,
-transparency, shadows. The below configuration assumes the following fork is
-being used: [[https://github.com/ibhagwan/picom]].
+transparency and shadows. The below configuration assumes the following fork is
+being used: [[https://github.com/yshui/picom]].
 
-The available window types as per the EWMH standard are =combo=, =desktop=,
-=dialog=, =dnd=, =dock=, =dropdown_menu=, =menu=, =normal=, =notification=,
-=popup_menu=, =splash=, =toolbar=, =tooltip=, =unknown= and =utility=.
+The available window types as per the EWMH standard are:
+
+- =combo=
+- =desktop=
+- =dialog=
+- =dnd=
+- =dock=
+- =dropdown_menu=
+- =menu=
+- =normal=
+- =notification=
+- =popup_menu=
+- =splash=
+- =toolbar=
+- =tooltip=
+- =unknown=
+- =utility=
 
 * Backend
 
@@ -39,8 +53,7 @@ shadow-radius = 24;
 * Rounded Corners
 
 #+BEGIN_SRC conf
-corner-radius = 16.0;
-round-borders = 1;
+corner-radius = 24;
 rounded-corners-exclude = [
   "!name~=''",                          # Exclude windows with no name ie. bars
   "window_type = 'combo'",
@@ -72,6 +85,9 @@ opacity-rule = [
   "70:window_type = 'menu'",            # Browser context menus
   "70:window_type = 'popup_menu'",      # Context menus, tray menus
   "70:window_type = 'tooltip'",         # Browser tooltips
+  # Application overwrites
+  "100:class_i = 'peek'",               # Screencast utility
+  "100:class_i *?= 'steam_app_'",       # Games
 ];
 #+END_SRC
 
