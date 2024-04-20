@@ -201,6 +201,7 @@ floating_layout = layout.Floating(
     float_rules=[
         *layout.Floating.default_float_rules,
         # NOTE Use `xprop` to guess the application attributes
+        Match(title='Steam Settings'),
         Match(title='branchdialog'),
         Match(title='pinentry'),
         Match(wm_class='confirmreset'),
@@ -268,8 +269,6 @@ def widgets_list():
             mouse_callbacks={'Button3': scratchpad.dropdown_toggle('terminal')},
             update_interval=60 * 60,
         ),
-        widget.Spacer(length=16),
-        widget.Systray(padding=0),
         widget.Spacer(length=16),
         widget.Volume(
             **text,
