@@ -6,7 +6,8 @@
 * Installation
 
 If missing, create a desktop entry under =/usr/share/xsessions/= in order to
-select Qtile as your preferred option from the login manager.
+select Qtile as your preferred option from the login manager. The widgets rely
+on decorations that are enabled through the =qtile-extras= package.
 
 #+BEGIN_SRC conf
 [Desktop Entry]
@@ -32,11 +33,13 @@ qtile cmd-obj -o cmd -f reload_config
 #+BEGIN_SRC python
 import os
 import subprocess
-from libqtile import bar, layout, widget
+from libqtile import bar, layout
 from libqtile.command import lazy
 from libqtile.config import (
     Click, Drag, DropDown, Group, Key, Match, Screen, ScratchPad,
 )
+from qtile_extras import widget
+from qtile_extras.widget.decorations import RectDecoration
 
 
 mod = 'mod4'
@@ -178,9 +181,9 @@ keys.append(Key([mod], 'Return', scratchpad.dropdown_toggle('terminal')))
 layouts_theme = {
     'border_focus': '#656555',
     'border_normal': '#5F5F5F',
-    'border_width': 1,
+    'border_width': 0,
     'margin': 36,
-    'single_border_width': 1,
+    'single_border_width': 0,
 }
 
 layouts = [
@@ -217,77 +220,119 @@ floating_layout = layout.Floating(
 * Bar
 
 #+BEGIN_SRC python
-def widgets_list():
-    colors = {
-        'accent': '#93E0E3',
-        'chart': '#7F9F7F',
-        'foreground': '#DCDCCC',
-        'muted': '#656566',
-    }
-    chart = {
-        'border_width': 0,
-        'fill_color': colors['chart'] + '.50',
-        'frequency': .25,
-        'graph_color': colors['chart'],
-        'line_width': 1,
-        'margin_x': 0,
-        'margin_y': 8,
-    }
-    text = {
-        'fontsize': 20,
-        'foreground': colors['foreground'],
-        'padding': 0,
-    }
-    return [
-        widget.Spacer(length=8),
-        widget.GroupBox(
-            active=colors['foreground'],
-            borderwidth=0,
-            disable_drag=True,
-            font='Material Design Icons',
-            fontsize=24,
-            highlight_method='text',
-            inactive=colors['muted'],
-            this_current_screen_border=colors['accent'],
-        ),
-        widget.Spacer(length=16),
-        widget.Prompt(
-            **text,
-            cursorblink=.25,
-            font='monospace',
-            ignore_dups_history=True,
-            prompt='Spawn: ',
-        ),
-        widget.Spacer(),
-        widget.Clock(**text, format='%H:%M %B %d'),
-        widget.Spacer(),
-        widget.CheckUpdates(
-            **text,
-            display_format='{updates} updates',
-            distro=update_distribution,
-            execute=update_command,
-            mouse_callbacks={'Button3': scratchpad.dropdown_toggle('terminal')},
-            update_interval=60 * 60,
-        ),
-        widget.Spacer(length=16),
-        widget.Volume(
-            **text,
-            mouse_callbacks={'Button3': lazy.spawn(bluetooth_manager)},
-            volume_down_command=volume_down,
-            volume_up_command=volume_up,
-        ),
-        widget.Spacer(length=16),
-        widget.KeyboardLayout(**text, configured_keyboards=['us', 'us intl']),
-        widget.Spacer(length=16),
-        widget.CPUGraph(**chart),
-        widget.Spacer(length=16),
-        widget.MemoryGraph(**chart),
-        widget.Spacer(length=16),
-        widget.NetGraph(**chart),
-        widget.Spacer(length=16),
-    ]
+color_background = '#494949.25'
+color_box_background= '#5C888B.80'
+color_box_background_transient= '#9C6363.80'
+color_box_foreground = '#FFFFEF'
+color_chart_background = '#7F9F7F.60'
+color_chart_border = '#7F9F7F.60'
+color_chart_foreground = '#7F9F7F'
+color_foreground = '#DCDCCC'
+color_group_active = '#DCDCCC'
+color_group_current = '#93E0E3'
+color_group_inactive = '#656566'
 
-screens_bar = bar.Bar(background='#494949.25', size=48, widgets=widgets_list())
+box_defaults = {
+    'fontsize': 16,
+    'foreground': color_box_foreground,
+    'padding': 8,
+}
+
+box_filled = {
+    **box_defaults,
+    'decorations': [RectDecoration(
+        filled=True,
+        padding_y=8,
+        radius=8,
+        use_widget_background=True,
+    )],
+}
+
+box_outline = {
+    **box_defaults,
+    'decorations': [RectDecoration(
+        clip=True,
+        line_colour=color_chart_border,
+        line_width=2,
+        padding_y=8,
+        radius=8,
+    )],
+}
+
+chart = {
+    **box_outline,
+    'border_width': 0,
+    'fill_color': color_chart_background,
+    'frequency': .25,
+    'graph_color': color_chart_foreground,
+    'line_width': 1,
+    'margin_x': 1,
+    'margin_y': 8,
+}
+
+spacer = { 'length': 8 }
+
+text = {
+    'fontsize': 20,
+    'foreground': color_foreground,
+    'padding': 0,
+}
+
+widgets = [
+    widget.Spacer(length=8),
+    widget.GroupBox(
+        active=color_group_active,
+        borderwidth=0,
+        disable_drag=True,
+        font='Material Design Icons',
+        fontsize=24,
+        highlight_method='text',
+        inactive=color_group_inactive,
+        this_current_screen_border=color_group_current,
+    ),
+    widget.Spacer(**spacer),
+    widget.Prompt(
+        **box_outline,
+        cursorblink=.25,
+        font='monospace',
+        ignore_dups_history=True,
+        prompt='$ ',
+    ),
+    widget.Spacer(),
+    widget.Clock(**text, format='%H:%M %B %d'),
+    widget.Spacer(),
+    widget.CheckUpdates(
+        **box_filled,
+        background=color_box_background_transient,
+        display_format='{updates} updates',
+        distro=update_distribution,
+        execute=update_command,
+        mouse_callbacks={'Button3': scratchpad.dropdown_toggle('terminal')},
+        update_interval=60 * 60,
+    ),
+    widget.Spacer(**spacer),
+    widget.Volume(
+        **box_filled,
+        background=color_box_background,
+        mouse_callbacks={'Button3': lazy.spawn(bluetooth_manager)},
+        volume_down_command=volume_down,
+        volume_up_command=volume_up,
+    ),
+    widget.Spacer(**spacer),
+    widget.KeyboardLayout(
+        **box_filled,
+        background=color_box_background,
+        configured_keyboards=['us', 'us intl'],
+    ),
+    widget.Spacer(**spacer),
+    widget.CPUGraph(**chart),
+    widget.Spacer(**spacer),
+    widget.MemoryGraph(**chart),
+    widget.Spacer(**spacer),
+    widget.NetGraph(**chart),
+    widget.Spacer(**spacer),
+]
+screens_bar = bar.Bar(background=color_background, size=48, widgets=widgets)
 screens = [Screen(top=screens_bar)]
 #+END_SRC
 
