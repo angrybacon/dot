@@ -325,6 +325,13 @@ widgets = [
         configured_keyboards=['us', 'us intl'],
     ),
     widget.Spacer(**spacer),
+    widget.Visualizer(
+        **box_outline,
+        bar_colour=color_chart_background,
+        bar_height=28,
+        spacing=0,
+    ),
+    widget.Spacer(**spacer),
     widget.CPUGraph(**chart),
     widget.Spacer(**spacer),
     widget.MemoryGraph(**chart),
