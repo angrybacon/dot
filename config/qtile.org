@@ -221,15 +221,15 @@ floating_layout = layout.Floating(
 
 #+BEGIN_SRC python
 color_background = '#494949.25'
-color_box_background= '#5C888B.80'
-color_box_background_transient= '#9C6363.80'
+color_box_background= '#5C888B.50'
+color_box_background_transient= '#9C6363.50'
 color_box_foreground = '#FFFFEF'
-color_chart_background = '#7F9F7F.60'
-color_chart_border = '#7F9F7F.60'
+color_chart_background = '#7F9F7F.50'
+color_chart_border = '#7F9F7F.50'
 color_chart_foreground = '#7F9F7F'
 color_foreground = '#DCDCCC'
 color_group_active = '#DCDCCC'
-color_group_current = '#93E0E3'
+color_group_current = '#8CD0D3'
 color_group_inactive = '#656566'
 
 box_defaults = {
