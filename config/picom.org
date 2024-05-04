@@ -4,8 +4,11 @@
 #+PROPERTY: header-args:conf :tangle ~/.config/picom/picom.conf
 
 Use a compositor to handle complex graphic interactions eg. dragging,
-transparency and shadows. The below configuration assumes the following fork is
-being used: [[https://github.com/yshui/picom]].
+transparency and shadows. The state of compositors is somewhat chaotic, not all
+are equal feature-wise, nor peformance-wise. Pick your preferred fork:
+
+- [[https://github.com/yshui/picom][picom-git]]
+- [[https://github.com/FT-Labs/picom][picom-ftlabs-git]]
 
 The available window types as per the EWMH standard are:
 
@@ -110,6 +113,15 @@ blur-strength = 12;
 #+BEGIN_SRC conf
 fading = true;                          # Fade windows in and out
 fade-delta = 4;                         # Time between fading steps
+#+END_SRC
+
+* Animations
+
+#+BEGIN_SRC conf
+animations = true;
+animation-for-open-window = "maximize";
+animation-stiffness-in-tag = 500;
+wintypes: { notification = { animation = "squeeze"; } }
 #+END_SRC
 
 * COMMENT Local Variables
