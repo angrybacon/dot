@@ -34,10 +34,10 @@ qtile cmd-obj -o cmd -f reload_config
 import os
 import subprocess
 from libqtile import bar, layout
-from libqtile.command import lazy
 from libqtile.config import (
     Click, Drag, DropDown, Group, Key, Match, Screen, ScratchPad,
 )
+from libqtile.lazy import lazy
 from qtile_extras import widget
 from qtile_extras.widget.decorations import RectDecoration
 
@@ -84,6 +84,7 @@ keys = [
     Key([mod, control], 'Return', lazy.spawn(terminal)),
     Key([mod, control], 'q', lazy.shutdown()),
     Key([mod, control], 'r', lazy.reload_config()),
+    Key([mod, control, shift], 'r', lazy.restart()),
     # Applications
     Key([mod], 'b', lazy.spawn(bluetooth_manager)),
     # Layout
@@ -233,7 +234,7 @@ color_group_current = '#8CD0D3'
 color_group_inactive = '#656566'
 
 box_defaults = {
-    'fontsize': 16,
+    'fontsize': 18,
     'foreground': color_box_foreground,
     'padding': 8,
 }

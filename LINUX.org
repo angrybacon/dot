@@ -86,7 +86,7 @@ See [[./config/kitty.org][config/kitty.org]].
 Increase the base DPI by 25%.
 
 #+BEGIN_SRC conf :tangle (if (eq system-type 'gnu/linux) "~/.Xresources" "no")
-Xft.dpi: 132
+Xft.dpi: 144
 #+END_SRC
 
 ** =~/.xprofile=
@@ -207,14 +207,18 @@ Prefer settings those through GUI but in case of failure, edit
 
 #+BEGIN_SRC conf :tangle (if (eq system-type 'gnu/linux) "~/.config/mimeapps.list" "no")
 [Default Applications]
+audio/mp3=vlc.desktop
+image/jpeg=feh.desktop
+image/png=feh.desktop
 text/html=brave-browser.desktop
+video/mp4=vlc.desktop
+video/x-flv=vlc.desktop;
+video/x-matroska=vlc.desktop
+x-scheme-handler/about=brave-browser.desktop
 x-scheme-handler/http=brave-browser.desktop
 x-scheme-handler/https=brave-browser.desktop
-x-scheme-handler/about=brave-browser.desktop
+x-scheme-handler/mailto=brave-browser.desktop
 x-scheme-handler/unknown=brave-browser.desktop
-audio/mp3=vlc.desktop
-video/mp4=vlc.desktop
-video/x-matroska=vlc.desktop
 #+END_SRC
 
 ** TODO Notifications
@@ -314,5 +318,4 @@ permissions.
 
 # Local Variables:
 # after-save-hook: (org-babel-tangle t)
-# eval: (when (require 'rainbow-mode nil :noerror) (rainbow-mode 1))
 # End:
