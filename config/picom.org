@@ -53,6 +53,12 @@ shadow-opacity = .25;
 shadow-radius = 24;
 #+END_SRC
 
+#+BEGIN_SRC conf
+shadow-exclude = [
+  "window_type = 'tooltip'",
+]
+#+END_SRC
+
 * Rounded Corners
 
 #+BEGIN_SRC conf
