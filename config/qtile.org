@@ -94,6 +94,7 @@ keys = [
     Key([mod], 'Up', lazy.layout.up()),
     Key([mod], 'e', lazy.spawn(file_manager)),
     Key([mod], 'f', lazy.window.toggle_fullscreen()),
+    Key([mod], 'h', lazy.window.toggle_minimize()),
     Key([mod], 'n', lazy.layout.next()),
     Key([mod], 'p', lazy.layout.previous()),
     Key([mod, control], 'Tab', lazy.next_layout()),
