@@ -119,7 +119,7 @@ fade-delta = 4;                         # Time between fading steps
 
 #+BEGIN_SRC conf
 animations = true;
-animation-for-open-window = "maximize";
+animation-for-open-window = "zoom";
 animation-stiffness-in-tag = 500;
 wintypes: { notification = { animation = "squeeze"; } }
 #+END_SRC
