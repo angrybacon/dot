@@ -117,11 +117,11 @@ blur-strength = 12;
 * Fading
 
 #+BEGIN_SRC conf
-fading = true;                          # Fade windows in and out
+fading = false;                         # Fade windows in and out
 fade-delta = 4;                         # Time between fading steps
 #+END_SRC
 
-* Animations
+* COMMENT Animations
 
 #+BEGIN_SRC conf
 animations = true;
