@@ -55,6 +55,7 @@ shadow-radius = 24;
 
 #+BEGIN_SRC conf
 shadow-exclude = [
+  "window_type = 'menu'",
   "window_type = 'tooltip'",
 ]
 #+END_SRC
@@ -91,7 +92,7 @@ opacity-rule = [
   "90:role = 'browser' && !focused",
   # Decoration overwrites
   "70:window_type = 'dropdown_menu'",
-  "70:window_type = 'menu'",            # Browser context menus
+  "95:window_type = 'menu'",            # Browser context menus
   "70:window_type = 'popup_menu'",      # Context menus, tray menus
   "70:window_type = 'tooltip'",         # Browser tooltips
   # Application overwrites
