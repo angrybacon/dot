@@ -62,7 +62,7 @@ shadow-exclude = [
 * Rounded Corners
 
 #+BEGIN_SRC conf
-corner-radius = 24;
+corner-radius = 16;
 rounded-corners-exclude = [
   "!name~=''",                          # Exclude windows with no name ie. bars
   # "window_type = 'combo'",
