@@ -215,13 +215,15 @@ floating_layout = layout.Floating(
 * Bar
 
 #+BEGIN_SRC python
+box_padding = 8
+box_radius = 8
 color_background = '#494949.25'
 color_box_background= '#5C888B.50'
 color_box_background_transient= '#9C6363.50'
 color_box_foreground = '#FFFFEF'
 color_chart_background = '#7F9F7F.50'
-color_chart_border = '#7F9F7F.50'
-color_chart_foreground = '#7F9F7F'
+color_chart_fill = '#7F9F7F.75'
+color_chart_foreground = '#7F9F7F.75'
 color_foreground = '#DCDCCC'
 color_group_active = '#DCDCCC'
 color_group_current = '#8CD0D3'
@@ -230,34 +232,38 @@ color_group_inactive = '#656566'
 box_defaults = {
     'fontsize': 18,
     'foreground': color_box_foreground,
-    'padding': 8,
+    'padding': box_padding,
 }
 
 box_filled = {
     **box_defaults,
-    'decorations': [RectDecoration(
-        filled=True,
-        padding_y=8,
-        radius=8,
-        use_widget_background=True,
-    )],
+    'decorations': [
+        RectDecoration(
+            filled=True,
+            padding_y=box_padding,
+            radius=box_radius,
+            use_widget_background=True,
+        ),
+    ],
 }
 
 box_outline = {
     **box_defaults,
-    'decorations': [RectDecoration(
-        clip=True,
-        line_colour=color_chart_border,
-        line_width=2,
-        padding_y=8,
-        radius=8,
-    )],
+    'decorations': [
+        RectDecoration(
+            clip=True,
+            colour=color_chart_background,
+            filled=True,
+            padding_y=box_padding,
+            radius=box_radius,
+        ),
+    ],
 }
 
 chart = {
     **box_outline,
     'border_width': 0,
-    'fill_color': color_chart_background,
+    'fill_color': color_chart_fill,
     'frequency': .25,
     'graph_color': color_chart_foreground,
     'line_width': 1,
@@ -322,8 +328,11 @@ widgets = [
     widget.Spacer(**spacer),
     widget.Visualizer(
         **box_outline,
-        bar_colour=color_chart_background,
-        bar_height=28,
+        bar_colour=color_chart_fill,
+        bar_height=32,
+        bars=10,
+        hide=False,
+        mouse_callbacks={'Button3': lazy.spawn(bluetooth_manager)},
         spacing=0,
     ),
     widget.Spacer(**spacer),
@@ -341,25 +350,6 @@ screens = [
         size=48,
         widgets=widgets,
     )),
-]
-#+END_SRC
-
-* Mouse
-
-#+BEGIN_SRC python
-mouse = [
-    Drag(
-        [mod],
-        'Button1',
-        lazy.window.set_position_floating(),
-        start=lazy.window.get_position(),
-    ),
-    Drag(
-        [mod],
-        'Button3',
-        lazy.window.set_size_floating(),
-        start=lazy.window.get_size(),
-    ),
 ]
 #+END_SRC
 
