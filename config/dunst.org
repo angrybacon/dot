@@ -28,14 +28,14 @@ horizontal_padding = 16                 # Horizontal padding in pixels
 Set size geometry for the notification frame.
 
 #+BEGIN_SRC conf :noweb-ref geometry
-height = 300                            # Maximum height for a notification
-width = (200, 400)                      # Width range
+height = (0, 400)                       # Height range
+width = (200, 600)                      # Width range
 #+END_SRC
 
 Add offset to the anchor.
 
 #+BEGIN_SRC conf :noweb-ref geometry
-offset = 12x48
+offset = (12, 44)
 origin = top-right
 #+END_SRC
 
