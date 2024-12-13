@@ -51,9 +51,10 @@ home = os.path.expanduser('~')
 Application commands.
 
 #+BEGIN_SRC python
-bluetooth_manager = 'blueman-manager'
+bluetooth_manager = 'overskride'
 file_manager = 'thunar'
 terminal = 'kitty'
+terminal_alternate = 'ghostty'
 #+END_SRC
 
 Variables used in the =CheckUpdates= widget.
@@ -70,6 +71,7 @@ player_next = 'playerctl next'
 player_previous = 'playerctl previous'
 player_toggle = 'playerctl play-pause'
 volume_down = 'pulsemixer --change-volume -5 --unmute'
+volume_reset = 'pulsemixer --set-volume 30'
 volume_toggle = 'pulsemixer  --toggle-mute'
 volume_up = 'pulsemixer --change-volume +5 --unmute'
 #+END_SRC
@@ -82,6 +84,7 @@ keys = [
     Key([mod], 'space', lazy.spawncmd()),
     Key([mod], 'q', lazy.window.kill()),
     Key([mod, control], 'Return', lazy.spawn(terminal)),
+    Key([mod, control, shift], 'Return', lazy.spawn(terminal_alternate)),
     Key([mod, control], 'q', lazy.shutdown()),
     Key([mod, control], 'r', lazy.reload_config()),
     Key([mod, control, shift], 'r', lazy.restart()),
@@ -222,8 +225,8 @@ color_box_background= '#5C888B.50'
 color_box_background_transient= '#9C6363.50'
 color_box_foreground = '#FFFFEF'
 color_chart_background = '#7F9F7F.50'
-color_chart_fill = '#7F9F7F.75'
-color_chart_foreground = '#7F9F7F.75'
+color_chart_fill = '#7F9F7F.90'
+color_chart_foreground = '#7F9F7F.90'
 color_foreground = '#DCDCCC'
 color_group_active = '#DCDCCC'
 color_group_current = '#8CD0D3'
@@ -308,14 +311,16 @@ widgets = [
         display_format='{updates} updates',
         distro=update_distribution,
         execute=update_command,
-        mouse_callbacks={'Button3': scratchpad.dropdown_toggle('terminal')},
         update_interval=60 * 60,
     ),
     widget.Spacer(**spacer),
     widget.Volume(
         **box_filled,
         background=color_box_background,
-        mouse_callbacks={'Button3': lazy.spawn(bluetooth_manager)},
+        mouse_callbacks={
+          'Button2': lazy.spawn(volume_reset),
+          'Button3': lazy.spawn(bluetooth_manager),
+        },
         volume_down_command=volume_down,
         volume_up_command=volume_up,
     ),
