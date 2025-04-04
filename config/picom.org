@@ -56,6 +56,7 @@ shadow-radius = 24;
 #+BEGIN_SRC conf
 shadow-exclude = [
   "window_type = 'menu'",
+  "window_type = 'popup_menu' && class_g = 'zen'",
   "window_type = 'tooltip'",
 ]
 #+END_SRC
@@ -65,13 +66,13 @@ shadow-exclude = [
 #+BEGIN_SRC conf
 corner-radius = 16;
 rounded-corners-exclude = [
-  "!name~=''",                          # Exclude windows with no name ie. bars
+  "!name ~= ''",                        # Exclude windows with no name ie. bars
   # "window_type = 'combo'",
   # "window_type = 'desktop'",
   # "window_type = 'dock'",
   # "window_type = 'dropdown_menu'",
   # "window_type = 'menu'",
-  # "window_type = 'popup_menu'",
+  "window_type = 'popup_menu'",
   "window_type = 'tooltip'",
   # "window_type = 'utility'",
 ];
@@ -81,23 +82,22 @@ rounded-corners-exclude = [
 
 #+BEGIN_SRC conf
 active-opacity = 1;                     # Default opacity for active windows
-inactive-opacity = .65;                 # Opacity for inactive windows
+inactive-opacity = .75;                 # Opacity for inactive windows
 inactive-opacity-override = false;
 opacity-rule = [
-  # Active overwrites
+  # In/active overwrites
   "90:class_i = 'emacs' && focused",
   "90:class_i = 'kitty' && focused",
   "90:class_i = 'spotify' && focused",
-  # Inactive overwrites
-  "90:role = 'browser' && !focused",
-  # Decoration overwrites
+  # Decorations
   "70:window_type = 'dropdown_menu'",
-  "95:window_type = 'menu'",            # Browser context menus
-  "70:window_type = 'popup_menu'",      # Context menus, tray menus
-  "70:window_type = 'tooltip'",         # Browser tooltips
+  "100:window_type = 'menu'",           # Chrome context menus
+  "100:window_type = 'popup_menu'",     # Firefox context menus
+  "100:window_type = 'tooltip'",        # Browser tooltips
   # Application overwrites
   "100:class_i = 'peek'",               # Screencast utility
-  "100:class_i *?= 'steam_app_'",       # Games
+  "100:class_i ?= 'steam_app_'",        # Games
+  "100:role ?= 'pictureinpicture'",     # Browser picture-in-picture
 ];
 #+END_SRC
 
@@ -110,6 +110,7 @@ blur-background-exclude = [
   "_GTK_FRAME_EXTENTS@:c",
   "window_type = 'desktop'",
   "window_type = 'dock'",
+  "window_type = 'popup_menu' && class_g = 'zen'",
 ];
 blur-method = "dual_kawase";
 blur-strength = 12;
