@@ -88,6 +88,7 @@ opacity-rule = [
   # In/active overwrites
   "90:class_i = 'emacs' && focused",
   "90:class_i = 'kitty' && focused",
+  "90:class_i = 'nemo' && focused",
   "90:class_i = 'spotify' && focused",
   # Decorations
   "70:window_type = 'dropdown_menu'",

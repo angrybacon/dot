@@ -21,7 +21,7 @@ yay -S \
 #+BEGIN_SRC sh
 yay -S \
     feh flameshot \
-    duf ncdu thunar \
+    duf ncdu nemo \
     btop htop \
     kitty neofetch ripgrep tree \
     deluge-gtk \
