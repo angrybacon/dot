@@ -24,9 +24,9 @@ yay -S \
     duf ncdu thunar \
     btop htop \
     kitty neofetch ripgrep tree \
-    deluge-gtk plex-media-server \
+    deluge-gtk \
     gimp obs-studio flameshot \
-    playerctl spotify
+    playerctl spotify tagger
 #+END_SRC
 
 ** Configure Visudo
@@ -95,24 +95,6 @@ Xft.dpi: 144
 [ -f "$HOME/.fehbg" ] && ~/.fehbg &
 picom --daemon
 #+END_SRC
-
-** Automatically Mount External Drives
-
-Given an external hard drive /Phoenix/ plugged in =sdb=.
-
-#+BEGIN_SRC sh
-sudo mkdir /media/Phoenix               # Create the mount point
-sudo fdisk -l                           # Identify the drive
-sudo blkid | grep sdb                   # Retrieve the UUID
-#+END_SRC
-
-Edit =/etc/fstab= to add the drive mount point.
-
-#+BEGIN_SRC diff
-+UUID=F8D2-30CF  /media/Phoenix  exfat  defaults  0  0
-#+END_SRC
-
-Confirm proper mouting with =sudo mount -a=.
 
 * Fonts
 
@@ -184,9 +166,41 @@ feh --bg-fill ~/Pictures/Wallpapers/filename.ext
 
 See [[./config/picom.org][config/picom.org]].
 
+** Default Applications
+
+Prefer settings those through GUI but in case of failure, edit
+=~/.config/mimeapps.list=.
+
+#+BEGIN_SRC conf :tangle (if (eq system-type 'gnu/linux) "~/.config/mimeapps.list" "no")
+[Default Applications]
+application/pdf=zen.desktop
+audio/mp3=vlc.desktop
+image/jpeg=feh.desktop
+image/png=feh.desktop
+text/html=zen.desktop
+video/mp4=vlc.desktop
+video/quicktime=vlc.desktop
+video/x-flv=vlc.desktop;
+video/x-matroska=vlc.desktop
+x-scheme-handler/about=zen.desktop
+x-scheme-handler/chrome=zen.desktop
+x-scheme-handler/http=zen.desktop
+x-scheme-handler/https=zen.desktop
+x-scheme-handler/mailto=zen.desktop
+x-scheme-handler/unknown=zen.desktop
+#+END_SRC
+
+** Notifications
+
+See [[./config/dunst.org][config/dunst.org]].
+
+** Screenshots
+
+See [[./config/flameshot.org][config/flameshot.org]].
+
 ** Window Manager
 
-I use =qtile= daily but other historical configuration can be found below.
+I use =qtile= daily but other historical configurations can be found below.
 
 *** EXWM
 
@@ -199,35 +213,6 @@ See [[./config/qtile.org][config/qtile.org]].
 *** XMonad
 
 See [[./config/xmonad.org][config/xmonad.org]].
-
-** Default Applications
-
-Prefer settings those through GUI but in case of failure, edit
-=~/.config/mimeapps.list=.
-
-#+BEGIN_SRC conf :tangle (if (eq system-type 'gnu/linux) "~/.config/mimeapps.list" "no")
-[Default Applications]
-audio/mp3=vlc.desktop
-image/jpeg=feh.desktop
-image/png=feh.desktop
-text/html=brave-browser.desktop
-video/mp4=vlc.desktop
-video/x-flv=vlc.desktop;
-video/x-matroska=vlc.desktop
-x-scheme-handler/about=brave-browser.desktop
-x-scheme-handler/http=brave-browser.desktop
-x-scheme-handler/https=brave-browser.desktop
-x-scheme-handler/mailto=brave-browser.desktop
-x-scheme-handler/unknown=brave-browser.desktop
-#+END_SRC
-
-** TODO Notifications
-
-See [[./config/dunst.org][config/dunst.org]].
-
-** TODO Screenshots
-
-See [[./config/flameshot.org][config/flameshot.org]].
 
 * Emacs
 
@@ -252,8 +237,6 @@ system-wide configuration in =/etc/vimrc=.
 #+END_SRC
 
 * Git
-
-** Base Configuration
 
 Default settings for all Git projects.
 
@@ -301,7 +284,9 @@ xclip -sel clip < ~/.ssh/id_ed25519.pub
 * Media
 
 This block exports to a script that resets the media folders with the right
-permissions.
+permissions. The proper way to handle this would be set a group with the right
+permissions, add the media paths under that group and finally add the media
+server user under that group. /Todo/ I guess.
 
 #+HEADER: :mkdirp yes :shebang "#!/bin/sh"
 #+BEGIN_SRC sh :tangle ~/Scripts/fix-media-permissions.sh
