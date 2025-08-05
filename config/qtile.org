@@ -40,6 +40,7 @@ from libqtile.config import (
 from libqtile.lazy import lazy
 from qtile_extras import widget
 from qtile_extras.widget.decorations import RectDecoration
+from re import compile
 
 
 mod = 'mod4'
@@ -131,7 +132,7 @@ for the glyph code points to use.
 
 #+BEGIN_SRC python
 klasses = {
-    'full': ['dota2', 'steam_app_1544020', 'wow.exe'],
+    'full': ['dota2', compile('steam_app_\\d+'), 'wow.exe'],
     'game': ['battle.net.exe', 'lutris', 'steam', 'steamwebhelper'],
     'music': ['spotify'],
     'social': ['discord', 'slack'],
