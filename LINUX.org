@@ -166,6 +166,20 @@ feh --bg-fill ~/Pictures/Wallpapers/filename.ext
 
 See [[./config/picom.org][config/picom.org]].
 
+** Dark Mode
+
+Install dependencies.
+
+#+BEGIN_SRC sh
+yay -S xfce4-settings
+#+END_SRC
+
+Query the current theme.
+
+#+BEGIN_SRC sh
+xfconf-query -c xsettings -p /Net/ThemeName
+#+END_SRC
+
 ** Default Applications
 
 Prefer settings those through GUI but in case of failure, edit
