@@ -26,7 +26,8 @@ yay -S \
     kitty neofetch ripgrep tree \
     deluge-gtk \
     gimp obs-studio flameshot \
-    playerctl spotify tagger
+    playerctl spotify tagger \
+    piper
 #+END_SRC
 
 ** Configure Visudo
