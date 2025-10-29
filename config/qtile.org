@@ -320,10 +320,12 @@ widgets = [
     widget.Volume(
         **box_filled,
         background=color_box_background,
+        font='monospace',
         mouse_callbacks={
           'Button2': lazy.spawn(volume_reset),
           'Button3': lazy.spawn(bluetooth_manager),
         },
+        mute_format=' M ',
         volume_down_command=volume_down,
         volume_up_command=volume_up,
     ),
@@ -331,6 +333,8 @@ widgets = [
     widget.KeyboardLayout(
         **box_filled,
         background=color_box_background,
+        display_map={'us': 'US', 'us intl': 'IN'},
+        font='monospace',
         configured_keyboards=['us', 'us intl'],
     ),
     widget.Spacer(**spacer),
