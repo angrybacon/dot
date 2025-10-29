@@ -49,14 +49,14 @@ get shadow, unless explicitly requested using the =wintypes= option.
 shadow = true;
 shadow-offset-x = -24;
 shadow-offset-y = -24;
-shadow-opacity = .25;
+shadow-opacity = .5;
 shadow-radius = 24;
 #+END_SRC
 
 #+BEGIN_SRC conf
 shadow-exclude = [
+  "class_g = 'zen' && role ?= 'popup'",
   "window_type = 'menu'",
-  "window_type = 'popup_menu' && class_g = 'zen'",
   "window_type = 'tooltip'",
 ]
 #+END_SRC
@@ -100,7 +100,7 @@ opacity-rule = [
   "100:class_i ?= 'steam_app_'",        # Games
   "100:role ?= 'pictureinpicture'",     # Browser picture-in-picture
   # Zen overwrites
-  "100:window_type = 'utility' && class_g = 'zen'",
+  "100:class_g = 'zen' && role ?= 'popup'",
 ];
 #+END_SRC
 
@@ -110,11 +110,9 @@ The =dual_kawase= method is only enabled with =--experimental-backends=.
 
 #+BEGIN_SRC conf
 blur-background-exclude = [
+  "class_g = 'zen' && role ?= 'popup'",
   "window_type = 'desktop'",
   "window_type = 'dock'",
-  # Zen overwrite
-  "class_g = 'zen' && window_type = 'popup_menu'",
-  "class_g = 'zen' && window_type = 'utility'",
 ];
 blur-method = "dual_kawase";
 blur-strength = 12;
