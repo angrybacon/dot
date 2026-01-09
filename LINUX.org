@@ -101,16 +101,11 @@ picom --daemon
 
 ** Font Dependencies
 
-Other sections from this document will assume these fonts are already installed:
-
-- /Cascadia Code/
-- /Google Sans/ or /Product Sans/
-- /Roboto Slab/
-
 #+BEGIN_SRC sh
 yay -S \
+    ttf-cascadia-code \
+    ttf-cascadia-code-nerd \
     ttf-google-sans \
-    ttf-material-design-icons \
     ttf-roboto-slab
 #+END_SRC
 

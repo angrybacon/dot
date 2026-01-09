@@ -127,8 +127,9 @@ keys = [
 
 * Groups
 
-Install Google's Material Design icon font. See https://fonts.google.com/icons
-for the glyph code points to use.
+Install a Nerd Font font that comes with a /circle/ glyph and use that in group
+labels. The current group is highlighted with text color so the same glyph can
+be used everywhere.
 
 #+BEGIN_SRC python
 klasses = {
@@ -146,16 +147,16 @@ groups_social = [Match(wm_class=klass) for klass in klasses['social']]
 groups_web = [Match(wm_class=klass) for klass in klasses['web']]
 
 groups = [
-    Group('1', label='\U0000EF4A', matches=groups_web),
-    Group('2', label='\U0000EF4A', matches=groups_social),
-    Group('3', label='\U0000EF4A', matches=groups_game),
-    Group('4', label='\U0000EF4A', matches=groups_full),
-    Group('5', label='\U0000EF4A'),
-    Group('6', label='\U0000EF4A'),
-    Group('7', label='\U0000EF4A'),
-    Group('8', label='\U0000EF4A'),
-    Group('9', label='\U0000EF4A', matches=groups_music),
-    Group('0', label='\U0000EF4A'),
+    Group('1', label='\U0000F111', matches=groups_web),
+    Group('2', label='\U0000F111', matches=groups_social),
+    Group('3', label='\U0000F111', matches=groups_game),
+    Group('4', label='\U0000F111', matches=groups_full),
+    Group('5', label='\U0000F111'),
+    Group('6', label='\U0000F111'),
+    Group('7', label='\U0000F111'),
+    Group('8', label='\U0000F111'),
+    Group('9', label='\U0000F111', matches=groups_music),
+    Group('0', label='\U0000F111'),
 ]
 
 for g in groups:
@@ -293,10 +294,10 @@ widgets = [
         active=color_group_active,
         borderwidth=0,
         disable_drag=True,
-        font='Material Design Icons',
-        fontsize=24,
+        fontsize=32,
         highlight_method='text',
         inactive=color_group_inactive,
+        spacing=8,
         this_current_screen_border=color_group_current,
     ),
     widget.Spacer(**spacer),
