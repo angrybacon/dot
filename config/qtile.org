@@ -221,8 +221,10 @@ floating_layout = layout.Floating(
 * Bar
 
 #+BEGIN_SRC python
-box_padding = 8
-box_radius = 8
+bar_height = 44
+box_padding_x = 16
+box_padding_y = 8
+box_radius = (bar_height - (box_padding_y * 2)) / 2
 color_background = '#494949.25'
 color_box_background= '#5C888B.50'
 color_box_background_transient= '#9C6363.50'
@@ -238,7 +240,7 @@ color_group_inactive = '#656566'
 box_defaults = {
     'fontsize': 18,
     'foreground': color_box_foreground,
-    'padding': box_padding,
+    'padding': box_padding_x,
 }
 
 box_filled = {
@@ -246,7 +248,7 @@ box_filled = {
     'decorations': [
         RectDecoration(
             filled=True,
-            padding_y=box_padding,
+            padding_y=box_padding_y,
             radius=box_radius,
             use_widget_background=True,
         ),
@@ -260,7 +262,7 @@ box_outline = {
             clip=True,
             colour=color_chart_background,
             filled=True,
-            padding_y=box_padding,
+            padding_y=box_padding_y,
             radius=box_radius,
         ),
     ],
@@ -359,7 +361,7 @@ widgets = [
 screens = [
     Screen(top=bar.Bar(
         background=color_background,
-        size=48,
+        size=bar_height,
         widgets=widgets,
     )),
 ]
