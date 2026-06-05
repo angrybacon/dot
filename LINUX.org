@@ -277,6 +277,8 @@ Default ignore list for all Git projects.
 
 #+BEGIN_SRC conf :tangle ~/.gitignore
 .DS_Store
+.agent-shell
+.claude
 .dir-locals.el
 .nvmrc
 TODO.org

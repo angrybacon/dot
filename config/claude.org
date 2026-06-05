@@ -1,0 +1,37 @@
+#+TITLE: Claude
+#+AUTHOR: Mathieu Marques
+#+PROPERTY: header-args :mkdirp yes
+
+* Settings
+
+#+BEGIN_SRC json :tangle ~/.claude/settings.json
+{
+  "permissions": {
+    "defaultMode": "plan"
+  }
+}
+#+END_SRC
+
+* Instructions
+
+#+BEGIN_SRC markdown :tangle ~/.claude/CLAUDE.md
+# Response Style
+
+- Keep answers short
+- Questions should go straight to the point
+- Skip preamble, answer the question directly
+- Don't pad prose with headings unless the content actually has sections
+
+# Coding Preferences
+
+## Tests
+
+- Structure tests with `Given`, `When`, `Then` comments
+- Bind the outputs of `When` to a `result` or `results` variable
+#+END_SRC
+
+* COMMENT Local Variables
+
+# Local Variables:
+# after-save-hook: (org-babel-tangle t)
+# End:
