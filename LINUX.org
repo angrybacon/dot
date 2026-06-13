@@ -11,23 +11,15 @@ usually running either Arch or Fedora. Adapt accordingly.
 
 #+BEGIN_SRC sh
 yay -S \
-    cmake git openssh \
-    highlight xclip \
-    vi vim
+    cmake git highlight openssh vi vim xclip
 #+END_SRC
 
 ** Install Other Programs
 
 #+BEGIN_SRC sh
 yay -S \
-    feh flameshot \
-    duf ncdu nemo \
-    btop htop \
-    kitty neofetch ripgrep tree \
-    deluge-gtk \
-    gimp obs-studio flameshot \
-    playerctl spotify tagger \
-    piper
+    btop deluge-gtk duf feh flameshot flameshot gimp htop kitty ncdu nemo \
+    neofetch obs-studio piper playerctl ripgrep spotify tagger tree
 #+END_SRC
 
 ** Configure Visudo
@@ -50,8 +42,7 @@ If they are not already, create the initial home directories with
 
 ** User Session
 
-Edit =~/.profile= to set the path for user binaries and increase the keyboard
-repeat rate.
+Add user paths.
 
 #+BEGIN_SRC sh :tangle (if (eq system-type 'gnu/linux) "~/.profile" "no")
 if [ -d "$HOME/.local/bin" ] ; then
@@ -61,8 +52,12 @@ fi
 if [ -d "$HOME/Scripts" ] ; then
   PATH="$HOME/Scripts:$PATH"
 fi
+#+END_SRC
 
-xset r rate 200 40
+Increase the default keyboard repeat rate.
+
+#+BEGIN_SRC sh :tangle  (if (eq system-type 'gnu/linux) "~/.profile" "no")
+xset r rate 200 50
 #+END_SRC
 
 ** Zsh
@@ -280,6 +275,7 @@ Default ignore list for all Git projects.
 .agent-shell
 .claude
 .dir-locals.el
+.env*.local
 .nvmrc
 TODO.org
 #+END_SRC

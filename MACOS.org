@@ -2,6 +2,18 @@
 #+AUTHOR: Mathieu Marques
 #+PROPERTY: header-args :results silent
 
+* Checklist
+
+#+BEGIN_SRC sh
+brew install \
+  btop fastfetch git ipython ncdu pnpm ripgrep tldr tree vim
+#+END_SRC
+
+#+BEGIN_SRC sh
+brew install --cask \
+  android-file-transfer ghostty gimp hiddenbar spotify steam vlc
+#+END_SRC
+
 * Emacs
 
 Install build dependencies, then install your preferred Emacs formulae.
@@ -9,8 +21,39 @@ Install build dependencies, then install your preferred Emacs formulae.
 #+BEGIN_SRC sh
 brew install libgccjit tree-sitter
 brew tap d12frosted/emacs-plus
-brew install emacs-plus@30 --with-native-comp
+brew install --cask emacs-plus-app
 #+END_SRC
 
 Most Emacs configurations also assume GNU utilities are available, in particular
 =ls= since =dired= relies on it.
+
+* Git
+
+#+BEGIN_SRC sh :tangle  (if (eq system-type 'darwin) "~/.gitconfig" "no")
+[core]
+    attributesfile = ~/.gitattributes
+    excludesfile = ~/.gitignore
+    ignorecase = false
+[diff "lisp"]
+    xfuncname = "^(((;;;+ )|\\(|([ \t]+\\(((cl-|el-patch-)?def(un|var|macro|method|custom)|gb/))).*)$"
+[diff "org"]
+    xfuncname = "^(\\*+ +.*)$"
+[fetch]
+    prune = true
+    pruneTags = true
+[pull]
+    rebase = true
+[rebase]
+    autosquash = true
+[remote "origin"]
+    tagOpt = --tags
+[user]
+    email = mathieumarques78@gmail.com
+    name = Mathieu Marques
+#+END_SRC
+
+* COMMENT Local Variables
+
+# Local Variables:
+# after-save-hook: (org-babel-tangle t)
+# End:
