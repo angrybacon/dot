@@ -14,6 +14,21 @@ brew install --cask \
   android-file-transfer ghostty gimp hiddenbar spotify steam vlc
 #+END_SRC
 
+* Claude
+
+Create a dedicated configuration directory per profile. Then link the common
+configuration files accordingly.
+
+#+BEGIN_SRC sh
+mkdir ~/.config/claude-korumite
+ln -s ~/.claude/CLAUDE.md ~/.config/claude-korumite/CLAUDE.md
+ln -s ~/.claude/settings.json ~/.config/claude-korumite/settings.json
+
+mkdir ~/.config/claude-manomano
+ln -s ~/.claude/CLAUDE.md ~/.config/claude-manomano/CLAUDE.md
+ln -s ~/.claude/settings.json ~/.config/claude-manomano/settings.json
+#+END_SRC
+
 * Emacs
 
 Install build dependencies, then install your preferred Emacs formulae.
