@@ -6,8 +6,9 @@
 
 #+BEGIN_SRC json :tangle ~/.claude/settings.json
 {
+  "model": "claude-opus-4-6",
   "permissions": {
-    "defaultMode": "plan"
+    "defaultMode": "auto"
   }
 }
 #+END_SRC
@@ -22,11 +23,25 @@
 - Skip preamble, answer the question directly
 - Don't pad prose with headings unless the content actually has sections
 
+# Saving Preferences
+
+- Don't edit `~/.claude/` directly, use `~/Workspace/dot/config/claude.org`
+
 # Coding Preferences
+
+## TypeScript
+
+### Documentation Strings
+
+- Prefer one-liners if possible
+- One-liners start with a capital and don't end with a dot
+- Multiple lines are fine but use a single line paragraph for the summary
 
 ## Tests
 
-- Structure tests with `Given`, `When`, `Then` comments
+- Use the tested symbol directly for describe summaries
+- Start the test summary with `should`
+- Structure tests with the AAA pattern ie. `Given`, `When`, `Then`
 - Bind the outputs of `When` to a `result` or `results` variable
 #+END_SRC
 
