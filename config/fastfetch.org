@@ -46,5 +46,5 @@ If missing, fenerate the base configuration file with =--gen-config=.
 * COMMENT Local Variables
 
 # Local Variables:
-# after-save-hook: (org-babel-tangle t)
+# eval: (add-hook 'after-save-hook #'org-babel-tangle nil t)
 # End:

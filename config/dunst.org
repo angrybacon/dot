@@ -120,6 +120,6 @@ mouse_right_click = close_current
 * COMMENT Local Variables
 
 # Local Variables:
-# after-save-hook: (org-babel-tangle t)
+# eval: (add-hook 'after-save-hook #'org-babel-tangle nil t)
 # eval: (when (require 'rainbow-mode nil :noerror) (rainbow-mode 1))
 # End:

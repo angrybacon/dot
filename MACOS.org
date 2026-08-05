@@ -70,5 +70,5 @@ Most Emacs configurations also assume GNU utilities are available, in particular
 * COMMENT Local Variables
 
 # Local Variables:
-# after-save-hook: (org-babel-tangle t)
+# eval: (add-hook 'after-save-hook #'org-babel-tangle nil t)
 # End:

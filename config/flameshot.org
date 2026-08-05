@@ -25,6 +25,6 @@ userColors=picker, #3F3F3F, #F0DFAF, #DFAF8F, #CC9393, #DC8CC3, #7F9F7F, #8CD0D3
 * COMMENT Local Variables
 
 # Local Variables:
-# after-save-hook: (org-babel-tangle t)
+# eval: (add-hook 'after-save-hook #'org-babel-tangle nil t)
 # eval: (when (require 'rainbow-mode nil :noerror) (rainbow-mode 1))
 # End:
