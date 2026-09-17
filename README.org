@@ -31,3 +31,21 @@ the following to your =PATH= variable.
 #+BEGIN_SRC diff
 +PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
 #+END_SRC
+
+* Claude
+
+Create a dedicated configuration directory per profile. Then link the common
+configuration files accordingly.
+
+#+BEGIN_SRC sh
+mkdir ~/.config/claude-korumite
+ln -s ~/.claude/CLAUDE.md ~/.config/claude-korumite/CLAUDE.md
+ln -s ~/.claude/settings.json ~/.config/claude-korumite/settings.json
+#+END_SRC
+
+Run =claude= with the appropriate value for =CLAUDE_CONFIG_DIR= then use
+=/login= to save your credentials in the corresponding configuration root.
+
+#+BEGIN_SRC sh
+CLAUDE_CONFIG_DIR=~/.config/claude-korumite claude
+#+END_SRC
