@@ -1,0 +1,61 @@
+#+TITLE: Ghostty
+#+AUTHOR: Mathieu Marques
+#+PROPERTY: header-args :mkdirp yes
+#+PROPERTY: header-args:conf :tangle ~/.config/ghostty/config
+
+* Meta
+
+#+BEGIN_SRC conf
+auto-update = off
+initial-window = false
+#+END_SRC
+
+* Keybindings
+
+#+BEGIN_SRC conf
+# keybind = global:alt+enter=new_tab
+keybind = global:option+enter=toggle_quick_terminal
+keybind = option+h=goto_split:left
+keybind = option+j=goto_split:down
+keybind = option+k=goto_split:up
+keybind = option+l=goto_split:right
+#+END_SRC
+
+* Window Decorations
+
+#+BEGIN_SRC conf
+macos-icon = paper
+# macos-titlebar-style = hidden
+window-subtitle = false
+#+END_SRC
+
+* Window Geometry
+
+#+BEGIN_SRC conf
+window-height = 25
+window-padding-balance = true
+window-width = 100
+#+END_SRC
+
+* Quick Terminal
+
+#+BEGIN_SRC conf
+quick-terminal-animation-duration = 0
+quick-terminal-autohide = false
+quick-terminal-size = 35%
+#+END_SRC
+
+* Theme
+
+#+BEGIN_SRC conf
+background-blur = true
+background-opacity = .9
+font-size = 12
+theme = zenburned
+#+END_SRC
+
+* COMMENT Local Variables
+
+# Local Variables:
+# eval: (add-hook 'after-save-hook #'org-babel-tangle nil t)
+# End:
