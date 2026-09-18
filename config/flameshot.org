@@ -19,6 +19,7 @@ showHelp=false
 showSidePanelButton=false
 showStartupLaunchMessage=false
 uiColor=#F0DFAF
+useX11LegacyScreenshot=true
 userColors=picker, #3F3F3F, #F0DFAF, #DFAF8F, #CC9393, #DC8CC3, #7F9F7F, #8CD0D3
 #+END_SRC
 

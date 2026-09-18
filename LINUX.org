@@ -180,6 +180,7 @@ Prefer settings those through GUI but in case of failure, edit
 [Default Applications]
 application/pdf=zen.desktop
 audio/mp3=vlc.desktop
+audio/x-vorbis+ogg=vlc.desktop
 image/jpeg=feh.desktop
 image/png=feh.desktop
 text/html=zen.desktop
