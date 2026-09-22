@@ -73,6 +73,7 @@ player_next = 'playerctl next'
 player_previous = 'playerctl previous'
 player_toggle = 'playerctl play-pause'
 volume_down = 'pulsemixer --change-volume -5 --unmute'
+volume_get = """pulsemixer --get-volume | awk '{print $1 "%"}'"""
 volume_reset = 'pulsemixer --set-volume 30'
 volume_toggle = 'pulsemixer  --toggle-mute'
 volume_up = 'pulsemixer --change-volume +5 --unmute'
@@ -326,6 +327,7 @@ widgets = [
         **box_filled,
         background=color_box_background,
         font='monospace',
+        get_volume_command=volume_get,
         mouse_callbacks={
           'Button2': lazy.spawn(volume_reset),
           'Button3': lazy.spawn(bluetooth_manager),
