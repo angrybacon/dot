@@ -223,7 +223,7 @@ floating_layout = layout.Floating(
 * Bar
 
 #+BEGIN_SRC python
-bar_height = 44
+bar_height = 48
 box_padding_x = 16
 box_padding_y = 8
 box_radius = (bar_height - (box_padding_y * 2)) / 2
@@ -290,7 +290,8 @@ text = {
 }
 
 widgets = [
-    widget.Spacer(length=8),
+    widget.Spacer(**spacer),
+    widget.Spacer(**spacer),
     widget.GroupBox(
         active=color_group_active,
         borderwidth=0,
@@ -357,6 +358,7 @@ widgets = [
     widget.MemoryGraph(**chart),
     widget.Spacer(**spacer),
     widget.NetGraph(**chart),
+    widget.Spacer(**spacer),
     widget.Spacer(**spacer),
 ]
 
