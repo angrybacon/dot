@@ -97,7 +97,7 @@ opacity-rule = [
   "100:window_type = 'tooltip'",        # Browser tooltips
   # Application overwrites
   "100:class_i = 'peek'",               # Screencast utility
-  "100:class_i ?= 'steam_app_'",        # Games
+  "100:class_i *= 'steam_app_'",        # Games
   "100:role ?= 'pictureinpicture'",     # Browser picture-in-picture
   # Zen overwrites
   "100:class_g = 'zen' && role ?= 'popup'",
