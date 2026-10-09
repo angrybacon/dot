@@ -3,24 +3,23 @@
 #+PROPERTY: header-args :mkdirp yes
 
 #+BEGIN_SRC conf :tangle ~/.gnuplot
+font = "Monospace,18"
 set border linecolor rgb "#DCDCCC"
-set datafile missing "" separator "\t"
 set grid linecolor rgb "#989890" linewidth 2
-set key top right textcolor rgb "#DCDCCC"
+set key top right textcolor rgb "#DCDCCC" font font
 set for [i=1:8] linetype i linewidth 4 pointsize 1 pointtype 0
-set linetype 1 linecolor rgb "#366060"
-set linetype 2 linecolor rgb "#CC9393"
-set linetype 3 linecolor rgb "#DFAF8F"
-set linetype 4 linecolor rgb "#7F9F7F"
-set linetype 5 linecolor rgb "#F0DFAF"
-set linetype 6 linecolor rgb "#93E0E3"
-set linetype 7 linecolor rgb "#94BFF3"
-set linetype 8 linecolor rgb "#DC8CC3"
+set linetype 1 linecolor rgb "#366060" linewidth 4
+set linetype 2 linecolor rgb "#7F9F7F" linewidth 4
+set linetype 3 linecolor rgb "#DFAF8F" linewidth 4
+set linetype 4 linecolor rgb "#CC9393" linewidth 4
+set linetype 5 linecolor rgb "#94BFF3" linewidth 4
+set linetype 6 linecolor rgb "#F0DFAF" linewidth 4
+set linetype 7 linecolor rgb "#DC8CC3" linewidth 4
+set linetype 8 linecolor rgb "#93E0E3" linewidth 4
 set style fill solid 1.0 noborder
-set terminal pngcairo size 1024,512 font "Monaco,16" background rgb "#3F3F3F"
-set title textcolor rgb "#93E0E3"
-set xtics textcolor rgb "#DCDCCC"
-set ytics textcolor rgb "#DCDCCC"
+set terminal png size 1024,512 background rgb "#3F3F3F" font font
+set tics textcolor rgb "#DCDCCC" font font
+set title textcolor rgb "#93E0E3" font font
 #+END_SRC
 
 * COMMENT Local Variables
