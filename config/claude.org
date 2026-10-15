@@ -49,7 +49,7 @@
 
 - Questions should go straight to the point
 - Answer what I asked, don't volunteer details
-- One sentence is a complete answer
+- Be extremely concise, sacrifice grammar for the sake of concision
 
 # Saving Preferences
 
