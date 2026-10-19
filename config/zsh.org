@@ -39,6 +39,7 @@ export PATH="/usr/local/sbin:/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
 #+BEGIN_SRC sh
 alias arecordvv='arecord -vv -f dat /dev/null'
 alias arecordvvv='arecord -vvv -f dat /dev/null'
+alias copy='xclip -selection clipboard'
 alias df='df --human-readable'
 alias diff='diff --color'
 alias dog='highlight -O ansi'
