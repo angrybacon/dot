@@ -35,7 +35,6 @@ Specify the backend to use eg. =xrender=, =glx= or =xr_glx_hybrid=.
 #+BEGIN_SRC conf
 backend = "glx";
 glx-copy-from-front = false;
-glx-no-stencil = true;
 use-damage = false;
 vsync = true;
 #+END_SRC
@@ -82,25 +81,20 @@ rounded-corners-exclude = [
 
 #+BEGIN_SRC conf
 active-opacity = 1;                     # Default opacity for active windows
-inactive-opacity = .75;                 # Opacity for inactive windows
+inactive-opacity = .8;                  # Opacity for inactive windows
 inactive-opacity-override = false;
 opacity-rule = [
-  # In/active overwrites
-  "90:class_i = 'emacs' && focused",
-  "90:class_i = 'kitty' && focused",
-  "90:class_i = 'nemo' && focused",
-  "90:class_i = 'spotify' && focused",
   # Decorations
-  "70:window_type = 'dropdown_menu'",
-  "100:window_type = 'menu'",           # Chrome context menus
-  "100:window_type = 'popup_menu'",     # Firefox context menus
+  "100:window_type = 'dropdown_menu'",  # Application context menus
+  "100:window_type = 'menu'",           # Chromium's Ozone context menus
+  "100:window_type = 'popup_menu'",     # GTK context menus
   "100:window_type = 'tooltip'",        # Browser tooltips
   # Application overwrites
   "100:class_i = 'peek'",               # Screencast utility
   "100:class_i *= 'steam_app_'",        # Games
   "100:role ?= 'pictureinpicture'",     # Browser picture-in-picture
   # Zen overwrites
-  "100:class_g = 'zen' && role ?= 'popup'",
+  "100:class_g ?= 'zen' && role ?= 'popup'",
 ];
 #+END_SRC
 
