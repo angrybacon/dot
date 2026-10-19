@@ -50,6 +50,7 @@
 - Questions should go straight to the point
 - Answer what I asked, don't volunteer details
 - Be extremely concise, sacrifice grammar for the sake of concision
+- Always fill your code snippets to 80 columns
 
 # Saving Preferences
 
