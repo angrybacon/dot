@@ -136,7 +136,7 @@ be used everywhere.
 #+BEGIN_SRC python
 klasses: Dict[str, List[Union[str, Pattern]]] = {
     'full': ['dota2', compile('steam_app_(\\d+|default)')],
-    'game': ['battle.net.exe', 'lutris', 'steam', 'steamwebhelper'],
+    'game': ['battle.net.exe', 'net.lutris.Lutris', 'steam', 'steamwebhelper'],
     'music': ['spotify'],
     'social': ['discord', 'slack'],
     'web': ['brave-browser', 'zen'],
@@ -314,6 +314,14 @@ widgets = [
     widget.Spacer(),
     widget.Clock(**text, format='%H:%M %B %d'),
     widget.Spacer(),
+    widget.StatusNotifier(
+        **(box_outline | { 'padding': spacer['length'] }),
+        icon_size=bar_height - (box_padding_y * 2) - 4,
+        menu_fontsize=text['fontsize'],
+        menu_icon_size=text['fontsize'],
+        menu_width=300,
+    ),
+    widget.Spacer(**spacer),
     widget.CheckUpdates(
         **box_filled,
         background=color_box_background_transient,
