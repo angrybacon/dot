@@ -2,7 +2,18 @@
 #+AUTHOR: Mathieu Marques
 #+PROPERTY: header-args:vimrc :tangle /sudo::/etc/vimrc.local
 
-Optionally link the configuration to the user-local path.
+* Bootstrap
+
+The configuration tangles to =/etc/vimrc.local=. Load it from the system-wide
+configuration in =/etc/vimrc=.
+
+#+BEGIN_SRC diff
++if filereadable("/etc/vimrc.local")
++  source /etc/vimrc.local
++endif
+#+END_SRC
+
+And make a user-local link.
 
 #+BEGIN_SRC sh :results silent
 ln -s /etc/vimrc.local ~/.vimrc

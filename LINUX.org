@@ -2,8 +2,8 @@
 #+AUTHOR: Mathieu Marques
 #+PROPERTY: header-args :results silent
 
-This file documents the steps I've followed to install my daily machines,
-usually running either Arch or Fedora. Adapt accordingly.
+This file documents the steps I've followed to install my daily drivers,
+usually running either Arch or Fedora. Adjust accordingly.
 
 * Checklist
 
@@ -11,15 +11,14 @@ usually running either Arch or Fedora. Adapt accordingly.
 
 #+BEGIN_SRC sh
 yay -S \
-    cmake git highlight openssh vi vim xclip
+    cmake git highlight openssh sd sed vi vim xclip zsh
 #+END_SRC
-
-** Install Other Programs
 
 #+BEGIN_SRC sh
 yay -S \
-    btop deluge-gtk duf feh flameshot flameshot gimp htop kitty ncdu nemo \
-    neofetch obs-studio piper playerctl ripgrep spotify tagger tree
+    bat btop duf feh flameshot gawk gimp htop kitty ncdu nemo neofetch \
+    obs-studio overskride peek pfetch piper playerctl ripgrep shotcut spotify \
+    tagger tree unrar unzip
 #+END_SRC
 
 ** Configure Visudo
@@ -38,13 +37,11 @@ editor to use and enable asterisk feedback in password prompts.
 If they are not already, create the initial home directories with
 =xdg-user-dirs-update=.
 
-* Shell
-
 ** User Session
 
 Add user paths.
 
-#+BEGIN_SRC sh :tangle (if (eq system-type 'gnu/linux) "~/.profile" "no")
+#+BEGIN_SRC sh :tangle "~/.profile"
 if [ -d "$HOME/.local/bin" ] ; then
   PATH="$HOME/.local/bin:$PATH"
 fi
@@ -54,42 +51,66 @@ if [ -d "$HOME/Scripts" ] ; then
 fi
 #+END_SRC
 
-Increase the default keyboard repeat rate.
-
-#+BEGIN_SRC sh :tangle  (if (eq system-type 'gnu/linux) "~/.profile" "no")
-xset r rate 200 50
-#+END_SRC
-
-** Zsh
-
-Install =zsh= then set it as your default shell.
-
-#+BEGIN_SRC sh
-chsh -s $(which zsh)
-ln -s ~/.profile ~/.zprofile
-#+END_SRC
-
-See [[./config/zsh.org][config/zsh.org]].
-
-** Terminal
-
-See [[./config/kitty.org][config/kitty.org]].
-
 * X
 
-** =~/.Xresources=
+** Bootstrap
 
 Increase the base DPI by 25%.
 
-#+BEGIN_SRC conf :tangle (if (eq system-type 'gnu/linux) "~/.Xresources" "no")
+#+BEGIN_SRC conf :tangle "~/.Xresources"
 Xft.dpi: 144
 #+END_SRC
 
-** =~/.xprofile=
+#+BEGIN_SRC sh :tangle "~/.xprofile"
+[ -f "$HOME/.fehbg" ] && ~/.fehbg &     # Background
+picom --daemon                          # Compositor
+#+END_SRC
 
-#+BEGIN_SRC sh :tangle (if (eq system-type 'gnu/linux) "~/.xprofile" "no")
-[ -f "$HOME/.fehbg" ] && ~/.fehbg &
-picom --daemon
+** Background
+
+Install =feh= and run it once to initialize the bootstrap executable.
+
+#+BEGIN_SRC sh
+feh --bg-fill ~/Pictures/Wallpapers/filename.ext
+#+END_SRC
+
+** Dark Mode
+
+Install dependencies.
+
+#+BEGIN_SRC sh
+yay -S xfce4-settings
+#+END_SRC
+
+Query the current theme.
+
+#+BEGIN_SRC sh
+xfconf-query -c xsettings -p /Net/ThemeName
+#+END_SRC
+
+** Default Applications
+
+Prefer settings those through GUI but in case of failure, edit
+=~/.config/mimeapps.list=.
+
+#+BEGIN_SRC conf :tangle "~/.config/mimeapps.list"
+[Default Applications]
+application/pdf=zen.desktop
+audio/mp3=vlc.desktop
+audio/x-vorbis+ogg=vlc.desktop
+image/jpeg=feh.desktop
+image/png=feh.desktop
+text/html=zen.desktop
+video/mp4=vlc.desktop
+video/quicktime=vlc.desktop
+video/x-flv=vlc.desktop;
+video/x-matroska=vlc.desktop
+x-scheme-handler/about=zen.desktop
+x-scheme-handler/chrome=zen.desktop
+x-scheme-handler/http=zen.desktop
+x-scheme-handler/https=zen.desktop
+x-scheme-handler/mailto=zen.desktop
+x-scheme-handler/unknown=zen.desktop
 #+END_SRC
 
 * Fonts
@@ -112,7 +133,7 @@ integrity.
 
 Set default fonts for =monospace=, =serif= and =sans-serif= classes.
 
-#+BEGIN_SRC xml :tangle (if (eq system-type 'gnu/linux) "/sudo::/etc/fonts/local.conf" "no")
+#+BEGIN_SRC xml :tangle "/sudo::/etc/fonts/local.conf"
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE fontconfig SYSTEM "urn:fontconfig:fonts.dtd">
 <fontconfig>
@@ -143,173 +164,13 @@ Set default fonts for =monospace=, =serif= and =sans-serif= classes.
 </fontconfig>
 #+END_SRC
 
-* Desktop
-
-** Background
-
-Install =feh= and run it once to initialize the bootstrap executable.
-
-#+BEGIN_SRC sh
-feh --bg-fill ~/Pictures/Wallpapers/filename.ext
-#+END_SRC
-
-** Compositor
-
-See [[./config/picom.org][config/picom.org]].
-
-** Dark Mode
-
-Install dependencies.
-
-#+BEGIN_SRC sh
-yay -S xfce4-settings
-#+END_SRC
-
-Query the current theme.
-
-#+BEGIN_SRC sh
-xfconf-query -c xsettings -p /Net/ThemeName
-#+END_SRC
-
-** Default Applications
-
-Prefer settings those through GUI but in case of failure, edit
-=~/.config/mimeapps.list=.
-
-#+BEGIN_SRC conf :tangle (if (eq system-type 'gnu/linux) "~/.config/mimeapps.list" "no")
-[Default Applications]
-application/pdf=zen.desktop
-audio/mp3=vlc.desktop
-audio/x-vorbis+ogg=vlc.desktop
-image/jpeg=feh.desktop
-image/png=feh.desktop
-text/html=zen.desktop
-video/mp4=vlc.desktop
-video/quicktime=vlc.desktop
-video/x-flv=vlc.desktop;
-video/x-matroska=vlc.desktop
-x-scheme-handler/about=zen.desktop
-x-scheme-handler/chrome=zen.desktop
-x-scheme-handler/http=zen.desktop
-x-scheme-handler/https=zen.desktop
-x-scheme-handler/mailto=zen.desktop
-x-scheme-handler/unknown=zen.desktop
-#+END_SRC
-
-** Notifications
-
-See [[./config/dunst.org][config/dunst.org]].
-
-** Screenshots
-
-See [[./config/flameshot.org][config/flameshot.org]].
-
-** Window Manager
-
-I use =qtile= daily but other historical configurations can be found below.
-
-*** EXWM
-
-See [[https://github.com/angrybacon/dotemacs/blob/master/DESKTOP.org]].
-
-*** Qtile
-
-See [[./config/qtile.org][config/qtile.org]].
-
-*** XMonad
-
-See [[./config/xmonad.org][config/xmonad.org]].
-
 * Emacs
 
-Emacs now ships with native compilation by default /almost/ everywhere. More
-details at [[http://akrl.sdf.org/gccemacs.html]].
-
-See https://github.com/angrybacon/dotemacs for my configuration.
-
-* Vim
-
-I mostly use Emacs but sometimes Vim too so minor tweaks are enough.
-
-See [[./config/vim.org][config/vim.org]].
-
-The above configuration tangles to =/etc/vimrc.local=. Load it from the
-system-wide configuration in =/etc/vimrc=.
-
-#+BEGIN_SRC diff
-+if filereadable("/etc/vimrc.local")
-+  source /etc/vimrc.local
-+endif
-#+END_SRC
-
-* Git
-
-Default settings for all Git projects.
-
-#+BEGIN_SRC conf :tangle ~/.gitconfig
-[user]
-    email = mathieumarques78@gmail.com
-    name = Mathieu Marques
-[core]
-    attributesfile = ~/.gitattributes
-    excludesfile = ~/.gitignore
-    ignorecase = false
-[diff "lisp"]
-    xfuncname = "^(((;;;+ )|\\(|([ \t]+\\(((cl-|el-patch-)?def(un|var|macro|method|custom)|gb/))).*)$"
-[diff "org"]
-    xfuncname = "^(\\*+ +.*)$"
-[pull]
-    rebase = true
-[rebase]
-    autosquash = true
-#+END_SRC
-
-#+BEGIN_SRC conf :tangle ~/.gitattributes
-*.el diff=lisp
-*.org diff=org
-#+END_SRC
-
-Default ignore list for all Git projects.
-
-#+BEGIN_SRC conf :tangle ~/.gitignore
-.DS_Store
-.agent-shell
-.claude
-.dir-locals.el
-.env*.local
-.nvmrc
-TODO.org
-#+END_SRC
-
-* SSH
-
-Create your public key and push it to the clipboard for further use.
-
-#+BEGIN_SRC sh
-ssh-keygen -t ed25519
-xclip -sel clip < ~/.ssh/id_ed25519.pub
-#+END_SRC
-
-* Media
-
-This block exports to a script that resets the media folders with the right
-permissions. The proper way to handle this would be set a group with the right
-permissions, add the media paths under that group and finally add the media
-server user under that group. /Todo/ I guess.
-
-#+HEADER: :mkdirp yes :shebang "#!/bin/sh"
-#+BEGIN_SRC sh :tangle ~/Scripts/fix-media-permissions.sh
-chmod 775 ~/
-find ~/Videos -type d \! -perm 775 -exec chmod 775 {} \; -print
-find ~/Videos -type f \! -perm 664 -exec chmod 664 {} \; -print
-notify-send --urgency=low "Cron" "Successfully updated permissions under ~/Videos/"
-#+END_SRC
-
-Run it at every hour of the day to ensure new files also have the right
-permissions.
+See [[https://github.com/angrybacon/dotemacs]].
 
 * COMMENT Local Variables
 
 # Local Variables:
-# eval: (add-hook 'after-save-hook #'org-babel-tangle nil t)
+# eval: (when (eq system-type 'gnu/linux)
+#         (add-hook 'after-save-hook #'org-babel-tangle nil t))
 # End:

@@ -2,6 +2,13 @@
 #+AUTHOR: Mathieu Marques
 #+PROPERTY: header-args:sh :tangle ~/.zshrc
 
+* Default Shell
+
+#+BEGIN_SRC sh :tangle no
+chsh -s $(which zsh)
+ln -s ~/.profile ~/.zprofile
+#+END_SRC
+
 * Parsing Arguments
 
 #+BEGIN_SRC sh
@@ -71,8 +78,6 @@ bindkey "^[[1;5D" backward-word
 See https://github.com/sindresorhus/pure to install the =pure= prompt.
 
 #+BEGIN_SRC sh
-fpath+=("$(brew --prefix)/share/zsh/site-functions")
-fpath+=$HOME/.zsh/pure
 autoload -U promptinit
 promptinit
 prompt pure

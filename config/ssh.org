@@ -1,0 +1,10 @@
+#+TITLE: SSH
+#+AUTHOR: Mathieu Marques
+#+PROPERTY: header-args :results silent
+
+Create your public key and push it to the clipboard for further use.
+
+#+BEGIN_SRC sh
+ssh-keygen -t ed25519
+xclip -sel clip < ~/.ssh/id_ed25519.pub
+#+END_SRC
