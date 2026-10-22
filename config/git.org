@@ -5,21 +5,26 @@
 Default settings for all Git projects.
 
 #+BEGIN_SRC conf :tangle ~/.gitconfig
-[user]
-    email = mathieumarques78@gmail.com
-    name = Mathieu Marques
 [core]
     attributesfile = ~/.gitattributes
     excludesfile = ~/.gitignore
     ignorecase = false
 [diff "lisp"]
-    xfuncname = "^(((;;;+ )|\\(|([ \t]+\\(((cl-|el-patch-)?def(un|var|macro|method|custom)|gb/))).*)$"
+    xfuncname = "^(((;;;+ )|\\(|([ \t]+\\(((cl-|el-patch-)?def(custom|macro|method|un|var)|gb/))).*)$"
 [diff "org"]
     xfuncname = "^(\\*+ +.*)$"
+[fetch]
+    prune = true
+    pruneTags = true
 [pull]
     rebase = true
 [rebase]
     autosquash = true
+[remote "origin"]
+    tagOpt = --tags
+[user]
+    email = mathieumarques78@gmail.com
+    name = Mathieu Marques
 #+END_SRC
 
 #+BEGIN_SRC conf :tangle ~/.gitattributes

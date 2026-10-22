@@ -4,6 +4,8 @@
 
 * Checklist
 
+** Install Dependencies and Packages
+
 #+BEGIN_SRC sh
 brew install \
   btop fastfetch git ipython ncdu pnpm ripgrep tldr tree vim
@@ -12,6 +14,22 @@ brew install \
 #+BEGIN_SRC sh
 brew install --cask \
   android-file-transfer ghostty gimp hiddenbar spotify steam vlc
+#+END_SRC
+
+** User Session
+
+Add user paths.
+
+#+BEGIN_SRC sh :tangle "~/.profile"
+if [ -d "$HOME/.local/bin" ] ; then
+  PATH="$HOME/.local/bin:$PATH"
+fi
+
+if [ -d "$HOME/Scripts" ] ; then
+  PATH="$HOME/Scripts:$PATH"
+fi
+
+eval "$(/opt/homebrew/bin/brew shellenv)"
 #+END_SRC
 
 * Emacs
@@ -27,33 +45,9 @@ brew install --cask emacs-plus-app
 Most Emacs configurations also assume GNU utilities are available, in particular
 =ls= since =dired= relies on it.
 
-* Git
-
-#+BEGIN_SRC sh :tangle  (if (eq system-type 'darwin) "~/.gitconfig" "no")
-[core]
-    attributesfile = ~/.gitattributes
-    excludesfile = ~/.gitignore
-    ignorecase = false
-[diff "lisp"]
-    xfuncname = "^(((;;;+ )|\\(|([ \t]+\\(((cl-|el-patch-)?def(un|var|macro|method|custom)|gb/))).*)$"
-[diff "org"]
-    xfuncname = "^(\\*+ +.*)$"
-[fetch]
-    prune = true
-    pruneTags = true
-[pull]
-    rebase = true
-[rebase]
-    autosquash = true
-[remote "origin"]
-    tagOpt = --tags
-[user]
-    email = mathieumarques78@gmail.com
-    name = Mathieu Marques
-#+END_SRC
-
 * COMMENT Local Variables
 
 # Local Variables:
-# eval: (add-hook 'after-save-hook #'org-babel-tangle nil t)
+# eval: (when (eq system-type 'darwin)
+#         (add-hook 'after-save-hook #'org-babel-tangle nil t))
 # End:
