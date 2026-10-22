@@ -8,3 +8,16 @@ Create your public key and push it to the clipboard for further use.
 ssh-keygen -t ed25519
 xclip -sel clip < ~/.ssh/id_ed25519.pub
 #+END_SRC
+
+Allow key caching in GPG signing.
+
+#+BEGIN_SRC conf :tangle "~/.ssh/config"
+Host *
+  AddKeysToAgent yes
+#+END_SRC
+
+* COMMENT Local Variables
+
+# Local Variables:
+# eval: (add-hook 'after-save-hook #'org-babel-tangle nil t)
+# End:
