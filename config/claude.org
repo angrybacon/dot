@@ -7,10 +7,10 @@
 #+BEGIN_SRC json :tangle ~/.claude/settings.json
 {
   "autoMemoryEnabled": false,
-  "model": "claude-sonnet-5",
+  "model": "opusplan",
   "outputStyle": "Concise",
   "permissions": {
-    "allow":[
+    "allow": [
       "Bash(cat:*)",
       "Bash(find:*)",
       "Bash(git diff:*)",
@@ -47,6 +47,7 @@
 #+BEGIN_SRC markdown :tangle ~/.claude/CLAUDE.md
 # Response Style
 
+- Never edit files until specifically approved to
 - Questions should go straight to the point
 - Answer what I asked, don't volunteer details
 - Be extremely concise, sacrifice grammar for the sake of concision
