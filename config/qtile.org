@@ -53,7 +53,7 @@ Application commands.
 
 #+BEGIN_SRC python
 bluetooth_manager = 'overskride'
-file_manager = 'nemo'
+file_manager = 'pcmanfm'
 terminal = 'kitty'
 terminal_alternate = 'ghostty'
 #+END_SRC

@@ -96,6 +96,12 @@ Allow case-insensitive completion candidates.
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 #+END_SRC
 
+* Gotta Catch 'Em All
+
+#+BEGIN_SRC sh
+pokeget kanto --hide-name
+#+END_SRC
+
 * Node Version Manager
 
 Bootstrap NVM.

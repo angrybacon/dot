@@ -1,0 +1,100 @@
+#+TITLE: PCManFM
+#+AUTHOR: Mathieu Marques
+#+PROPERTY: header-args :mkdirp yes
+
+Lightweight file manager with no desktop environment dependencies. Run it as a
+daemon from =~/.xprofile= so removable media get mounted even when no window is
+open.
+
+#+BEGIN_SRC sh
+pcmanfm --daemon-mode &
+#+END_SRC
+
+* PCManFM
+
+Open bookmarks in the current panel. Mount removable media as soon as they are
+inserted but skip the "Removable medium is inserted" dialog.
+
+#+BEGIN_SRC conf :tangle ~/.config/pcmanfm/default/pcmanfm.conf
+[config]
+bm_open_method=0
+
+[ui]
+always_show_tabs=0
+change_tab_on_drop=1
+close_on_unmount=1
+desktop_folder_new_win=0
+focus_previous=0
+max_tab_chars=32
+media_in_new_tab=0
+pathbar_mode_buttons=0
+show_hidden=0
+show_statusbar=1
+side_pane_mode=places
+sort=name;ascending;
+splitter_pos=240
+toolbar=newtab;navigation;home;
+view_mode=list
+
+[volume]
+autorun=0
+mount_on_startup=1
+mount_removable=1
+#+END_SRC
+
+* Libfm
+
+The file management library behind PCManFM owns the file operations, the date
+and size formats, the trash behavior and the icon sizes, including the zoom
+level.
+
+#+BEGIN_SRC conf :tangle ~/.config/libfm/libfm.conf
+[config]
+advanced_mode=0
+auto_selection_delay=600
+backup_as_hidden=1
+confirm_del=1
+confirm_trash=1
+date_iso_8601=1
+defer_content_test=0
+drop_default_action=auto
+force_startup_notify=1
+middle_click=0
+no_child_non_expandable=0
+no_usb_trash=1
+only_user_templates=0
+quick_exec=0
+show_full_names=0
+si_unit=1
+single_click=0
+smart_desktop_autodrop=1
+template_run_app=0
+template_type_once=0
+thumbnail_local=1
+thumbnail_max=2048
+use_trash=1
+
+[places]
+places_applications=1
+places_computer=0
+places_desktop=1
+places_home=1
+places_network=0
+places_root=0
+places_trash=1
+places_unmounted=1
+
+[ui]
+big_icon_size=48
+pane_icon_size=24
+shadow_hidden=0
+show_thumbnail=1
+small_icon_size=32
+thumbnail_size=128
+#+END_SRC
+
+* COMMENT Local Variables
+
+# Local Variables:
+# eval: (add-hook 'after-save-hook #'org-babel-tangle nil t)
+# End:

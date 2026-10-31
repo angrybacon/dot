@@ -10,23 +10,7 @@ are equal feature-wise, nor peformance-wise. Pick your preferred fork:
 - [[https://github.com/yshui/picom][picom-git]]
 - [[https://github.com/FT-Labs/picom][picom-ftlabs-git]]
 
-The available window types as per the EWMH standard are:
-
-- =combo=
-- =desktop=
-- =dialog=
-- =dnd=
-- =dock=
-- =dropdown_menu=
-- =menu=
-- =normal=
-- =notification=
-- =popup_menu=
-- =splash=
-- =toolbar=
-- =tooltip=
-- =unknown=
-- =utility=
+Use =picom-inspect= or =xprop= to determine how to target a frame.
 
 * Backend
 
@@ -50,13 +34,9 @@ shadow-offset-x = -24;
 shadow-offset-y = -24;
 shadow-opacity = .5;
 shadow-radius = 24;
-#+END_SRC
 
-#+BEGIN_SRC conf
 shadow-exclude = [
   "class_g = 'zen' && role ?= 'popup'",
-  "window_type = 'menu'",
-  "window_type = 'tooltip'",
 ]
 #+END_SRC
 
@@ -64,16 +44,9 @@ shadow-exclude = [
 
 #+BEGIN_SRC conf
 corner-radius = 16;
+
 rounded-corners-exclude = [
-  "!name ~= ''",                        # Exclude windows with no name ie. bars
-  # "window_type = 'combo'",
-  # "window_type = 'desktop'",
-  # "window_type = 'dock'",
-  # "window_type = 'dropdown_menu'",
-  # "window_type = 'menu'",
-  "window_type = 'popup_menu'",
-  "window_type = 'tooltip'",
-  # "window_type = 'utility'",
+  "class_g = 'zen' && role ?= 'popup'",
 ];
 #+END_SRC
 
