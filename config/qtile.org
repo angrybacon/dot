@@ -193,7 +193,7 @@ layouts_theme = {
     'border_focus': '#656555',
     'border_normal': '#5F5F5F',
     'border_width': 0,
-    'margin': 24,
+    'margin': 16,
     'single_border_width': 0,
 }
 
@@ -228,7 +228,7 @@ floating_layout = layout.Floating(
 bar_height = 48
 box_padding_x = 16
 box_padding_y = 8
-box_radius = (bar_height - (box_padding_y * 2)) / 2
+box_radius = 16 - box_padding_y  # NOTE Compositor uses 16
 color_background = '#494949.25'
 color_box_background= '#5C888B.50'
 color_box_background_transient= '#9C6363.50'
@@ -374,12 +374,17 @@ widgets = [
     widget.Spacer(**spacer),
 ]
 
+bar_margin = 16
+
 screens = [
-    Screen(top=bar.Bar(
-        background=color_background,
-        size=bar_height,
-        widgets=widgets,
-    )),
+    Screen(
+        top=bar.Bar(
+            background=color_background,
+            margin=[bar_margin, bar_margin, 0, bar_margin],
+            size=bar_height,
+            widgets=widgets,
+        ),
+    ),
 ]
 #+END_SRC
 
