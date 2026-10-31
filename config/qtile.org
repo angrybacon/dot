@@ -47,7 +47,6 @@ from typing import Dict, List, Pattern, Union
 mod = 'mod4'
 control = 'control'
 shift = 'shift'
-home = os.path.expanduser('~')
 #+END_SRC
 
 Application commands.
@@ -59,11 +58,12 @@ terminal = 'kitty'
 terminal_alternate = 'ghostty'
 #+END_SRC
 
-Variables used in the =CheckUpdates= widget.
+Widget variables.
 
 #+BEGIN_SRC python
+icon_theme='Tela-circle-black-light'
 update_command = terminal + ' yay -Syu'
-update_distribution = 'Arch_checkupdates'
+update_command_distribution = 'Arch_checkupdates'
 #+END_SRC
 
 Commands for media keys.
@@ -103,6 +103,7 @@ keys = [
     Key([mod], 'n', lazy.layout.next()),
     Key([mod], 'p', lazy.layout.previous()),
     Key([mod, control], 'Tab', lazy.next_layout()),
+    Key([mod, control], 'f', lazy.window.toggle_fullscreen()),
     Key([mod, control], 'h', lazy.layout.shrink_main()),
     Key([mod, control], 'j', lazy.layout.grow()),
     Key([mod, control], 'k', lazy.layout.shrink()),
@@ -136,14 +137,14 @@ be used everywhere.
 #+BEGIN_SRC python
 klasses: Dict[str, List[Union[str, Pattern]]] = {
     'full': ['dota2', compile('steam_app_(\\d+|default)')],
-    'game': ['battle.net.exe', 'net.lutris.Lutris', 'steam', 'steamwebhelper'],
+    'launcher': ['net.lutris.Lutris', 'steam', 'steamwebhelper'],
     'music': ['spotify'],
     'social': ['discord', 'slack'],
-    'web': ['brave-browser', 'zen'],
+    'web': ['zen'],
 }
 
 groups_full = [Match(wm_class=klass) for klass in klasses['full']]
-groups_game = [Match(wm_class=klass) for klass in klasses['game']]
+groups_launcher = [Match(wm_class=klass) for klass in klasses['launcher']]
 groups_music = [Match(wm_class=klass) for klass in klasses['music']]
 groups_social = [Match(wm_class=klass) for klass in klasses['social']]
 groups_web = [Match(wm_class=klass) for klass in klasses['web']]
@@ -151,7 +152,7 @@ groups_web = [Match(wm_class=klass) for klass in klasses['web']]
 groups = [
     Group('1', label='\U0000F111', matches=groups_web),
     Group('2', label='\U0000F111', matches=groups_social),
-    Group('3', label='\U0000F111', matches=groups_game),
+    Group('3', label='\U0000F111', matches=groups_launcher),
     Group('4', label='\U0000F111', matches=groups_full),
     Group('5', label='\U0000F111'),
     Group('6', label='\U0000F111'),
@@ -317,6 +318,7 @@ widgets = [
     widget.StatusNotifier(
         **(box_outline | { 'padding': spacer['length'] }),
         icon_size=bar_height - (box_padding_y * 2) - 4,
+        icon_theme=icon_theme,
         menu_fontsize=text['fontsize'],
         menu_icon_size=text['fontsize'],
         menu_width=300,
@@ -326,7 +328,7 @@ widgets = [
         **box_filled,
         background=color_box_background_transient,
         display_format='{updates} updates',
-        distro=update_distribution,
+        distro=update_command_distribution,
         execute=update_command,
         update_interval=60 * 60,
     ),

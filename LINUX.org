@@ -17,7 +17,7 @@ yay -S \
 #+BEGIN_SRC sh
 yay -S \
     bat btop duf feh flameshot gawk gimp htop kitty ncdu nemo neofetch \
-    obs-studio overskride peek pfetch piper playerctl ripgrep shotcut spotify \
+    obs-studio overskride peek pfetch playerctl ripgrep shotcut solaar spotify \
     tagger tree unrar unzip
 #+END_SRC
 
@@ -111,6 +111,12 @@ x-scheme-handler/http=zen.desktop
 x-scheme-handler/https=zen.desktop
 x-scheme-handler/mailto=zen.desktop
 x-scheme-handler/unknown=zen.desktop
+#+END_SRC
+
+** Icon Theme
+
+#+BEGIN_SRC sh
+yay -S lxappearance tela-circle-icon-theme-black
 #+END_SRC
 
 * Fonts
