@@ -1,17 +1,15 @@
 #+TITLE: Fastfetch
 #+AUTHOR: Mathieu Marques
 #+PROPERTY: header-args :mkdirp yes
-#+PROPERTY: header-args:jsonc :tangle ~/.config/fastfetch/config.jsonc
+#+PROPERTY: header-args:json :tangle ~/.config/fastfetch/config.jsonc
 
-If missing, fenerate the base configuration file with =--gen-config=.
+If missing, generate the base configuration file with =--gen-config=.
 
-#+BEGIN_SRC jsonc
+#+BEGIN_SRC json
 {
   "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
   "logo": "none",
   "modules": [
-    // "title",
-    // "separator",
     "os",
     "host",
     "kernel",
@@ -22,23 +20,21 @@ If missing, fenerate the base configuration file with =--gen-config=.
     "de",
     "wm",
     "wmtheme",
-    // "theme",
-    // "icons",
-    // "font",
-    // "cursor",
+    "theme",
+    "icons",
+    "font",
+    "cursor",
     "terminal",
-    // "terminalfont",
+    "terminalfont",
     "cpu",
     "gpu",
     "memory",
     "swap",
-    // "disk",
-    // "localip",
+    "disk",
     "battery",
     "poweradapter",
-    "locale",
-    "break",
-    // "colors"
+    "localip",
+    "locale"
   ]
 }
 #+END_SRC
