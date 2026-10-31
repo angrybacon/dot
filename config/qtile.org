@@ -123,8 +123,8 @@ keys = [
     Key([], 'XF86AudioRaiseVolume', lazy.spawn(volume_up)),
     # Screenshot
     Key([mod, shift], '3', lazy.spawn(['flameshot', 'gui'])),
-    Key([mod, shift], '4', lazy.spawn(['flameshot', 'screen'])),
-    Key([mod, shift, control], '4', lazy.spawn(['flameshot', 'screen', '-c'])),
+    Key([mod, shift], '4', lazy.spawn(['flameshot', 'full'])),
+    Key([mod, shift, control], '4', lazy.spawn(['flameshot', 'full', '-c'])),
 ]
 #+END_SRC
 
