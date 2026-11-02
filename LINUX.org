@@ -53,16 +53,12 @@ fi
 
 * X
 
-** Bootstrap
+** Dots per Inch
 
 Increase the base DPI by 25%.
 
 #+BEGIN_SRC conf :tangle "~/.Xresources"
-Xft.dpi: 144
-#+END_SRC
-
-#+BEGIN_SRC sh :tangle "~/.xprofile"
-picom --daemon                          # Compositor
+Xft.dpi: 120
 #+END_SRC
 
 ** Dark Mode

@@ -33,7 +33,7 @@ qtile cmd-obj -o cmd -f reload_config
 #+BEGIN_SRC python
 import os
 import subprocess
-from libqtile import bar, layout
+from libqtile import bar, hook, layout
 from libqtile.config import (
     Click, Drag, DropDown, Group, Key, Match, Screen, ScratchPad,
 )
@@ -250,7 +250,7 @@ floating_layout = layout.Floating(
 bar_height = 48
 box_padding_x = 16
 box_padding_y = 8
-box_radius = 16 - box_padding_y  # NOTE Compositor uses 16
+box_radius = 16 - box_padding_y  # NOTE The compositor uses 16
 color_background = '#494949.25'
 color_box_background= '#5C888B.50'
 color_box_background_transient= '#9C6363.50'
@@ -422,6 +422,17 @@ screens = [
         wallpaper_mode='fill',
     ),
 ]
+#+END_SRC
+
+* Compositor
+
+Start the compositor once per session. Reloading the configuration won't
+relaunch it.
+
+#+BEGIN_SRC python
+@hook.subscribe.startup_once
+def autostart():
+    subprocess.Popen(['picom', '--daemon'])
 #+END_SRC
 
 * COMMENT Local Variables
