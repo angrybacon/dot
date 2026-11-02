@@ -38,14 +38,20 @@ from libqtile.config import (
     Click, Drag, DropDown, Group, Key, Match, Screen, ScratchPad,
 )
 from libqtile.lazy import lazy
+from libqtile.utils import rgb
+from libqtile.widget.helpers.status_notifier import StatusNotifierItem
+from math import pi
 from qtile_extras import widget
 from qtile_extras.widget.decorations import RectDecoration
 from re import compile
 from typing import Dict, List, Pattern, Union
+#+END_SRC
 
+Modifier keys.
 
-mod = 'mod4'
+#+BEGIN_SRC python
 control = 'control'
+mod = 'mod4'
 shift = 'shift'
 #+END_SRC
 
@@ -62,21 +68,37 @@ Widget variables.
 
 #+BEGIN_SRC python
 icon_theme='Tela-circle-black-light'
-update_command = terminal + ' yay -Syu'
-update_command_distribution = 'Arch_checkupdates'
-#+END_SRC
-
-Commands for media keys.
-
-#+BEGIN_SRC python
 player_next = 'playerctl next'
 player_previous = 'playerctl previous'
 player_toggle = 'playerctl play-pause'
+update_command = terminal + ' yay -Syu'
+update_command_distribution = 'Arch_checkupdates'
 volume_down = 'pulsemixer --change-volume -5 --unmute'
 volume_get = """pulsemixer --get-volume | awk '{print $1 "%"}'"""
 volume_reset = 'pulsemixer --set-volume 30'
 volume_toggle = 'pulsemixer  --toggle-mute'
 volume_up = 'pulsemixer --change-volume +5 --unmute'
+#+END_SRC
+
+* Icon Overwrites
+
+Some applications prefer the icon they ship with, ignoring the icon themes. We
+install themes for a reason, so we reverse the priority. Tested with the Tela
+theme.
+
+#+BEGIN_SRC python
+aliases = {
+    'spotify-linux-32': 'spotify',
+    'steam_tray_mono': 'steam',
+}
+
+_get_custom_icon = StatusNotifierItem._get_custom_icon
+
+def _get_themed_icon(self, name, path):
+    themed = self._get_xdg_icon(aliases.get(name, name))
+    return themed or _get_custom_icon(self, name, path)
+
+StatusNotifierItem._get_custom_icon = _get_themed_icon
 #+END_SRC
 
 * Keys
@@ -179,7 +201,7 @@ scratchpad_dropdown = DropDown('terminal', terminal, **scratchpad_geometry)
 groups.append(ScratchPad('scratchpad', [scratchpad_dropdown]))
 #+END_SRC
 
-Bind the dropdown key.
+Bind the terminal dropdown key.
 
 #+BEGIN_SRC python
 scratchpad = lazy.group['scratchpad']
@@ -291,6 +313,18 @@ text = {
     'padding': 0,
 }
 
+class BorderedStatusNotifier(widget.StatusNotifier):
+    def _draw_icon(self, icon, x, y):
+        ctx = self.drawer.ctx
+        size = self.icon_size
+        ctx.save()
+        ctx.arc(x + size / 2, y + size / 2, size / 2 + 1, 0, 2 * pi)
+        ctx.set_source_rgba(*rgb(color_foreground))
+        ctx.set_line_width(1)
+        ctx.stroke()
+        ctx.restore()
+        super()._draw_icon(icon, x, y)
+
 widgets = [
     widget.Spacer(**spacer),
     widget.Spacer(**spacer),
@@ -315,9 +349,9 @@ widgets = [
     widget.Spacer(),
     widget.Clock(**text, format='%H:%M %B %d'),
     widget.Spacer(),
-    widget.StatusNotifier(
-        **(box_outline | { 'padding': spacer['length'] }),
-        icon_size=bar_height - (box_padding_y * 2) - 4,
+    BorderedStatusNotifier(
+        **box_outline,
+        icon_size=bar_height - (box_padding_y * 2) - 10,
         icon_theme=icon_theme,
         menu_fontsize=text['fontsize'],
         menu_icon_size=text['fontsize'],
