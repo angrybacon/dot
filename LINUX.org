@@ -17,8 +17,8 @@ yay -S \
 #+BEGIN_SRC sh
 yay -S \
     bat blanket btop duf fastfetch feh flameshot gawk gimp htop kitty ncdu \
-    obs-studio overskride pcmanfm peek playerctl pokeget ripgrep shotcut \
-    solaar spotify tagger tree unrar unzip
+    obs-studio obs-plugin-waveform-bin overskride pcmanfm peek playerctl \
+    pokeget ripgrep shotcut solaar spotify tagger tree unrar unzip
 #+END_SRC
 
 ** Configure Visudo
