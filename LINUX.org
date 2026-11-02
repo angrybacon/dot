@@ -16,7 +16,7 @@ yay -S \
 
 #+BEGIN_SRC sh
 yay -S \
-    bat blanket btop duf fastfetch feh flameshot gawk gimp htop kitty ncdu \
+    bat blanket btop duf fastfetch flameshot gawk gimp htop imv kitty ncdu \
     obs-studio obs-plugin-waveform-bin overskride pcmanfm peek playerctl \
     pokeget ripgrep shotcut solaar spotify tagger tree unrar unzip
 #+END_SRC
@@ -62,16 +62,7 @@ Xft.dpi: 144
 #+END_SRC
 
 #+BEGIN_SRC sh :tangle "~/.xprofile"
-[ -f "$HOME/.fehbg" ] && ~/.fehbg &     # Background
 picom --daemon                          # Compositor
-#+END_SRC
-
-** Background
-
-Install =feh= and run it once to initialize the bootstrap executable.
-
-#+BEGIN_SRC sh
-feh --bg-fill ~/Pictures/Wallpapers/filename.ext
 #+END_SRC
 
 ** Dark Mode
@@ -98,8 +89,8 @@ Prefer settings those through GUI but in case of failure, edit
 application/pdf=zen.desktop
 audio/mp3=vlc.desktop
 audio/x-vorbis+ogg=vlc.desktop
-image/jpeg=feh.desktop
-image/png=feh.desktop
+image/jpeg=imv.desktop
+image/png=imv.desktop
 text/html=zen.desktop
 video/mp4=vlc.desktop
 video/quicktime=vlc.desktop

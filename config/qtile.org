@@ -418,6 +418,8 @@ screens = [
             size=bar_height,
             widgets=widgets,
         ),
+        wallpaper='~/Pictures/Wallpapers/wallpaper.jpeg',
+        wallpaper_mode='fill',
     ),
 ]
 #+END_SRC
