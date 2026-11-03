@@ -36,6 +36,7 @@ shadow-opacity = .5;
 shadow-radius = 24;
 
 shadow-exclude = [
+  "QTILE_INTERNAL && _NET_WM_STATE@[*] = '_NET_WM_STATE_BELOW'",
   "class_g = 'zen' && role ?= 'popup'",
   "window_type = 'menu'",
 ]
@@ -47,6 +48,7 @@ shadow-exclude = [
 corner-radius = 16;
 
 rounded-corners-exclude = [
+  "QTILE_INTERNAL && _NET_WM_STATE@[*] = '_NET_WM_STATE_BELOW'",
   "class_g = 'zen' && role ?= 'popup'",
   "window_type = 'menu'",
 ];
@@ -79,13 +81,14 @@ The =dual_kawase= method is only enabled with =--experimental-backends=.
 
 #+BEGIN_SRC conf
 blur-background-exclude = [
+  "QTILE_INTERNAL && _NET_WM_STATE@[*] = '_NET_WM_STATE_BELOW'",
   "class_g = 'zen' && role ?= 'popup'",
   "window_type = 'desktop'",
   "window_type = 'dock'",
   "window_type = 'menu'",
 ];
 blur-method = "dual_kawase";
-blur-strength = 12;
+blur-strength = 8;
 #+END_SRC
 
 * Fading

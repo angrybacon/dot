@@ -34,9 +34,7 @@ qtile cmd-obj -o cmd -f reload_config
 import os
 import subprocess
 from libqtile import bar, hook, layout
-from libqtile.config import (
-    Click, Drag, DropDown, Group, Key, Match, Screen, ScratchPad,
-)
+from libqtile.config import DropDown, Group, Key, Match, Screen, ScratchPad
 from libqtile.lazy import lazy
 from libqtile.utils import rgb
 from libqtile.widget.helpers.status_notifier import StatusNotifierItem
@@ -214,14 +212,13 @@ keys.append(Key([mod], 'Return', scratchpad.dropdown_toggle('terminal')))
 layouts_theme = {
     'border_focus': '#656555',
     'border_normal': '#5F5F5F',
-    'border_width': 0,
+    'border_width': 1,
     'margin': 16,
-    'single_border_width': 0,
+    'single_border_width': 1,
 }
 
 layouts = [
     layout.MonadTall(**layouts_theme, ratio=.65),
-    layout.MonadWide(**layouts_theme, ratio=.6),
     layout.Columns(**layouts_theme, ratio=.5),
 ]
 #+END_SRC
@@ -232,7 +229,6 @@ floating_layout = layout.Floating(
     float_rules=[
         *layout.Floating.default_float_rules,
         # NOTE Use `xprop` to guess the application attributes
-        Match(title='Steam Settings'),
         Match(title='branchdialog'),
         Match(title='pinentry'),
         Match(wm_class='confirmreset'),
@@ -247,34 +243,32 @@ floating_layout = layout.Floating(
 * Bar
 
 #+BEGIN_SRC python
-bar_height = 48
-box_padding_x = 16
-box_padding_y = 8
-box_radius = 16 - box_padding_y  # NOTE The compositor uses 16
-color_background = '#494949.25'
-color_box_background= '#5C888B.50'
-color_box_background_transient= '#9C6363.50'
-color_box_foreground = '#FFFFEF'
-color_chart_background = '#7F9F7F.50'
-color_chart_fill = '#7F9F7F.90'
-color_chart_foreground = '#7F9F7F.90'
+bar_height = 32
+box_radius = 16
+color_box_background = '#4C7073.90'
+color_box_background_transient = '#8C5353.90'
+color_box_foreground = '#DCDCCC'
+color_chart_background = '#5F7F5F.90'
+color_chart_foreground = '#7F9F7F'
 color_foreground = '#DCDCCC'
 color_group_active = '#DCDCCC'
-color_group_current = '#8CD0D3'
-color_group_inactive = '#656566'
+color_group_current = '#93E0E3'
+color_group_inactive = '#DCDCCC.10'
+
+spacer = { 'length': 16 }
 
 box_defaults = {
     'fontsize': 18,
     'foreground': color_box_foreground,
-    'padding': box_padding_x,
+    'padding': spacer['length'],
 }
 
 box_filled = {
     **box_defaults,
+    'background': color_box_background,
     'decorations': [
         RectDecoration(
             filled=True,
-            padding_y=box_padding_y,
             radius=box_radius,
             use_widget_background=True,
         ),
@@ -288,29 +282,20 @@ box_outline = {
             clip=True,
             colour=color_chart_background,
             filled=True,
-            padding_y=box_padding_y,
             radius=box_radius,
         ),
     ],
 }
 
-chart = {
+box_chart = {
     **box_outline,
+    'border_color': color_foreground,
     'border_width': 0,
-    'fill_color': color_chart_fill,
-    'frequency': .25,
+    'fill_color': color_chart_foreground,
+    'frequency': .2,
     'graph_color': color_chart_foreground,
     'line_width': 1,
-    'margin_x': 1,
-    'margin_y': 8,
-}
-
-spacer = { 'length': 8 }
-
-text = {
-    'fontsize': 20,
-    'foreground': color_foreground,
-    'padding': 0,
+    'margin': 0,
 }
 
 class BorderedStatusNotifier(widget.StatusNotifier):
@@ -320,47 +305,55 @@ class BorderedStatusNotifier(widget.StatusNotifier):
         ctx.save()
         ctx.arc(x + size / 2, y + size / 2, size / 2 + 1, 0, 2 * pi)
         ctx.set_source_rgba(*rgb(color_foreground))
-        ctx.set_line_width(1)
+        ctx.set_line_width(2)
         ctx.stroke()
         ctx.restore()
         super()._draw_icon(icon, x, y)
 
 widgets = [
-    widget.Spacer(**spacer),
-    widget.Spacer(**spacer),
     widget.GroupBox(
+        **{ **box_filled, 'fontsize': 24, 'padding': 0 },
         active=color_group_active,
         borderwidth=0,
         disable_drag=True,
-        fontsize=32,
         highlight_method='text',
         inactive=color_group_inactive,
-        spacing=8,
+        margin=box_filled['padding'],
+        spacing=box_filled['padding'],
         this_current_screen_border=color_group_current,
     ),
     widget.Spacer(**spacer),
+    widget.WindowName(
+        **box_filled,
+        empty_group_string='',
+        max_chars=80,
+        stretch=False,
+    ),
+    widget.Spacer(**spacer),
     widget.Prompt(
-        **box_outline,
-        cursorblink=.25,
+        **{ **box_filled, 'background': color_box_background_transient },
         font='monospace',
         ignore_dups_history=True,
         prompt='$ ',
     ),
     widget.Spacer(),
-    widget.Clock(**text, format='%H:%M %B %d'),
+    widget.Clock(
+        **box_filled,
+        format='%H:%M %B %d',
+    ),
     widget.Spacer(),
     BorderedStatusNotifier(
-        **box_outline,
-        icon_size=bar_height - (box_padding_y * 2) - 10,
+        # NOTE Reserve space for the gap and the ring in `_draw_icon`
+        icon_size=bar_height - 4,
         icon_theme=icon_theme,
-        menu_fontsize=text['fontsize'],
-        menu_icon_size=text['fontsize'],
+        menu_fontsize=box_defaults['fontsize'],
+        menu_icon_size=box_defaults['fontsize'],
         menu_width=300,
+        # NOTE This is misnamed and includes horizontal margins too
+        padding=spacer['length'],
     ),
-    widget.Spacer(**spacer),
     widget.CheckUpdates(
-        **box_filled,
-        background=color_box_background_transient,
+        **{ **box_filled, 'background': color_box_background_transient },
         display_format='{updates} updates',
         distro=update_command_distribution,
         execute=update_command,
@@ -369,7 +362,6 @@ widgets = [
     widget.Spacer(**spacer),
     widget.Volume(
         **box_filled,
-        background=color_box_background,
         font='monospace',
         get_volume_command=volume_get,
         mouse_callbacks={
@@ -383,7 +375,6 @@ widgets = [
     widget.Spacer(**spacer),
     widget.KeyboardLayout(
         **box_filled,
-        background=color_box_background,
         display_map={'us': 'US', 'us intl': 'IN'},
         font='monospace',
         configured_keyboards=['us', 'us intl'],
@@ -391,21 +382,19 @@ widgets = [
     widget.Spacer(**spacer),
     widget.Visualizer(
         **box_outline,
-        bar_colour=color_chart_fill,
-        bar_height=32,
+        bar_colour=color_chart_foreground,
+        bar_height=bar_height,
         bars=10,
         hide=False,
         mouse_callbacks={'Button3': lazy.spawn(bluetooth_manager)},
         spacing=0,
     ),
     widget.Spacer(**spacer),
-    widget.CPUGraph(**chart),
+    widget.CPUGraph(**box_chart),
     widget.Spacer(**spacer),
-    widget.MemoryGraph(**chart),
+    widget.MemoryGraph(**box_chart),
     widget.Spacer(**spacer),
-    widget.NetGraph(**chart),
-    widget.Spacer(**spacer),
-    widget.Spacer(**spacer),
+    widget.NetGraph(**box_chart),
 ]
 
 bar_margin = 16
@@ -413,7 +402,7 @@ bar_margin = 16
 screens = [
     Screen(
         top=bar.Bar(
-            background=color_background,
+            background='#000000.00',
             margin=[bar_margin, bar_margin, 0, bar_margin],
             size=bar_height,
             widgets=widgets,
